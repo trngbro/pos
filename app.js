@@ -9,8 +9,9 @@ const cors = require("cors")
 const mongoose = require("mongoose")
 var bodyparser = require("body-parser")
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var loginRouter = require('./api/v1/routes/login');
+var usersRouter = require('./api/v1/routes/users');
+
 
 dotenv.config()
 
@@ -41,7 +42,7 @@ app.use(helmet());
 app.use(cors());
 // app.use(logger("common"));
 
-app.use('/', indexRouter);
+app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
