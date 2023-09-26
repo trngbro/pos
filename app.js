@@ -3,15 +3,36 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const dotenv = require("dotenv")
+const helmet = require("helmet")
+const cors = require("cors")
+const mongoose = require("mongoose")
+var bodyparser = require("body-parser")
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+dotenv.config()
+
+mongoose.connect((process.env.DATABASE)).then(()=>{
+  console.log('Connected to the database');
+})
+.catch((err) => {
+  console.error(`${err} \n\n\n\n\n\n ${process.env.DATABASE}`);
+})
+
 var app = express();
+
+app.use(bodyparser.json({limit:"50mb"}));
+app.use(helmet());
+app.use(cors());
+app.use(logger("common"));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+
 
 app.use(logger('dev'));
 app.use(express.json());
