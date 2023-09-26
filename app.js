@@ -23,10 +23,7 @@ mongoose.connect((process.env.DATABASE)).then(()=>{
 
 var app = express();
 
-app.use(bodyparser.json({limit:"50mb"}));
-app.use(helmet());
-app.use(cors());
-app.use(logger("common"));
+
 
 
 // view engine setup
@@ -39,6 +36,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyparser.json({limit:"50mb"}));
+app.use(helmet());
+app.use(cors());
+// app.use(logger("common"));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
