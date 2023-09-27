@@ -10,6 +10,8 @@ const mongoose = require("mongoose")
 var bodyparser = require("body-parser")
 
 var loginRouter = require('./api/v1/routes/login');
+var logoutRouter = require('./api/v1/routes/logout');
+var homeRouter = require('./api/v1/routes/home');
 var usersRouter = require('./api/v1/routes/users');
 
 
@@ -43,6 +45,8 @@ app.use(cors());
 // app.use(logger("common"));
 
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
+app.use('/home', homeRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

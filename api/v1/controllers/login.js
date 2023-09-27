@@ -5,7 +5,10 @@ const localStorage = require('localStorage');
 const loginController = {
     rederLoginPage: (req, res) => {
         try {
-            res.render('index', {title: "Login page"});
+            if(localStorage.getItem("user"))
+                res.redirect("./home");
+            else
+                res.render('login');
         } catch (error) {
             res.render('error');
         }
@@ -19,25 +22,42 @@ const loginController = {
                     var LocalStorage = require('node-localstorage').LocalStorage;
                     localStorage = new LocalStorage('./scratch');
                 }
-                localStorage.setItem('myFirstKey', 'myFirstValue');
-                console.log();
                 var lc_user = localStorage.getItem("user");
                 if(lc_user != null)
                     arr = [];
                 arr.push({
                     userId: user[0]._id,
-                    tyoe: user[0].type,
+                    type: user[0].type,
                     status: user[0].status
                 })
                 localStorage.setItem("user", JSON.stringify(arr));
-                
-                return res.status(200).json({message: "Login success", message: localStorage.getItem('user')})
+                if(user[0].type == "block") {
+                    arr = [];
+                    res.render('login')
+                }
+                else{
+                    res.redirect('./home')
+                }
             }
-            return res.status(401).json({message: "Login fail"})
+            else return res.status(401).json({message: "Login fail"})
         } catch (error) {
             res.status(500).json(error)
         }
     },
+    identifyUser: (req, res) => {
+        try {
+            // Send mail a reset password
+        } catch (error) {
+            res.render('error');
+        }
+    },
+    resetAccount: (req, res) => {
+        try {
+            
+        } catch (error) {
+            res.render('error');
+        }
+    }
 }
 
 module.exports = loginController;
