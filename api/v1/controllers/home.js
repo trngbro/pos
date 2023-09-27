@@ -11,17 +11,15 @@ const homeController = {
         if (lc_user !== null) {
             lc_user = JSON.parse(lc_user.slice(1, -1));
         }
-        console.log(typeof lc_user)
-        console.log(lc_user)
         if(lc_user == null) res.redirect("/login");
         else{
             try {
                 
                 if(lc_user.status == "block"){
                     res.render("layouts/layout");
-
                 }
                 else {
+                    // or staff, admin
                     res.render("index")
                 }
                 

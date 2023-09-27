@@ -23,6 +23,7 @@ const loginController = {
                     localStorage = new LocalStorage('./scratch');
                 }
                 var lc_user = localStorage.getItem("user");
+                
                 if(lc_user != null)
                     arr = [];
                 arr.push({
@@ -31,13 +32,7 @@ const loginController = {
                     status: user[0].status
                 })
                 localStorage.setItem("user", JSON.stringify(arr));
-                if(user[0].type == "block") {
-                    arr = [];
-                    res.render('login')
-                }
-                else{
-                    res.redirect('./home')
-                }
+                res.redirect('./home')
             }
             else return res.status(401).json({message: "Login fail"})
         } catch (error) {
