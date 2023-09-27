@@ -570,7 +570,7 @@ function init_flot_chart() {
 
 
         $.plot($("#chart_plot_03"), [{
-            label: "Registrations",
+            label: "USD",
             data: chart_plot_03_data,
             lines: {
                 fillColor: "rgba(150, 202, 89, 0.12)"
