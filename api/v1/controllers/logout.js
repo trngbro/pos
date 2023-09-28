@@ -9,7 +9,7 @@ const logoutController = {
         var lc_user = localStorage.getItem("user");
         if(lc_user != null)
             localStorage.clear()
-        res.render('login')
+        res.redirect('./login')
     }
 }
 

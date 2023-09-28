@@ -8,7 +8,7 @@ const loginController = {
             if(localStorage.getItem("user"))
                 res.redirect("./home");
             else
-                res.render('login');
+                res.render('login', {layout: false});
         } catch (error) {
             res.render('error');
         }

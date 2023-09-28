@@ -16,7 +16,7 @@ const homeController = {
             try {
                 
                 if(lc_user.status == "block"){
-                    res.render("layouts/layout");
+                    res.render("noauth", {layout: "layout"});
                 }
                 else {
                     // or staff, admin
@@ -28,6 +28,13 @@ const homeController = {
             }
         }
     },
+    rederCustomerManagePage: (req, res) => {
+        try {
+            res.render('customer')
+        } catch (error) {
+            res.render('error')
+        }   
+    }
 }
 
 module.exports = homeController
