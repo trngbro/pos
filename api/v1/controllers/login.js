@@ -1,11 +1,12 @@
 const {User} = require("../models/models")
 const encode = require("../middlewares/crypto")
 const localStorage = require('localStorage');
+const localStorageSupport = require('../middlewares/localStorageSupport');
 
 const loginController = {
     rederLoginPage: (req, res) => {
         try {
-            if(localStorage.getItem("user"))
+            if(localStorageSupport.checkItemExist("user"))
                 res.redirect("./home");
             else
                 res.render('login', {layout: false});
