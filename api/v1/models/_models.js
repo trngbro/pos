@@ -85,6 +85,7 @@ const categorySchema = new mongoose.Schema({
 
 const Category = mongoose.model("Category", categorySchema);
 
+
 // Customer model
 const customerSchema = new mongoose.Schema({
     phone: {

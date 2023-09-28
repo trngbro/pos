@@ -1,4 +1,4 @@
-const {User} = require("../models/models")
+const {User} = require("../models/_models")
 const encode = require("../middlewares/crypto")
 const localStorage = require('localStorage');
 const localStorageSupport = require('../middlewares/localStorageSupport');
