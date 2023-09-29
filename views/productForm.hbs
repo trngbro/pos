@@ -1,0 +1,100 @@
+<div class="right_col" role="main" style="min-height: 3288.8px;">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Create a new product</h3>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+      <!-- form input mask -->
+      <div class="col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <h2>Input Mask</h2>
+            <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <br>
+            <form class="form-horizontal form-label-left">
+              <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3">Barcode <span class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                  <input type="text" class="form-control" required="required"
+                    data-inputmask="'mask' : '*-******-******'">
+                  <span class="fa fa-barcode form-control-feedback right" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="item form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="first-name">Product's name <span
+                    class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 ">
+                  <input type="text" id="first-name" required="required" class="form-control ">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3">Origin price <span class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                  <input type="text" class="form-control" required="required" data-inputmask="'mask' : '***.***.***'">
+                  <span class="fa fa-money form-control-feedback right" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3">Sale price <span class="required">*</span>
+                </label>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                  <input type="text" class="form-control" required="required" data-inputmask="'mask' : '***.***.***'">
+                  <span class="fa fa-money form-control-feedback right" aria-hidden="true"></span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 ">Category</label>
+                <div class="col-md-9 col-sm-9 ">
+                  <select class="select2_multiple form-control" multiple="multiple">
+                    <option>Phone</option>
+                    <option>Laptop</option>
+                    <option>Charger</option>
+                    <option>Case</option>
+                    <option>Backup charger</option>
+                    <option>Charger cord</option>
+                    <option>Tablet</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="control-label col-md-3 col-sm-3 ">Images</label>
+                <div class="col-md-9 col-sm-9">
+                  <input class="form-control" type="file" id="formFile" >
+                </div>
+              </div>
+
+
+
+              <div class="ln_solid"></div>
+
+              <div class="form-group row">
+                <div class="col-md-9 offset-md-3">
+                  <button type="submit" class="btn btn-primary">Cancel</button>
+                  <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- /form input mask -->
+    </div>
+  </div>
+</div>

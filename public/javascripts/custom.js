@@ -929,7 +929,7 @@ function init_autocomplete() {
     });
 
     // initialize autocomplete with custom appendTo
-    $('#autocomplete-custom-append').autocomplete({
+    $('#autocomplete-custom-append-country').autocomplete({
         lookup: countriesArray
     });
 

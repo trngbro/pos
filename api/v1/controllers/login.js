@@ -1,7 +1,8 @@
-const {User} = require("../models/_models")
-const encode = require("../middlewares/crypto")
 const localStorage = require('localStorage');
-const localStorageSupport = require('../middlewares/localStorageSupport');
+
+const {User} = require("../models/_models")
+const encode = require("../helpers/crypto")
+const localStorageSupport = require('../helpers/localStorageSupport');
 
 const loginController = {
     rederLoginPage: (req, res) => {
@@ -9,9 +10,12 @@ const loginController = {
             if(localStorageSupport.checkItemExist("user"))
                 res.redirect("./home");
             else
-                res.render('login', {layout: false});
+                res.render('login', {
+                    layout: false,
+                    pathIsLevelTwo: false
+                });
         } catch (error) {
-            res.render('error');
+            res.redirect('error');
         }
     },
     loginChecking: async (req, res) => {
@@ -44,14 +48,14 @@ const loginController = {
         try {
             // Send mail a reset password
         } catch (error) {
-            res.render('error');
+            res.redirect('error');
         }
     },
     resetAccount: (req, res) => {
         try {
             
         } catch (error) {
-            res.render('error');
+            res.redirect('error');
         }
     }
 }

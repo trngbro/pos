@@ -10,19 +10,10 @@
 
   <title>CellphoneZ </title>
 
-  <!-- Bootstrap -->
-  <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome -->
-  <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <!-- NProgress -->
-  <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
-  <!-- bootstrap-progressbar -->
-  <link href="vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-  <!-- bootstrap-daterangepicker -->
-  <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+  {{{stylesheets}}}
 
   <!-- Custom Theme Style -->
-  <link href="stylesheets/custom.min.css" rel="stylesheet">
+  <link href="{{#if pathIsLevelTwo}}../{{/if}}stylesheets/custom.min.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -31,7 +22,7 @@
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="index.html" class="site_title"><i class="fa fa-mobile"></i> <span>CellphoneZ</span></a>
+            <a href="{{#if pathIsLevelTwo}}../{{/if}}home" class="site_title"><i class="fa fa-mobile"></i> <span>CellphoneZ</span></a>
           </div>
 
           <div class="clearfix"></div>
@@ -39,7 +30,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="images/default.png" alt="..." class="img-circle profile_img">
+              <img src="{{#if pathIsLevelTwo}}../{{/if}}images/default.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -53,15 +44,73 @@
           <!-- sidebar menu -->
           <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-              <h3>General</h3>
-              <ul class="nav side-menu">
-                <li><a href="./dashboard"><i class="fa fa-home" ></i> Dashboard </a></li>
-                <li><a href="./products"><i class="fa fa-home" ></i> Products </a></li>
-                <li><a href="./warehouse"><i class="fa fa-home" ></i> Warehouse </a></li>
-                <li><a href="./customers"><i class="fa fa-home" ></i> Customers </a></li>
-                <li><a href="./sales"><i class="fa fa-home" ></i> POS </a></li>
-              </ul>
-            </div>
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-bar-chart"></i> Dashboard</a></li>
+                  <li><a><i class="fa fa-laptop"></i> Products <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}products">View all products</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}products/create">Create a product</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}categories">View all categories</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}categories/create">Create a category</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-home"></i> Warehouse <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}warehouse/">Data products</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}warehouse/">Re-stock</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}warehouse/">Get lost</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-users"></i> Customer <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}customer/">View all customer</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}customer/">Customer's service</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}customer/">Customer recommended</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-code"></i> POS <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}sales/">Go to a application</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}sales/">All revenues</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}sales/">Return</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}sales/">KPI</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="menu_section">
+                <h3>Advanced</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-pencil-square-o"></i> Custom website </a></li>
+                  <li><a><i class="fa fa-cube"></i> Staff management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}accounts/">View all staffs</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}accounts/">Create a staff</a></li>
+                      <li><a href="{{#if pathIsLevelTwo}}../{{/if}}accounts/">Create a manager</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-tag"></i> Manage store <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="/manage">Lose product</a>
+                        <li><a>Income<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="income/">Today</a>
+                            </li>
+                            <li><a href="{{#if pathIsLevelTwo}}../{{/if}}income/">This week</a>
+                            </li>
+                            <li><a href="{{#if pathIsLevelTwo}}../{{/if}}income/">This month</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li><a href="{{#if pathIsLevelTwo}}../{{/if}}return">Return</a>
+                        </li>
+                    </ul>
+                  </li>                  
+                  <li><a href="javascript:void(0)"><i class="fa fa-star"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
+                </ul>
+              </div>
           </div>
           <!-- /sidebar menu -->
 
@@ -95,7 +144,7 @@
               <li class="nav-item dropdown open" style="padding-left: 15px;">
                 <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown"
                   data-toggle="dropdown" aria-expanded="false">
-                  <img src="images/default.png" alt="">John Doe
+                  <img src="{{#if pathIsLevelTwo}}../{{/if}}images/default.png" alt="">John Doe
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="javascript:;"> Profile</a>
@@ -117,7 +166,7 @@
                 <ul class="dropdown-menu list-unstyled msg_list" role="menu" aria-labelledby="navbarDropdown1">
                   <li class="nav-item">
                     <a class="dropdown-item">
-                      <span class="image"><img src="images/default.png" alt="Profile Image" /></span>
+                      <span class="image"><img src="{{#if pathIsLevelTwo}}../{{/if}}images/default.png" alt="Profile Image" /></span>
                       <span>
                         <span>John Smith</span>
                         <span class="time">3 mins ago</span>
@@ -129,7 +178,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="dropdown-item">
-                      <span class="image"><img src="images/default.png" alt="Profile Image" /></span>
+                      <span class="image"><img src="{{#if pathIsLevelTwo}}../{{/if}}images/default.png" alt="Profile Image" /></span>
                       <span>
                         <span>John Smith</span>
                         <span class="time">3 mins ago</span>
@@ -141,7 +190,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="dropdown-item">
-                      <span class="image"><img src="images/default.png" alt="Profile Image" /></span>
+                      <span class="image"><img src="{{#if pathIsLevelTwo}}../{{/if}}images/default.png" alt="Profile Image" /></span>
                       <span>
                         <span>John Smith</span>
                         <span class="time">3 mins ago</span>
@@ -153,7 +202,7 @@
                   </li>
                   <li class="nav-item">
                     <a class="dropdown-item">
-                      <span class="image"><img src="images/default.png" alt="Profile Image" /></span>
+                      <span class="image"><img src="{{#if pathIsLevelTwo}}../{{/if}}images/default.png" alt="Profile Image" /></span>
                       <span>
                         <span>John Smith</span>
                         <span class="time">3 mins ago</span>
@@ -195,46 +244,12 @@
   </div>
   </div>
 
-  <!-- jQuery -->
-  <script src="vendors/jquery/dist/jquery.min.js"></script>
-  <!-- Bootstrap -->
-  <script src="vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- FastClick -->
-  <script src="vendors/fastclick/lib/fastclick.js"></script>
-  <!-- NProgress -->
-  <script src="vendors/nprogress/nprogress.js"></script>
-  <!-- Chart.js -->
-  <script src="vendors/Chart.js/dist/Chart.min.js"></script>
-  <!-- jQuery Sparklines -->
-  <script src="vendors/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-  <!-- morris.js -->
-  <script src="vendors/raphael/raphael.min.js"></script>
-  <script src="vendors/morris.js/morris.min.js"></script>
-  <!-- gauge.js -->
-  <script src="vendors/gauge.js/dist/gauge.min.js"></script>
-  <!-- bootstrap-progressbar -->
-  <script src="vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
-  <!-- Skycons -->
-  <script src="vendors/skycons/skycons.js"></script>
-  <!-- Flot -->
-  <script src="vendors/Flot/jquery.flot.js"></script>
-  <script src="vendors/Flot/jquery.flot.pie.js"></script>
-  <script src="vendors/Flot/jquery.flot.time.js"></script>
-  <script src="vendors/Flot/jquery.flot.stack.js"></script>
-  <script src="vendors/Flot/jquery.flot.resize.js"></script>
-  <!-- Flot plugins -->
-  <script src="vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-  <script src="vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-  <script src="vendors/flot.curvedlines/curvedLines.js"></script>
-  <!-- DateJS -->
-  <script src="vendors/DateJS/build/date.js"></script>
-  <!-- bootstrap-daterangepicker -->
-  <script src="vendors/moment/min/moment.min.js"></script>
-  <script src="vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+{{{javascripts}}}
 
-  <!-- Custom Theme Scripts -->
-  <script src="javascripts/custom.min.js?2"></script>
+<!-- Custom Theme Scripts -->
+<script src="{{#if pathIsLevelTwo}}../{{/if}}javascripts/custom.js"></script>
 
+<div class="form-group row">flex
 </body>
 
 </html>

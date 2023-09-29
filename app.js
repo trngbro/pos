@@ -13,7 +13,9 @@ var bodyparser = require("body-parser");
 var loginRouter = require("./api/v1/routes/login");
 var logoutRouter = require("./api/v1/routes/logout");
 var homeRouter = require("./api/v1/routes/home");
-var usersRouter = require("./api/v1/routes/users");
+var productRouter = require("./api/v1/routes/product");
+var categoryRouter = require("./api/v1/routes/categories");
+var indexRouter = require("./api/v1/routes/index");
 
 dotenv.config();
 
@@ -29,7 +31,12 @@ mongoose
 var app = express();
 
 // view engine setup
-app.engine('hbs', exphbs.engine({defaultLayout: "layout"}))
+app.engine('hbs', exphbs.engine({
+  defaultLayout: "layout",
+  helpers: {
+  },
+  partialsDir: __dirname + '/views/partials'
+}))
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -54,7 +61,9 @@ app.use(cors());
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
 app.use("/home", homeRouter);
-app.use("/users", usersRouter);
+app.use("/categories", categoryRouter);
+app.use("/products", productRouter);
+app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

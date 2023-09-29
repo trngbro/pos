@@ -1,4 +1,4 @@
-const localStorageSupport = require('../middlewares/localStorageSupport');
+const localStorageSupport = require('../helpers/localStorageSupport');
 
 const logoutController = {
     renderLogoutPage: (req, res) => {

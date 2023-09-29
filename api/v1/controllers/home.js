@@ -1,4 +1,6 @@
-const localStorageSupport = require('../middlewares/localStorageSupport');
+const localStorageSupport = require('../helpers/localStorageSupport');
+const styles = require('../helpers/stylesheetsConfig')
+const scripts = require('../helpers/javascriptConfig')
 
 const homeController = {
     rederHomepage: (req, res) => {
@@ -7,23 +9,35 @@ const homeController = {
         else{
             try {
                 if(lc_user.status == "block"){
-                    res.render("noauth");
+                    res.render("noauth", {
+                        pathIsLevelTwo: false,
+                        stylesheets: styles.homeCSS,
+                        javascripts: scripts.homeJS
+                    });
                 }
                 else {
                     // or staff, admin
-                    res.render("index")
+                    res.render("home", {
+                        pathIsLevelTwo: false,
+                        stylesheets: styles.homeCSS,
+                        javascripts: scripts.homeJS
+                    })
                 }
                 
             } catch (error) {
-                res.render("error", {message: "Loi"})
+                res.redirect("error")
             }
         }
     },
     rederCustomerManagePage: (req, res) => {
         try {
-            res.render('customer')
+            res.render('customer', {
+                pathIsLevelTwo: false,
+                stylesheets: styles.homeCSS,
+                javascripts: scripts.homeJS
+            })
         } catch (error) {
-            res.render('error')
+            res.redirect('error')
         }   
     }
 }

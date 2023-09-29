@@ -1,23 +1,32 @@
 const renderErrorPage = {
     page403: (req, res) => {
         try {
-            res.render('403', {layout: false})
+            res.render('403', {
+                layout: false,
+                pathIsLevelTwo: false
+            })
         } catch (error) {
-            res.render('error')
+            res.redirect('error')
         }
     },
     page404: (req, res) => {
         try {
-            res.render('404', {layout: false})
+            res.render('404', {
+                layout: false,
+                pathIsLevelTwo: false
+            })
         } catch (error) {
-            res.render('error')
+            res.redirect('error')
         }
     },
     page500: (req, res) => {
         try {
-            res.render('500', {layout: false})
+            res.render('500', {
+                layout: false,
+                pathIsLevelTwo: false
+            })
         } catch (error) {
-            res.render('error')
+            res.redirect('error')
         }
     },
 }
