@@ -15,6 +15,7 @@ var logoutRouter = require("./api/v1/routes/logout");
 var homeRouter = require("./api/v1/routes/home");
 var productRouter = require("./api/v1/routes/product");
 var categoryRouter = require("./api/v1/routes/categories");
+var warehouseRouter = require("./api/v1/routes/warehouse");
 var indexRouter = require("./api/v1/routes/index");
 
 dotenv.config();
@@ -63,6 +64,7 @@ app.use("/logout", logoutRouter);
 app.use("/home", homeRouter);
 app.use("/categories", categoryRouter);
 app.use("/products", productRouter);
+app.use("/warehouse", warehouseRouter);
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
@@ -78,7 +80,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("500");
+  res.render("500", {layout: false});
 });
 
 module.exports = app;

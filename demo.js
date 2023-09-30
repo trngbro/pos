@@ -1,5 +1,3 @@
-const users = require("./api/v1/models/user")
+const encode = require("./api/v1/helpers/crypto")
 
-const user = new users({ name: 'John Doe' });
-console.log(user.getUserFullName());
-console.log(user.isInformation());
+console.log(encode("admin"));
