@@ -151,6 +151,8 @@
                               <td
                                 style="display: none;"
                               >
+                                <button data-toggle="modal" data-target="#delete">Delete</button>
+                                <button data-toggle="modal" data-target="#editform">Edit</button>
                               </td>
                             </tr>
                             <tr role="row" class="even">
@@ -165,6 +167,8 @@
                               <td
                                 style="display: none;"
                               >
+                                <button data-toggle="modal" data-target="#delete">Delete</button>
+                                <button data-toggle="modal" data-target="#editform">Edit</button>
                               </td>
                             </tr>
                           </tbody>
@@ -179,6 +183,82 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editform" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lable">Edit Products</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Barcode</label>
+            <input type="text" class="form-control" id="barcode">
+          </div>
+           <div class="form-group">
+            <label for="exampleFormControlInput1">Name</label>
+            <input type="text" class="form-control" id="name">
+          </div>
+           <div class="form-group">
+            <label for="exampleFormControlInput1">OG Price</label>
+            <input type="text" class="form-control" id="ogPrice">
+          </div>
+           <div class="form-group">
+            <label for="exampleFormControlInput1">SL Price</label>
+            <input type="number" class="form-control" id="slPrice">
+          </div>
+           <div class="form-group">
+            <label for="exampleFormControlInput1">Category</label>
+            <input type="number" class="form-control" id="category">
+          </div>
+           <div class="form-group">
+            <label for="exampleFormControlInput1">Created</label>
+            <input type="datetime-local" class="form-control" id="created">
+          </div>
+           <div class="form-group">
+            <label for="exampleFormControlInput1">Quantity</label>
+            <input type="number" class="form-control" id="quantity">
+          </div>
+           <div class="form-group">
+            <label for="exampleFormControlInput1">Sold</label>
+            <input type="number" class="form-control" id="sold">
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lable">Are you sure to delete this product?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        barcode + name
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary">Yes</button>
       </div>
     </div>
   </div>
