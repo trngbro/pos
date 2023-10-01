@@ -16,6 +16,7 @@ var homeRouter = require("./api/v1/routes/home");
 var productRouter = require("./api/v1/routes/product");
 var categoryRouter = require("./api/v1/routes/categories");
 var warehouseRouter = require("./api/v1/routes/warehouse");
+var customerRouter = require("./api/v1/routes/customer");
 var indexRouter = require("./api/v1/routes/index");
 
 dotenv.config();
@@ -41,7 +42,7 @@ app.engine('hbs', exphbs.engine({
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(logger("common")); //dev
+app.use(logger("dev")); //common
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -65,6 +66,7 @@ app.use("/home", homeRouter);
 app.use("/categories", categoryRouter);
 app.use("/products", productRouter);
 app.use("/warehouse", warehouseRouter);
+app.use("/customers", customerRouter);
 app.use("/", indexRouter);
 
 // catch 404 and forward to error handler
