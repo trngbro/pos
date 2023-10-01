@@ -6,4 +6,4 @@ router.get("/", productController.viewAllProducts);
 router.get("/create", productController.viewCreateProduct);
 router.post("/create", productController.addProduct);
 
-module.exports = router;
+module.exports = router; 

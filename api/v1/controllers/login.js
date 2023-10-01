@@ -1,7 +1,6 @@
 const localStorage = require('localStorage');
 
 const {User} = require("../models/_models")
-const encode = require("../helpers/crypto")
 const localStorageSupport = require('../helpers/localStorageSupport');
 
 const loginController = {
@@ -20,7 +19,7 @@ const loginController = {
     },
     loginChecking: async (req, res) => {
         try {
-            const user = await User.find({user: req.body.username, password: encode(req.body.password)}).exec();
+            const user = await User.find({user: req.body.username, password: req.body.password}).exec();
             if(user[0]._id){
                 var arr = new Array();
                 if (typeof localStorage === "undefined" || localStorage === null) {
@@ -41,7 +40,7 @@ const loginController = {
             }
             else return res.status(401).json({message: "Login fail"})
         } catch (error) {
-            res.status(500).json(error)
+            res.status(333).json(res.body)
         }
     },
     identifyUser: (req, res) => {
