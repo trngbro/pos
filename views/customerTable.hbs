@@ -104,23 +104,27 @@
                           </thead>
                           <tbody>
                             <tr role="row" class="odd">
-                              <td class="sorting_1" tabindex="0">84947605644</td>
-                              <td>Trung-Nghia Nguyen</td>
-                              <td>0947605644</td>
-                              <td>29, 81. St, Tan Quy Ward, District 7, Ho Chi Minh City</td>
+                              <td class="sorting_1 84947605644" tabindex="0">84947605644</td>
+                              <td class="84947605644">Trung-Nghia Nguyen</td>
+                              <td class="84947605644">0947605644</td>
+                              <td class="84947605644">29, 81. St, Tan Quy Ward, District 7, Ho Chi Minh City</td>
                               <td
                                 style="display: none;"
                               >
+                                <button data-toggle="modal" data-target="#delete" data="84947605644" class="btn-delete-customer">Delete</button>
+                                <button data-toggle="modal" data-target="#editform" id="84947605644" class="btn-edit-customer">Edit</button>
                               </td>
                             </tr>
                             <tr role="row" class="even">
-                              <td tabindex="0" class="sorting_1">84599280502</td>
-                              <td>Nguyen Trung Nghia</td>
-                              <td>0599280502</td>
-                              <td>1168/9, Le Van Luong. St, Phuoc Kieng Ward, Nha Be Province, Ho Chi Minh City</td>
+                              <td tabindex="0" class="sorting_1 84599280502">84599280502</td>
+                              <td class="84599280502">Nguyen Trung Nghia</td>
+                              <td class="84599280502">0599280502</td>
+                              <td class="84599280502">1168/9, Le Van Luong. St, Phuoc Kieng Ward, Nha Be Province, Ho Chi Minh City</td>
                               <td
                                 style="display: none;"
                               >
+                                <button data-toggle="modal" data-target="#delete" data="84599280502" class="btn-delete-customer">Delete</button>
+                                <button data-toggle="modal" data-target="#editform" id="84599280502" class="btn-edit-customer">Edit</button>
                               </td>
                             </tr>
                           </tbody>
@@ -135,6 +139,67 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="editform" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lable">Edit Customer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <div class="form-group">
+            <label for="customer-id">Customer ID</label>
+            <input type="number" class="form-control" required="required" readonly="readonly" id="customer-id" name="customer-id">
+          </div>
+           <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" autocomplete="off" id="name" name="name">
+          </div>
+           <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" id="phone" name="phone">
+          </div>
+           <div class="form-group">
+            <label for="slPrice">Address</label>
+            <input type="text" class="form-control" id="address" name="address">
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="editSpecticalItem" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lable">Are you sure to delete this customer?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="d-data"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary">Yes</button>
       </div>
     </div>
   </div>
