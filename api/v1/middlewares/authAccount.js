@@ -1,10 +1,13 @@
-const localStorage = require("../helpers/localStorageSupport")
+const crypto = require('../helpers/crypto')
 
 function authuAccount(req, res, next) {
-    if(localStorage.checkItemExist("user"))
+    var userData = req.cookies.userLog;
+    if(crypto.decode(userData).status === 'block'){
+        res.render('noauth')
+    }
+    if(crypto.decode(userData).status === 'active'){
         next();
-    else
-        res.redirect('/login');
+    }
 }
 
 module.exports = authuAccount;

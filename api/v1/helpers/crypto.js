@@ -1,4 +1,6 @@
-function encode(inputString) {
+const base64 = require('base-64');
+
+function password_hash(inputString) {
     const rotateLeft = (value, shift) => (value << shift) | (value >>> (32 - shift));
 
     const words = [];
@@ -84,4 +86,21 @@ function encode(inputString) {
     return toHexString(h0) + toHexString(h1) + toHexString(h2) + toHexString(h3);
 }
 
-module.exports = encode;
+function encode(uid, type, status) {
+    const inputString = `${uid}:${type}:${status}`;
+
+    const encodedString = base64.encode(inputString);
+
+    return encodedString;
+}
+
+function decode(encodedString) {
+    const decodedString = base64.decode(encodedString);
+
+    // Tách chuỗi thành uid, type và status
+    const [uid, type, status] = decodedString.split(':');
+
+    return { uid, type, status };
+}
+
+module.exports = { encode, decode, password_hash };

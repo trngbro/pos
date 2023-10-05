@@ -1,19 +1,15 @@
-const localStorage = require('localStorage');
-
-const {User} = require("../models/_models")
-const localStorageSupport = require('../helpers/localStorageSupport');
-
+const User = require("../models/user")
+const crypto = require("../helpers/crypto")
 
 const loginController = {
     rederLoginPage: (req, res) => {
         try {
-            if(localStorageSupport.checkItemExist("user"))
-                res.redirect("./home");
-            else
-                res.render('login', {
-                    layout: false,
-                    pathIsLevelTwo: false
-                });
+            if(req.cookies.userLog){
+                res.redirect('home')
+            }
+            else{
+                res.render('login', {layout: false})
+            }
         } catch (error) {
             res.redirect('error');
         }
@@ -22,26 +18,14 @@ const loginController = {
         try {
             const user = await User.find({user: req.body.username, password: req.body.password}).exec();
             if(user[0]._id){
-                var arr = new Array();
-                if (typeof localStorage === "undefined" || localStorage === null) {
-                    var LocalStorage = require('node-localstorage').LocalStorage;
-                    localStorage = new LocalStorage('./scratch');
-                }
-                var lc_user = localStorage.getItem("user");
-                
-                if(lc_user != null)
-                    arr = [];
-                arr.push({
-                    userId: user[0]._id,
-                    type: user[0].type,
-                    status: user[0].status
-                })
-                localStorage.setItem("user", JSON.stringify(arr));
-                res.redirect('./home')
+                res.cookie('userLog', crypto.encode(user[0].id, user[0].type, user[0].status))
+                res.redirect('home')
             }
-            else return res.status(401).json({message: "Login fail"})
+            else{
+                res.redirect('login')
+            }
         } catch (error) {
-            res.status(333).json(res.body)
+            res.redirect('login')
         }
     },
     identifyUser: (req, res) => {

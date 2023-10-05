@@ -1,4 +1,4 @@
-const localStorageSupport = require('../helpers/localStorageSupport');
+
 const styles = require('../helpers/stylesheetsConfig')
 const scripts = require('../helpers/javascriptConfig')
 

@@ -1,3 +1,10 @@
-const test = require("./api/v1/middlewares/authAccount")
+const test = require("./api/v1/helpers/localStorageSupport")
 
-console.log(test)
+var dt = {
+    _id: "123",
+    type: "block",
+    status: "block"
+}
+
+console.log(test.clearUserAndSavedData(dt))
+console.log(test.getCurrentUser())
