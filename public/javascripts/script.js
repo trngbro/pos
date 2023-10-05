@@ -22,7 +22,7 @@ async function loadDatabase() {
   };
 }
 
-function initApp() {
+function initAppLock() {
   const app = {
     db: null,
     time: null,

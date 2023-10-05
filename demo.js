@@ -1,3 +1,3 @@
-const encode = require("./api/v1/helpers/crypto")
+const test = require("./api/v1/middlewares/authAccount")
 
-console.log(encode("admin"));
+console.log(test)

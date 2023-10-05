@@ -8,7 +8,8 @@ const posControllers = {
             res.render('main_pos', {
                 pathIsLevelTwo: false,
                 stylesheets: styles.point_of_sale,
-                javascripts: scripts.point_of_sale
+                javascripts: scripts.point_of_sale,
+                layout: false
             })
         } catch (error) {
             res.render('error')

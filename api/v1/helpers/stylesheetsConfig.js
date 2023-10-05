@@ -85,18 +85,13 @@ module.exports = {
     },
     point_of_sale: () => {
         return `
-            <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
-            <link rel="stylesheet" href="stylesheets/style.css">
-            <!-- Bootstrap -->
-            <link href="vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-            <!-- Font Awesome -->
-            <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-            <!-- NProgress -->
-            <link href="vendors/nprogress/nprogress.css" rel="stylesheet">
-            <!-- bootstrap-progressbar -->
-            <link href="vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-            <!-- bootstrap-daterangepicker -->
-            <link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+        <!-- jQuery -->
+        <!-- Bootstrap4 files-->
+        <link href="vendors/pos.assets/bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="vendors/pos.assets/ui.css" type="text/css" rel="stylesheet">
+        <link href="vendors/pos.assets/OverlayScrollbars.css" type="text/css" rel="stylesheet" />
+        <!-- custom style -->
         `
     }
 }
