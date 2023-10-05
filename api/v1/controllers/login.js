@@ -11,7 +11,7 @@ const loginController = {
                 res.render('login', {layout: false})
             }
         } catch (error) {
-            res.redirect('error');
+            res.redirect('logout');
         }
     },
     loginChecking: async (req, res) => {
