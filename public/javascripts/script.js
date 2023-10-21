@@ -1,28 +1,91 @@
 async function loadDatabase() {
-  const db = await idb.openDB("tailwind_store", 1, {
-    upgrade(db, oldVersion, newVersion, transaction) {
-      db.createObjectStore("products", {
-        keyPath: "id",
-        autoIncrement: true,
-      });
-      db.createObjectStore("sales", {
-        keyPath: "id",
-        autoIncrement: true,
-      });
-    },
-  });
+  try {
+    const db = await new Promise((resolve, reject) => {
+      const request = indexedDB.open("tailwind_store", 1);
 
-  return {
-    db,
-    getProducts: async () => await db.getAll("products"),
-    addProduct: async (product) => await db.add("products", product),
-    editProduct: async (product) =>
-      await db.put("products", product.id, product),
-    deleteProduct: async (product) => await db.delete("products", product.id),
-  };
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        db.createObjectStore("products", {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+        db.createObjectStore("sales", {
+          keyPath: "id",
+          autoIncrement: true,
+        });
+      };
+
+      request.onsuccess = (event) => {
+        resolve(event.target.result);
+      };
+
+      request.onerror = (event) => {
+        reject(event.target.error);
+      };
+    });
+
+    return {
+      db,
+      getProducts: async () => {
+        const transaction = db.transaction("products", "readonly");
+        const objectStore = transaction.objectStore("products");
+        const products = await new Promise((resolve, reject) => {
+          const request = objectStore.getAll();
+          request.onsuccess = (event) => {
+            resolve(event.target.result);
+          };
+          request.onerror = (event) => {
+            reject(event.target.error);
+          };
+        });
+        return products;
+      },
+      addProduct: async (product) => {
+        const transaction = db.transaction("products", "readwrite");
+        const objectStore = transaction.objectStore("products");
+        await new Promise((resolve, reject) => {
+          const request = objectStore.add(product);
+          request.onsuccess = () => {
+            resolve();
+          };
+          request.onerror = (event) => {
+            reject(event.target.error);
+          };
+        });
+      },
+      editProduct: async (product) => {
+        const transaction = db.transaction("products", "readwrite");
+        const objectStore = transaction.objectStore("products");
+        await new Promise((resolve, reject) => {
+          const request = objectStore.put(product);
+          request.onsuccess = () => {
+            resolve();
+          };
+          request.onerror = (event) => {
+            reject(event.target.error);
+          };
+        });
+      },
+      deleteProduct: async (productId) => {
+        const transaction = db.transaction("products", "readwrite");
+        const objectStore = transaction.objectStore("products");
+        await new Promise((resolve, reject) => {
+          const request = objectStore.delete(productId);
+          request.onsuccess = () => {
+            resolve();
+          };
+          request.onerror = (event) => {
+            reject(event.target.error);
+          };
+        });
+      },
+    };
+  } catch (error) {
+    console.error("Error opening IndexedDB:", error);
+  }
 }
 
-function initAppLock() {
+function initApp() {
   const app = {
     db: null,
     time: null,
@@ -47,7 +110,7 @@ function initAppLock() {
       console.log("products loaded", this.products);
     },
     async startWithSampleData() {
-      const response = await fetch("sample.json");
+      const response = await fetch("../public/javascripts/sample.json");
       const data = await response.json();
       this.products = data.products;
       for (let product of data.products) {

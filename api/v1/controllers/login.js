@@ -22,10 +22,14 @@ const loginController = {
                 res.redirect('home')
             }
             else{
-                res.redirect('login')
+                console.log("Passed")
+                res.render('login', {
+                    layout: true,
+                    status: "Email or password is not corrected"
+                })
             }
         } catch (error) {
-            res.redirect('login')
+            res.redirect('login?login=password-or-username-be-not-correct')
         }
     },
     identifyUser: (req, res) => {

@@ -152,6 +152,8 @@ function init_sidebar() {
 }
 // /Sidebar
 
+
+
 // Panel toolbox
 $(document).ready(function () {
     $('.collapse-link').on('click', function () {
@@ -5619,3 +5621,4 @@ $(document).ready(function () {
     init_autocomplete();
 
 });
+
