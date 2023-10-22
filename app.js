@@ -21,6 +21,8 @@ var posRouter = require("./api/v1/routes/pos");
 var staffRouter = require("./api/v1/routes/staff");
 var indexRouter = require("./api/v1/routes/index");
 
+var isLoginMiddleware = require("./api/v1/middlewares/authAccount");
+
 dotenv.config();
 
 mongoose
@@ -61,6 +63,8 @@ app.use(
 app.use(helmet());
 app.use(cors());
 // app.use(logger("common"));
+
+// app.use(isLoginMiddleware);
 
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);

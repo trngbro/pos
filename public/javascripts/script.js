@@ -1,259 +1,145 @@
-async function loadDatabase() {
-  try {
-    const db = await new Promise((resolve, reject) => {
-      const request = indexedDB.open("tailwind_store", 1);
-
-      request.onupgradeneeded = (event) => {
-        const db = event.target.result;
-        db.createObjectStore("products", {
-          keyPath: "id",
-          autoIncrement: true,
-        });
-        db.createObjectStore("sales", {
-          keyPath: "id",
-          autoIncrement: true,
-        });
-      };
-
-      request.onsuccess = (event) => {
-        resolve(event.target.result);
-      };
-
-      request.onerror = (event) => {
-        reject(event.target.error);
-      };
-    });
-
-    return {
-      db,
-      getProducts: async () => {
-        const transaction = db.transaction("products", "readonly");
-        const objectStore = transaction.objectStore("products");
-        const products = await new Promise((resolve, reject) => {
-          const request = objectStore.getAll();
-          request.onsuccess = (event) => {
-            resolve(event.target.result);
-          };
-          request.onerror = (event) => {
-            reject(event.target.error);
-          };
-        });
-        return products;
-      },
-      addProduct: async (product) => {
-        const transaction = db.transaction("products", "readwrite");
-        const objectStore = transaction.objectStore("products");
-        await new Promise((resolve, reject) => {
-          const request = objectStore.add(product);
-          request.onsuccess = () => {
-            resolve();
-          };
-          request.onerror = (event) => {
-            reject(event.target.error);
-          };
-        });
-      },
-      editProduct: async (product) => {
-        const transaction = db.transaction("products", "readwrite");
-        const objectStore = transaction.objectStore("products");
-        await new Promise((resolve, reject) => {
-          const request = objectStore.put(product);
-          request.onsuccess = () => {
-            resolve();
-          };
-          request.onerror = (event) => {
-            reject(event.target.error);
-          };
-        });
-      },
-      deleteProduct: async (productId) => {
-        const transaction = db.transaction("products", "readwrite");
-        const objectStore = transaction.objectStore("products");
-        await new Promise((resolve, reject) => {
-          const request = objectStore.delete(productId);
-          request.onsuccess = () => {
-            resolve();
-          };
-          request.onerror = (event) => {
-            reject(event.target.error);
-          };
-        });
-      },
-    };
-  } catch (error) {
-    console.error("Error opening IndexedDB:", error);
-  }
-}
-
-function initApp() {
-  const app = {
-    db: null,
-    time: null,
-    firstTime: localStorage.getItem("first_time") === null,
-    activeMenu: 'pos',
-    loadingSampleData: false,
-    moneys: [2000, 5000, 10000, 20000, 50000, 100000],
-    products: [],
-    keyword: "",
-    cart: [],
-    cash: 0,
-    change: 0,
-    isShowModalReceipt: false,
-    receiptNo: null,
-    receiptDate: null,
-    async initDatabase() {
-      this.db = await loadDatabase();
-      this.loadProducts();
-    },
-    async loadProducts() {
-      this.products = await this.db.getProducts();
-      console.log("products loaded", this.products);
-    },
-    async startWithSampleData() {
-      const response = await fetch("../public/javascripts/sample.json");
-      const data = await response.json();
-      this.products = data.products;
-      for (let product of data.products) {
-        await this.db.addProduct(product);
-      }
-
-      this.setFirstTime(false);
-    },
-    startBlank() {
-      this.setFirstTime(false);
-    },
-    setFirstTime(firstTime) {
-      this.firstTime = firstTime;
-      if (firstTime) {
-        localStorage.removeItem("first_time");
-      } else {
-        localStorage.setItem("first_time", new Date().getTime());
-      }
-    },
-    filteredProducts() {
-      const rg = this.keyword ? new RegExp(this.keyword, "gi") : null;
-      return this.products.filter((p) => !rg || p.name.match(rg));
-    },
-    addToCart(product) {
-      const index = this.findCartIndex(product);
-      if (index === -1) {
-        this.cart.push({
-          productId: product.id,
-          image: product.image,
-          name: product.name,
-          price: product.price,
-          option: product.option,
-          qty: 1,
-        });
-      } else {
-        this.cart[index].qty += 1;
-      }
-      this.beep();
-      this.updateChange();
-    },
-    findCartIndex(product) {
-      return this.cart.findIndex((p) => p.productId === product.id);
-    },
-    addQty(item, qty) {
-      const index = this.cart.findIndex((i) => i.productId === item.productId);
-      if (index === -1) {
-        return;
-      }
-      const afterAdd = item.qty + qty;
-      if (afterAdd === 0) {
-        this.cart.splice(index, 1);
-        this.clearSound();
-      } else {
-        this.cart[index].qty = afterAdd;
-        this.beep();
-      }
-      this.updateChange();
-    },
-    addCash(amount) {      
-      this.cash = (this.cash || 0) + amount;
-      this.updateChange();
-      this.beep();
-    },
-    getItemsCount() {
-      return this.cart.reduce((count, item) => count + item.qty, 0);
-    },
-    updateChange() {
-      this.change = this.cash - this.getTotalPrice();
-    },
-    updateCash(value) {
-      this.cash = parseFloat(value.replace(/[^0-9]+/g, ""));
-      this.updateChange();
-    },
-    getTotalPrice() {
-      return this.cart.reduce(
-        (total, item) => total + item.qty * item.price,
-        0
-      );
-    },
-    submitable() {
-      return this.change >= 0 && this.cart.length > 0;
-    },
-    submit() {
-      const time = new Date();
-      this.isShowModalReceipt = true;
-      this.receiptNo = `TWPOS-KS-${Math.round(time.getTime() / 1000)}`;
-      this.receiptDate = this.dateFormat(time);
-    },
-    closeModalReceipt() {
-      this.isShowModalReceipt = false;
-    },
-    dateFormat(date) {
-      const formatter = new Intl.DateTimeFormat('id', { dateStyle: 'short', timeStyle: 'short'});
-      return formatter.format(date);
-    },
-    numberFormat(number) {
-      return (number || "")
-        .toString()
-        .replace(/^0|\./g, "")
-        .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
-    },
-    priceFormat(number) {
-      return number ? `Dong. ${this.numberFormat(number)}` : `Dong. 0`;
-    },
-    clear() {
-      this.cash = 0;
-      this.cart = [];
-      this.receiptNo = null;
-      this.receiptDate = null;
-      this.updateChange();
-      this.clearSound();
-    },
-    beep() {
-      this.playSound("sound/beep-29.mp3");
-    },
-    clearSound() {
-      this.playSound("sound/button-21.mp3");
-    },
-    playSound(src) {
-      const sound = new Audio();
-      sound.src = src;
-      sound.play();
-      sound.onended = () => delete(sound);
-    },
-    printAndProceed() {
-      const receiptContent = document.getElementById('receipt-content');
-      const titleBefore = document.title;
-      const printArea = document.getElementById('print-area');
-
-      printArea.innerHTML = receiptContent.innerHTML;
-      document.title = this.receiptNo;
-
-      window.print();
-      this.isShowModalReceipt = false;
-
-      printArea.innerHTML = '';
-      document.title = titleBefore;
-
-      // TODO save sale data to database
-
-      this.clear();
+$(document).ready(function() {
+  $("#cart").on("click", ".minus", function(event) {
+    event.preventDefault();
+    var quantityCell = $(this).closest("tr").find(".quantity");
+    var currentQuantity = parseInt(quantityCell.text());
+    if (currentQuantity > 1) {
+      quantityCell.text(currentQuantity - 1);
+      updateRow(this);
     }
-  };
+    else{
+      $(this).closest("tr").remove();
+    }
+  });
+  $("#cart").on("click", ".plus", function(event) {
+    event.preventDefault();
+    var quantityCell = $(this).closest("tr").find(".quantity");
+    var currentQuantity = parseInt(quantityCell.text());
+    quantityCell.text(currentQuantity + 1)
+    updateRow(this);
+  });
+  function updateRow(trigger){
+    var $row = $(trigger).closest("tr");
+    var quantity = parseInt($row.find(".quantity").text());
+    var price = parseInt($row.find(".a-price").text().replace("VNĐ", "").replace(" ", ""));
+    console.log(quantity, price)
+    var subTotal = quantity * price;
+    $row.find(".sub-price").text(subTotal.toFixed(2) + "VNĐ");
+  }
+  $(".add-to-cart").click(function(event) {
+    event.preventDefault();
 
-  return app;
-}
+    var productId = $(this).closest(".card-product").find(".product-id").text();
+    var existingRow = $("#cart tr[data-product-id='" + productId + "']");
+
+    if (existingRow.length) {
+      var quantityCell = existingRow.find(".quantity");
+      var currentQuantity = parseInt(quantityCell.text());
+      quantityCell.text(currentQuantity + 1);
+
+      var priceCell = existingRow.find(".a-price");
+      var subPriceCell = existingRow.find(".sub-price");
+      var currentPrice = parseInt(subPriceCell.text().replace("VNĐ", "").replace(" ", "")) + parseInt(priceCell.text().replace("VNĐ", "").replace(" ", ""));
+      existingRow.find(".sub-price").text(currentPrice + " VNĐ");
+    } 
+    else {
+      var newRow = $("<tr data-product-id='" + productId + "'>");
+      newRow.html(
+        `
+          <td>
+            <figure class="media">
+            
+              <div class="img-wrap"><img src="`+ $(this).closest(".card-product").find("img").attr("src") +`" class="img-thumbnail img-xs"></div>
+              <figcaption class="media-body">
+                <h6 class="title text-truncate"> ` + $(this).closest(".card-product").find(".title").text() + ` </h6>
+              </figcaption>
+            </figure>
+          </td>
+          <td class="text-center">
+            <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
+              <button type="button" class="m-btn btn btn-default minus"><i class="fa fa-minus"></i></button>
+              <button type="button" class="m-btn btn btn-default quantity" disabled>1</button>
+              <button type="button" class="m-btn btn btn-default plus"><i class="fa fa-plus"></i></button>
+            </div>
+          </td>
+          <td>
+            <div class="price-wrap">
+              <var class="sub-price">` + $(this).closest(".card-product").find(".price-new").text() +`</var>
+              <span class="a-price" style="display: none;">` + $(this).closest(".card-product").find(".price-new").text() + `</span>
+            </div> <!-- price-wrap .// -->
+          </td>
+          <td class="text-right">
+            <a href="" class="btn btn-outline-danger delete-from-cart"> <i class="fa fa-trash"></i></a>
+          </td>
+        `
+        );
+
+
+      // Thêm sản phẩm vào giỏ hàng (thẻ có id "cart")
+      $("#cart").append(newRow);
+      calculateReciept();
+    }
+  });
+
+
+  $("#cart").on("click", ".plus, .minus, .delete-from-cart, .add-to-cal", function(event) {
+    event.preventDefault();
+    calculateReciept();
+      
+  });
+
+  function calculateReciept(){
+    var subPriceAll = 0;
+    $("#cart tr").each(function() {
+      var aPrice = parseInt($(this).find(".sub-price").text().replace(" VNĐ", ""));
+      subPriceAll += aPrice;
+      console.log(aPrice)
+      
+    })
+    console.log(subPriceAll)
+
+    $(".sub-price-all").text(subPriceAll.toFixed(2));
+    $(".sub-price-take").text(subPriceAll.toFixed(2));  
+  }
+
+  // Xử lý sự kiện xóa khỏi giỏ hàng
+  $("#cart").on("click", ".delete-from-cart", function(event) {
+    event.preventDefault();
+    $(this).closest("tr").remove();
+  });
+  $(document).ready(function() {
+    $(".cancel-cart").click(function() {
+      $(".sub-price-all").text(0);
+      $(".sub-price-take").text(0); 
+      $("#cart").find("tr").remove();
+    });
+  });
+  $(document).ready(function() {
+    $(".charge-reciept").click(function() {
+      // Lấy nội dung của tbody
+      var tbodyContent = $("#print-area").html();
+  
+      // Tạo một cửa sổ mới để hiển thị nội dung
+      var newWindow = window.open("", "_blank");
+      newWindow.document.write(`
+      <html>
+      <head>
+      <title>Receipt</title>
+      <link href="vendors/pos.assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+      <link href="vendors/pos.assets/css/ui.css" rel="stylesheet" type="text/css" />
+      <link href="vendors/pos.assets/fonts/fontawesome/css/fontawesome-all.min.css" type="text/css" rel="stylesheet">
+      <link href="vendors/pos.assets/css/OverlayScrollbars.css" type="text/css" rel="stylesheet" />
+      </head>
+      `);
+  
+      // In nội dung của tbody vào cửa sổ mới
+      newWindow.document.write("<body>" + tbodyContent + "</body>");
+  
+      newWindow.document.write("</html>");
+      newWindow.document.close();
+  
+      // In cửa sổ mới
+      newWindow.print();
+    });
+  });
+});
