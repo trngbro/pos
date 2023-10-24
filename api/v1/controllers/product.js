@@ -27,6 +27,7 @@ const productController = {
                     categoryName: element.categoryName,
                     qty: element.qty,
                     sold: element.sold,
+                    date: date
                 })
             });
 

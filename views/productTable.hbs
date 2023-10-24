@@ -147,7 +147,7 @@
                                 <td class="{{barcode}}">{{originalPrice}}</td>
                                 <td class="{{barcode}}">{{salePrice}}</td>
                                 <td class="{{barcode}}">{{categoryName}}</td>
-                                <td class="{{barcode}}">{{dateCreated}}</td>
+                                <td class="{{barcode}}" id="date{{barcode}}" data="{{date}}">{{dateCreated}}</td>
                                 <td class="{{barcode}}">{{qty}}</td>
                                 <td class="{{barcode}}">{{sold}}</td>
                                 <td
@@ -159,18 +159,9 @@
                               </tr>
                             {{/each}}
                         </table>
-                        <div>
-                          {{#each productTableData}}
-                            {{#each this}}
-                              <p>{{this.name}}</p>
-                            {{/each}}
-                          {{/each}}
-                        </div>
                       </div>
                     </div>
-                    
                   </div>
-
                 </div>
               </div>
             </div>
@@ -215,7 +206,7 @@
           </div>
            <div class="form-group">
             <label for="created">Created</label>
-            <input type="datetime-local" class="form-control" id="created" name="dateCreated">
+            <input type="datetime-local" class="form-control" id="created" name="dateCreated" value="2023-10-24T06:59">
           </div>
            <div class="form-group">
             <label for="quantity">Quantity</label>

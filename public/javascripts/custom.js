@@ -5529,12 +5529,22 @@ $(document).ready(function () {
             data2.push($(this).text())
         })
 
+        let date = $("#date" + id).attr('data')
+        const defaultDate = new Date(date);
+        const year = defaultDate.getFullYear();
+        const month = defaultDate.getMonth() + 1;
+        const day = defaultDate.getDate();
+        const hours = defaultDate.getHours();
+        const minutes = defaultDate.getMinutes();
+
+        const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hours}:${minutes}`;
+
         $('#barcode').val(data2[0])
         $('#name').val(data2[1])
         $('#ogPrice').val(data2[2])
         $('#slPrice').val(data2[3])
         $('#category').val(data2[4])
-        $('#created').val(data2[5])
+        $('#created').val(formattedDate)
         $('#quantity').val(data2[6])
         $('#sold').val(data2[7])
     })
@@ -5621,4 +5631,3 @@ $(document).ready(function () {
     init_autocomplete();
 
 });
-
