@@ -5,6 +5,7 @@ const isAdmin = require('../middlewares/checkPermission');
 const router = require("express").Router();
 
 router.get("/", productController.viewAllProducts);
+router.delete("/:barcode", productController.deleteProduct);
 router.get("/create", productController.viewCreateProduct);
 router.post("/create", productController.addProduct);
 

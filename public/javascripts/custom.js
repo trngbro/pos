@@ -5529,22 +5529,12 @@ $(document).ready(function () {
             data2.push($(this).text())
         })
 
-        let date = $("#date" + id).attr('data')
-        const defaultDate = new Date(date);
-        const year = defaultDate.getFullYear();
-        const month = defaultDate.getMonth() + 1;
-        const day = defaultDate.getDate();
-        const hours = defaultDate.getHours();
-        const minutes = defaultDate.getMinutes();
-
-        const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}T${hours}:${minutes}`;
-
         $('#barcode').val(data2[0])
         $('#name').val(data2[1])
         $('#ogPrice').val(data2[2])
         $('#slPrice').val(data2[3])
         $('#category').val(data2[4])
-        $('#created').val(formattedDate)
+        $('#created').val(data2[5])
         $('#quantity').val(data2[6])
         $('#sold').val(data2[7])
     })
@@ -5560,6 +5550,28 @@ $(document).ready(function () {
         })
 
         $('#d-data').html(data2[0] + " - " + data2[1])
+    })
+})
+
+$(document).ready(function () {
+    $("#delete .confirmedDeletedProduct").click(function () {
+        const dataText = $('#d-data').text().split(" - ")[0];
+        fetch(`/products/${dataText}`, {
+            method: 'DELETE',
+        })
+            .then(response => {
+                if (response.status === 204) {
+                    $(`[data-barcode="${dataText}"]`).remove();
+                } else if (response.status === 404) {
+                    console.log('Product not found.');
+                } else {
+                    console.error('Request failed.');
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+        $('#delete').modal('hide');
     })
 })
 
@@ -5631,3 +5643,4 @@ $(document).ready(function () {
     init_autocomplete();
 
 });
+

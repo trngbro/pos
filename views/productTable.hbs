@@ -141,7 +141,7 @@
                           <tbody>
                             
                             {{#each productTableData}}
-                              <tr role="row" class="odd">
+                              <tr role="row" class="odd" data-barcode="{{barcode}}">
                                 <td class="sorting_1 {{barcode}}" tabindex="0">{{barcode}}</td>
                                 <td class="{{barcode}}">{{name}}</td>
                                 <td class="{{barcode}}">{{originalPrice}}</td>
@@ -242,7 +242,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-warning">Yes</button>
+        <button type="button" class="btn btn-warning confirmedDeletedProduct">Yes</button>
       </div>
     </div>
   </div>

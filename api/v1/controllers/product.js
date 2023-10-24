@@ -16,7 +16,6 @@ const productController = {
                 const year = date.getFullYear();
                 const formattedDate = `${day}/${month}/${year}`;
 
-                console.log(formattedDate);
                 arr.push({
                     barcode: element.barcode,
                     name: element.name,
@@ -51,6 +50,20 @@ const productController = {
         } catch (error) {
             res.render("error")
         }
+    },
+    deleteProduct: async (req, res) => {
+        const barcode = req.params.barcode;
+        Products.findOneAndDelete({ barcode: barcode })
+            .then((product) => {
+                if (!product) {
+                    res.status(404).send('Product not found.');
+                } else {
+                    res.status(204).send(); 
+                }
+            })
+            .catch((err) => {
+                res.status(500).send('Internal Server Error');
+            });
     },
     // Them san pham moi, chua lam
     addProduct: (req, res) => {
