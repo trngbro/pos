@@ -1,16 +1,21 @@
+const Categories = require("../models/category")
+const Products = require("../models/product")
 const styles = require('../helpers/stylesheetsConfig')
 const scripts = require('../helpers/javascriptConfig')
 
 const productController = {
-    viewAllProducts: (req, res) => {
+    viewAllProducts: async (req, res) => {
         try {
+            const products = await Products.find({}).exec();
+            console.log(typeof(JSON.stringify(products)))
             res.render("productTable", {
                 pathIsLevelTwo: false,
                 stylesheets: styles.tableCSS,
-                javascripts: scripts.tableJS
-            })
+                javascripts: scripts.tableJS,
+                productTableData: (products)
+            });
         } catch (error) {
-            res.render("error")
+          res.render("error");
         }
     },
     viewCreateProduct: (req, res) => {

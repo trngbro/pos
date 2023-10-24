@@ -139,6 +139,25 @@
                             </tr>
                           </thead>
                           <tbody>
+                            
+                            {{#each productTableData}}
+                              <tr role="row" class="odd">
+                                <td class="sorting_1 {{this.barcode}}" tabindex="0">{{barcode}}</td>
+                                <td class="{{barcode}}">{{name}}</td>
+                                <td class="{{barcode}}">{{originalPrice}}</td>
+                                <td class="{{barcode}}">{{salePrice}}</td>
+                                <td class="{{barcode}}">{{categoryName}}</td>
+                                <td class="{{barcode}}">{{dateCreated}}</td>
+                                <td class="{{barcode}}">{{qty}}</td>
+                                <td class="{{barcode}}">{{sold}}</td>
+                                <td
+                                  style="display: none;"
+                                >
+                                  <button data-toggle="modal" data-target="#delete" data="{{barcode}}" class="btn-delete-product">Delete</button>
+                                  <button data-toggle="modal" data-target="#editform" id="{{barcode}}" class="btn-edit-product">Edit</button>
+                                </td>
+                              </tr>
+                            {{/each}}
                             <tr role="row" class="odd">
                               <td class="sorting_1 1234567890123" tabindex="0">1234567890123</td>
                               <td class="1234567890123">IPhone 15 Pro Max</td>

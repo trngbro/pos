@@ -5,15 +5,33 @@ const categorySchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
+        unique: true
     },
-    products: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-    }, ],
     image: {
         type: String,
         default: "abc",
     },
 });
 
-module.exports = mongoose.model("Category", categorySchema);
+const Category = mongoose.model("Category", categorySchema);
+
+const sampleCategories = [
+    {
+        name: "Phone",
+        image: "",
+    },
+    {
+        name: "Laptop",
+        image: "clothing.jpg",
+    }
+];
+
+Category.insertMany(sampleCategories)
+    .then(() => {
+        console.log("Categories data are inserted.");
+    })
+    .catch((error) => {
+        console.log("Has error/ or data was had before at categories model");
+    });
+
+module.exports = Category;

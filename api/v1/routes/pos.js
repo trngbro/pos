@@ -1,4 +1,4 @@
-const pos = require('../controllers/pos')
+const pos = require('../controllers/pos');
 
 const router = require("express").Router();
 
