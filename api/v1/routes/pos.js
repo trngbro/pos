@@ -1,7 +1,8 @@
 const pos = require('../controllers/pos');
+const isLogin = require('../middlewares/authAccount');
 
 const router = require("express").Router();
 
-router.get("/", pos.renderPOSPage);
+router.get("/", isLogin, pos.renderPOSPage);
 
 module.exports = router

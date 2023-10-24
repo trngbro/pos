@@ -142,4 +142,18 @@ $(document).ready(function() {
       newWindow.print();
     });
   });
+  $('#search-input').on('input', function () {
+    // Lấy giá trị nhập vào ô tìm kiếm
+    var searchText = $(this).val().toLowerCase();
+
+    // Lọc và hiển thị sản phẩm dựa trên giá trị tìm kiếm
+    $('.col-md-3').each(function () {
+        var title = $(this).find('.title').text().toLowerCase();
+        if (title.includes(searchText)) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+});
 });

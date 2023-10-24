@@ -39,7 +39,7 @@
         <div class="col-lg-6 col-sm-6">
           <form action="#" class="search-wrap">
             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search">
+              <input type="text" class="form-control" id="search-input" placeholder="Search">
               <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">
                   <i class="fa fa-search"></i>
@@ -70,149 +70,27 @@
           
           <span id="items">
             <div class="row">
-              <div class="col-md-3">
-                <figure class="card card-product">
-                  <span class="badge-new"> NEW </span>
-                  <span class="product-id" style="display: none;">1111117</span>
-                  <div class="img-wrap">
-                    <img src="images/product_sample.png">
+              {{#each productTableData}}
+                <div class="col-md-3">
+                  <figure class="card card-product">
+                    <span class="badge-new"> NEW </span>
+                    <span class="product-id" style="display: none;">{{barcode}}</span>
+                    <div class="img-wrap">
+                      <img src="images/product_sample.png">
 
-                  </div>
-                  <figcaption class="info-wrap">
-                    <a href="#" class="title">Good item name</a>
-                    <div class="action-wrap">
-                      <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
-                      <div class="price-wrap h5">
-                        <span class="price-new">1280 VNĐ</span>
-                      </div> <!-- price-wrap.// -->
-                    </div> <!-- action-wrap -->
-                  </figcaption>
-                </figure> <!-- card // -->
-              </div> <!-- col // -->
-              <div class="col-md-3">
-                <figure class="card card-product">
-                  <span class="product-id" style="display: none;">1111112</span>
-                  <div class="img-wrap"> <img src="images/product_sample.png">
-
-                  </div>
-                  <figcaption class="info-wrap">
-                    <a href="#" class="title">Name of product</a>
-                    <div class="action-wrap">
-                      <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
-                      <div class="price-wrap h5">
-                        <span class="price-new">280 VNĐ</span>
-                      </div> <!-- price-wrap.// -->
-                    </div> <!-- action-wrap -->
-                  </figcaption>
-                </figure> <!-- card // -->
-              </div> <!-- col // -->
-              <div class="col-md-3">
-                <figure class="card card-product">
-                  <span class="product-id" style="display: none;">1111118</span>
-                  <div class="img-wrap"> <img src="images/product_sample.png">
-
-                  </div>
-                  <figcaption class="info-wrap">
-                    <a href="#" class="title">Name of product</a>
-                    <div class="action-wrap">
-                      <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
-                      <div class="price-wrap h5">
-                        <span class="price-new">280 VNĐ</span>
-                        <del class="price-old">1980</del>
-                      </div> <!-- price-wrap.// -->
-                    </div> <!-- action-wrap -->
-                  </figcaption>
-                </figure> <!-- card // -->
-              </div> <!-- col // -->
-              <div class="col-md-3">
-                <figure class="card card-product">
-                  <span class="product-id" style="display: none;">1111113</span>
-                  <div class="img-wrap"> <img src="images/product_sample.png">
-
-                  </div>
-                  <figcaption class="info-wrap">
-                    <a href="#" class="title">Name of product</a>
-                    <div class="action-wrap">
-                      <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
-                      <div class="price-wrap h5">
-                        <span class="price-new">280 VNĐ</span>
-                      </div> <!-- price-wrap.// -->
-                    </div> <!-- action-wrap -->
-                  </figcaption>
-                </figure> <!-- card // -->
-              </div> <!-- col // -->
-            </div> <!-- row.// -->
-            <div class="row">
-              <div class="col-md-3">
-                <figure class="card card-product">
-                  <span class="product-id" style="display: none;">1111111</span>
-                  <div class="img-wrap">
-                    <img src="images/product_sample.png">
-
-                  </div>
-                  <figcaption class="info-wrap">
-                    <a href="#" class="title">Good item name</a>
-                    <div class="action-wrap">
-                      <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
-                      <div class="price-wrap h5">
-                        <span class="price-new">1280 VNĐ</span>
-                      </div> <!-- price-wrap.// -->
-                    </div> <!-- action-wrap -->
-                  </figcaption>
-                </figure> <!-- card // -->
-              </div> <!-- col // -->
-              <div class="col-md-3">
-                <figure class="card card-product">
-                  <span class="product-id" style="display: none;">1111114</span>
-                  <div class="img-wrap"> <img src="images/product_sample.png">
-
-                  </div>
-                  <figcaption class="info-wrap">
-                    <a href="#" class="title">Name of product</a>
-                    <div class="action-wrap">
-                      <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
-                      <div class="price-wrap h5">
-                        <span class="price-new">280 VNĐ</span>
-                      </div> <!-- price-wrap.// -->
-                    </div> <!-- action-wrap -->
-                  </figcaption>
-                </figure> <!-- card // -->
-              </div> <!-- col // -->
-              <div class="col-md-3">
-                <figure class="card card-product">
-                  <span class="product-id" style="display: none;">1111115</span>
-                  <div class="img-wrap"> <img src="images/product_sample.png">
-
-                  </div>
-                  <figcaption class="info-wrap">
-                    <a href="#" class="title">Name of product</a>
-                    <div class="action-wrap">
-                      <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
-                      <div class="price-wrap h5">
-                        <span class="price-new">280 VNĐ</span>
-                        <del class="price-old">1980</del>
-                      </div> <!-- price-wrap.// -->
-                    </div> <!-- action-wrap -->
-                  </figcaption>
-                </figure> <!-- card // -->
-              </div> <!-- col // -->
-              <div class="col-md-3">
-                <figure class="card card-product">
-                  <span class="product-id" style="display: none;">1111116</span>
-                  <div class="img-wrap"> <img src="images/product_sample.png">
-
-                  </div>
-                  <figcaption class="info-wrap">
-                    <a href="#" class="title">Name of product</a>
-                    <div class="action-wrap">
-                      <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
-                      <div class="price-wrap h5">
-                        <span class="price-new">280 VNĐ</span>
-                      </div> <!-- price-wrap.// -->
-                    </div> <!-- action-wrap -->
-                  </figcaption>
-                </figure> <!-- card // -->
-              </div> <!-- col // -->
+                    </div>
+                    <figcaption class="info-wrap">
+                      <a href="#" class="title">{{name}}</a>
+                      <div class="action-wrap">
+                        <a href="#" class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"> <i class="fa fa-cart-plus"></i> Add </a>
+                        <div class="price-wrap h5">
+                          <span class="price-new">{{salePrice}} VNĐ</span>
+                        </div> <!-- price-wrap.// -->
+                      </div> <!-- action-wrap -->
+                    </figcaption>
+                  </figure> <!-- card // -->
+                </div> <!-- col // -->
+              {{/each}}
             </div> <!-- row.// -->
           </span>
         </div>
