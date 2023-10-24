@@ -142,7 +142,7 @@
                             
                             {{#each productTableData}}
                               <tr role="row" class="odd">
-                                <td class="sorting_1 {{this.barcode}}" tabindex="0">{{barcode}}</td>
+                                <td class="sorting_1 {{barcode}}" tabindex="0">{{barcode}}</td>
                                 <td class="{{barcode}}">{{name}}</td>
                                 <td class="{{barcode}}">{{originalPrice}}</td>
                                 <td class="{{barcode}}">{{salePrice}}</td>
@@ -158,40 +158,14 @@
                                 </td>
                               </tr>
                             {{/each}}
-                            <tr role="row" class="odd">
-                              <td class="sorting_1 1234567890123" tabindex="0">1234567890123</td>
-                              <td class="1234567890123">IPhone 15 Pro Max</td>
-                              <td class="1234567890123">1000</td>
-                              <td class="1234567890123">1000</td>
-                              <td class="1234567890123">Phone</td>
-                              <td class="1234567890123">2011/12/06</td>
-                              <td class="1234567890123">1000</td>
-                              <td class="1234567890123">1000</td>
-                              <td
-                                style="display: none;"
-                              >
-                                <button data-toggle="modal" data-target="#delete" data="1234567890123" class="btn-delete-product">Delete</button>
-                                <button data-toggle="modal" data-target="#editform" id="1234567890123" class="btn-edit-product">Edit</button>
-                              </td>
-                            </tr>
-                            <tr role="row" class="even">
-                              <td tabindex="0" class="sorting_1 0987654321123">0987654321123</td>
-                              <td class="0987654321123">Gooogle Pixel 8 Pro</td>
-                              <td class="0987654321123">1111</td>
-                              <td class="0987654321123">1111</td>
-                              <td class="0987654321123">Phone</td>
-                              <td class="0987654321123">2012/03/29</td>
-                              <td class="0987654321123">1001</td>
-                              <td class="0987654321123">1111</td>
-                              <td
-                                class="center-block" style="display: block;"
-                              >
-                                <button data-toggle="modal" data-target="#delete" data="0987654321123" class="btn-delete-product">Delete</button>
-                                <button data-toggle="modal" data-target="#editform" id="0987654321123" class="btn-edit-product">Edit</button>
-                              </td>
-                            </tr>
-                          </tbody>
                         </table>
+                        <div>
+                          {{#each productTableData}}
+                            {{#each this}}
+                              <p>{{this.name}}</p>
+                            {{/each}}
+                          {{/each}}
+                        </div>
                       </div>
                     </div>
                     
