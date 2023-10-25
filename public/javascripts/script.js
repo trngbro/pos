@@ -22,7 +22,6 @@ $(document).ready(function() {
     var $row = $(trigger).closest("tr");
     var quantity = parseInt($row.find(".quantity").text());
     var price = parseInt($row.find(".a-price").text().replace("VNĐ", "").replace(" ", ""));
-    console.log(quantity, price)
     var subTotal = quantity * price;
     $row.find(".sub-price").text(subTotal.toFixed(2) + "VNĐ");
   }
@@ -86,18 +85,18 @@ $(document).ready(function() {
   $("#cart").on("click", ".plus, .minus, .delete-from-cart, .add-to-cal", function(event) {
     event.preventDefault();
     calculateReciept();
-      
+  });
+
+  $("#makeRecieptFromCart").on("click", function(event) {
+    getDataFromCartToReciept();
   });
 
   function calculateReciept(){
     var subPriceAll = 0;
     $("#cart tr").each(function() {
       var aPrice = parseFloat($(this).find(".sub-price").text().replace(" VNĐ", ""));
-      subPriceAll += aPrice;
-      console.log(aPrice)
-      
+      subPriceAll += aPrice; 
     })
-    console.log(subPriceAll)
 
     $(".sub-price-all").text(subPriceAll.toFixed(2));
     $(".sub-price-take").text(subPriceAll.toFixed(2));  
@@ -116,35 +115,6 @@ $(document).ready(function() {
     });
   });
 
-  // $(document).ready(function() {
-  //   $(".charge-reciept").click(function() {
-  //     // Lấy nội dung của tbody
-  //     var tbodyContent = $("#print-area").html();
-  
-  //     // Tạo một cửa sổ mới để hiển thị nội dung
-  //     var newWindow = window.open("", "_blank");
-  //     newWindow.document.write(`
-  //     <html>
-  //     <head>
-  //     <title>Receipt</title>
-  //     <link href="vendors/pos.assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-  //     <link href="vendors/pos.assets/css/ui.css" rel="stylesheet" type="text/css" />
-  //     <link href="vendors/pos.assets/fonts/fontawesome/css/fontawesome-all.min.css" type="text/css" rel="stylesheet">
-  //     <link href="vendors/pos.assets/css/OverlayScrollbars.css" type="text/css" rel="stylesheet" />
-  //     </head>
-  //     `);
-  
-  //     // In nội dung của tbody vào cửa sổ mới
-  //     newWindow.document.write("<body>" + tbodyContent + "</body>");
-  
-  //     newWindow.document.write("</html>");
-  //     newWindow.document.close();
-  
-  //     // In cửa sổ mới
-  //     newWindow.print();
-  //   });
-  // });
-
   $('#search-input').on('input', function () {
     // Lấy giá trị nhập vào ô tìm kiếm
     var searchText = $(this).val().toLowerCase();
@@ -161,6 +131,37 @@ $(document).ready(function() {
   });
 });
 
+function getDataFromCartToReciept() {
+  // Lấy danh sách các sản phẩm từ bảng
+  var products = [];
+  $("#cart tr[data-product-id]").each(function () {
+    var product = {};
+    product.product_id = $(this).data("product-id");
+    product.title = $(this).find(".title").text();
+    product.quantity = $(this).find(".quantity").text();
+    product.subprice = $(this).find(".sub-price").text();
+    products.push(product);
+  });
+
+  // Lấy thông tin giảm giá và tổng cộng
+  var discount = $(".discount a").text();
+  var subTotal = $(".sub-price-all").text();
+  var totalAmount = $(".sub-price-take").text();
+
+  // Tạo hoặc cập nhật dữ liệu trong modal theo nhu cầu
+  $("#invoiceModal .modal-body tbody").empty(); // Xóa dữ liệu cũ
+  products.forEach(function (product, index) {
+    var row = $("<tr>");
+    row.append($("<td>").text(index + 1));
+    row.append($("<td>").text(product.title));
+    row.append($("<td>").text(product.quantity));
+    row.append($("<td>").text(product.subprice));
+    $("#invoiceModal .modal-body tbody").append(row);
+  });
+
+  $("#totalAmount").text(totalAmount);
+}
+
 document.getElementById("printOutReciept").onclick = function () {
   printElement(document.getElementById("printAreaContent"));
 };
@@ -169,8 +170,6 @@ function printElement(elem) {
   var domClone = elem.cloneNode(true);
 
   var $printSection = document.getElementById("printSection");
-
-  
 
   if (!$printSection) {
       var $printSection = document.createElement("div");

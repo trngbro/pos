@@ -154,7 +154,7 @@
                   Cancel </a>
               </div>
               <div class="col-md-6">
-                <button type="button" class="btn  btn-primary btn-lg btn-block charge-reciept" onclick="functionPrint()" data-toggle="modal" data-target="#invoiceModal"><i class="fa fa-shopping-bag"> Charge</i></button>
+                <button type="button" id="makeRecieptFromCart" class="btn  btn-primary btn-lg btn-block charge-reciept" data-toggle="modal" data-target="#invoiceModal"><i class="fa fa-shopping-bag"> Charge</i></button>
               </div>
             </div>
           </div> <!-- box.// -->
@@ -200,11 +200,11 @@
                     </table>
                     <div class="d-flex justify-content-between">
                         <p class="text-left">Tax</p>
-                        <p class="text-right">100</p>
+                        <p class="text-right tax-number">8% đã bao gồm</p>
                     </div>
                     <div class="d-flex justify-content-between">
                         <p class="text-left">Total Amount</p>
-                        <p class="text-right">100</p>
+                        <p id="totalAmount" class="text-right">100</p>
                     </div>
                 </div>
                 <!-- Modal footer -->
