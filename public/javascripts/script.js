@@ -77,8 +77,9 @@ $(document).ready(function() {
 
       // Thêm sản phẩm vào giỏ hàng (thẻ có id "cart")
       $("#cart").append(newRow);
-      calculateReciept();
+      
     }
+    calculateReciept();
   });
 
 
@@ -91,7 +92,7 @@ $(document).ready(function() {
   function calculateReciept(){
     var subPriceAll = 0;
     $("#cart tr").each(function() {
-      var aPrice = parseInt($(this).find(".sub-price").text().replace(" VNĐ", ""));
+      var aPrice = parseFloat($(this).find(".sub-price").text().replace(" VNĐ", ""));
       subPriceAll += aPrice;
       console.log(aPrice)
       
