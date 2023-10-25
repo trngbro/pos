@@ -114,34 +114,36 @@ $(document).ready(function() {
       $("#cart").find("tr").remove();
     });
   });
-  $(document).ready(function() {
-    $(".charge-reciept").click(function() {
-      // Lấy nội dung của tbody
-      var tbodyContent = $("#print-area").html();
+
+  // $(document).ready(function() {
+  //   $(".charge-reciept").click(function() {
+  //     // Lấy nội dung của tbody
+  //     var tbodyContent = $("#print-area").html();
   
-      // Tạo một cửa sổ mới để hiển thị nội dung
-      var newWindow = window.open("", "_blank");
-      newWindow.document.write(`
-      <html>
-      <head>
-      <title>Receipt</title>
-      <link href="vendors/pos.assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-      <link href="vendors/pos.assets/css/ui.css" rel="stylesheet" type="text/css" />
-      <link href="vendors/pos.assets/fonts/fontawesome/css/fontawesome-all.min.css" type="text/css" rel="stylesheet">
-      <link href="vendors/pos.assets/css/OverlayScrollbars.css" type="text/css" rel="stylesheet" />
-      </head>
-      `);
+  //     // Tạo một cửa sổ mới để hiển thị nội dung
+  //     var newWindow = window.open("", "_blank");
+  //     newWindow.document.write(`
+  //     <html>
+  //     <head>
+  //     <title>Receipt</title>
+  //     <link href="vendors/pos.assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
+  //     <link href="vendors/pos.assets/css/ui.css" rel="stylesheet" type="text/css" />
+  //     <link href="vendors/pos.assets/fonts/fontawesome/css/fontawesome-all.min.css" type="text/css" rel="stylesheet">
+  //     <link href="vendors/pos.assets/css/OverlayScrollbars.css" type="text/css" rel="stylesheet" />
+  //     </head>
+  //     `);
   
-      // In nội dung của tbody vào cửa sổ mới
-      newWindow.document.write("<body>" + tbodyContent + "</body>");
+  //     // In nội dung của tbody vào cửa sổ mới
+  //     newWindow.document.write("<body>" + tbodyContent + "</body>");
   
-      newWindow.document.write("</html>");
-      newWindow.document.close();
+  //     newWindow.document.write("</html>");
+  //     newWindow.document.close();
   
-      // In cửa sổ mới
-      newWindow.print();
-    });
-  });
+  //     // In cửa sổ mới
+  //     newWindow.print();
+  //   });
+  // });
+
   $('#search-input').on('input', function () {
     // Lấy giá trị nhập vào ô tìm kiếm
     var searchText = $(this).val().toLowerCase();
@@ -157,3 +159,31 @@ $(document).ready(function() {
     });
   });
 });
+
+document.getElementById("printOutReciept").onclick = function () {
+  printElement(document.getElementById("printAreaContent"));
+};
+
+function printElement(elem) {
+  var domClone = elem.cloneNode(true);
+
+  var $printSection = document.getElementById("printSection");
+
+  
+
+  if (!$printSection) {
+      var $printSection = document.createElement("div");
+      $printSection.id = "printSection";
+      var $logoImage = document.createElement("img");
+      $logoImage.style.minHeight = "60px";
+      $logoImage.src = "./favicon.ico";
+      document.body.appendChild($logoImage);
+      document.body.appendChild($printSection);
+  }
+
+  $printSection.innerHTML = "";
+  $printSection.appendChild(domClone);
+  $printSection.style.width = "100%";
+  $printSection.style.fontSize = "200%";
+  window.print();
+}

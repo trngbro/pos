@@ -10,6 +10,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
+
 var loginRouter = require("./api/v1/routes/login");
 var logoutRouter = require("./api/v1/routes/logout");
 var homeRouter = require("./api/v1/routes/home");
@@ -44,7 +45,15 @@ app.engine('hbs', exphbs.engine({
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(logger("dev")); //common
+app.use(logger("dev", { 
+  skip: function (req, res) {
+    return req.url.includes("/vendors") 
+        || req.url.includes("/images") 
+        || req.url.includes("/javascripts") 
+        || req.url.includes("/stylesheets")
+        || req.url.includes("/favicon.ico");
+  } 
+})); //dev
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -61,8 +70,6 @@ app.use(helmet());
 app.use(cors());
 // app.use(logger("common"));
 
-// app.use(isLoginMiddleware);
-
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
 app.use("/home", homeRouter);
@@ -73,6 +80,7 @@ app.use("/customers", customerRouter);
 app.use("/pos", posRouter);
 app.use("/accounts", staffRouter);
 app.use("/", indexRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

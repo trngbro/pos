@@ -12,6 +12,24 @@
   <link href="vendors/pos.assets/css/OverlayScrollbars.css" type="text/css" rel="stylesheet" />
   <!-- Font awesome 5 -->
   <style>
+    @media screen {
+    #printSection {
+        display: none;
+    }
+}
+    @media print {
+        body * {
+            visibility:hidden;
+        }
+        #printSection, #printSection * {
+            visibility:visible;
+        }
+        #printSection {
+            position:absolute;
+            left:0;
+            top:0;
+        }
+    }
     .avatar {
       vertical-align: middle;
       width: 35px;
@@ -28,11 +46,17 @@
       color: #ef5f5f;
     }
   </style>
+
+   <style type="text/css" media="print">
+    .noPrint{
+      display: none;
+    }
+  </style>
   <!-- custom style -->
 </head>
 
 <body>
-  <section class="header-main">
+  <section class="header-main" id="nonPrintable">
     <div class="container">
       <div class="row align-items-center">
 
@@ -76,7 +100,7 @@
                     <span class="badge-new"> NEW </span>
                     <span class="product-id" style="display: none;">{{barcode}}</span>
                     <div class="img-wrap">
-                      <img src="images/product_sample.png">
+                      <img src="{{images}}" alt="Red dot" />
 
                     </div>
                     <figcaption class="info-wrap">
@@ -130,7 +154,7 @@
                   Cancel </a>
               </div>
               <div class="col-md-6">
-                <a href="#" class="btn  btn-primary btn-lg btn-block charge-reciept"><i class="fa fa-shopping-bag"></i> Charge </a>
+                <button type="button" class="btn  btn-primary btn-lg btn-block charge-reciept" onclick="functionPrint()" data-toggle="modal" data-target="#invoiceModal"><i class="fa fa-shopping-bag"> Charge</i></button>
               </div>
             </div>
           </div> <!-- box.// -->
@@ -138,6 +162,61 @@
       </div>
     </div><!-- container //  -->
   </section>
+
+  <div class="modal" id="invoiceModal">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Invoice</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" id="printAreaContent">
+                    <div class="text-center">
+                        <img style="min-height: 60px;" src="favicon.ico" alt="Company Logo">
+                        <h2 style="margin: 10px">CellphoneZ</h2>
+                        <p><a href="https://trngbro.github.io/more/portfolio/">Phone: 0947605644 - Address: D7, HCMC</a></p>
+                    </div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Product Name</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Product 1</td>
+                                <td>5</td>
+                                <td>$10.00</td>
+                            </tr>
+                            
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between">
+                        <p class="text-left">Tax</p>
+                        <p class="text-right">100</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p class="text-left">Total Amount</p>
+                        <p class="text-right">100</p>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" id="printOutReciept" class="btn btn-primary" data-dismiss="modal">Print out</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
   <!-- ========================= SECTION CONTENT END// ========================= -->
   <script src="vendors/pos.assets/js/jquery-2.0.0.min.js" type="text/javascript"></script>
   <script src="vendors/pos.assets/js/bootstrap.bundle.min.js" type="text/javascript"></script>
