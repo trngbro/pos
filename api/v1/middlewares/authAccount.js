@@ -1,11 +1,9 @@
-const crypto = require('../helpers/crypto')
-// const styles = require('../helpers/stylesheetsConfig')
-// const scripts = require('../helpers/javascriptConfig')
+const crypto = require('../helpers/crypto');
 
 function authuAccount(req, res, next) {
     var userData = req.cookies.userLog;
     if(!userData){
-        res.redirect('logout')
+        res.redirect('logout');
     }
     else{
         if(crypto.decode(userData).status == "active"){
@@ -15,9 +13,9 @@ function authuAccount(req, res, next) {
             res.render('noauth');
         }
         else{
-            res.redirect('notfound')
+            res.redirect('notfound');
         }
     }
-}
+};
 
 module.exports = authuAccount;
