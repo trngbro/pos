@@ -26,10 +26,10 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    images: [{
+    images: {
         type: String,
         required: true,
-    }],
+    },
     originalPrice: {
         type: Number,
         required: true,
@@ -61,7 +61,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '0987654321123',
             name: 'Google Pixel 8 Pro',
-            images: ['image1.jpg', 'image2.jpg'],
+            images: "test",
             originalPrice: 1111,
             salePrice: 1111,
             category: phoneCategoryId,
@@ -72,7 +72,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567890123',
             name: 'IPhone 15 Pro Max',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 1000,
             category: phoneCategoryId,
@@ -83,7 +83,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567890456',
             name: 'Google Pixel 8',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 900,
             category: phoneCategoryId,
@@ -94,7 +94,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567890567',
             name: 'Google Pixel 7 Pro',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 950,
             category: phoneCategoryId,
@@ -105,7 +105,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567890789',
             name: 'Google Pixel 7',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 900,
             category: phoneCategoryId,
@@ -116,7 +116,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567890890',
             name: 'Google Pixel 6 Pro',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 800,
             salePrice: 1000,
             category: phoneCategoryId,
@@ -127,7 +127,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '123456781233',
             name: 'Google Pixel 6',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 700,
             salePrice: 1000,
             category: phoneCategoryId,
@@ -138,7 +138,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567894563',
             name: 'Google Pixel 7A',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 850,
             salePrice: 1000,
             category: phoneCategoryId,
@@ -149,7 +149,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567892343',
             name: 'Google Pixel 6A',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 700,
             category: phoneCategoryId,
@@ -160,7 +160,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567893453',
             name: 'IPhone 15 Pro',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 950,
             category: phoneCategoryId,
@@ -171,7 +171,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567897893',
             name: 'IPhone 15',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 900,
             category: phoneCategoryId,
@@ -182,7 +182,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567895673',
             name: 'IPhone 15 Plus',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 925,
             category: phoneCategoryId,
@@ -193,7 +193,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567898903',
             name: 'IPhone 14',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 700,
             category: phoneCategoryId,
@@ -204,7 +204,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567812323',
             name: 'IPhone 14 Pro',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 750,
             category: phoneCategoryId,
@@ -215,7 +215,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567823423',
             name: 'IPhone 14 Pro Max',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 850,
             category: phoneCategoryId,
@@ -226,7 +226,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567834523',
             name: 'Xperia 1 V',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 900,
             category: phoneCategoryId,
@@ -237,7 +237,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567845623',
             name: 'Xperia 10 V',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 1000,
             category: phoneCategoryId,
@@ -248,7 +248,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567856723',
             name: 'Xperia 5 V',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 950,
             category: phoneCategoryId,
@@ -259,7 +259,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567878923',
             name: 'Xperia 1 IV',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 800,
             category: phoneCategoryId,
@@ -270,7 +270,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234567889023',
             name: 'Xperia 10 IV',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 850,
             category: phoneCategoryId,
@@ -281,7 +281,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234561230123',
             name: 'Xperia 5 IV',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 800,
             category: phoneCategoryId,
@@ -292,7 +292,7 @@ const insertSampleProducts = async () => {
         {
             barcode: '1234562340123',
             name: 'Xperia PRO I',
-            images: ['image3.jpg', 'image4.jpg'],
+            images: "test",
             originalPrice: 1000,
             salePrice: 750,
             category: phoneCategoryId,

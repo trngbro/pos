@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 const helmet = require("helmet");
 const cors = require("cors");
 const mongoose = require("mongoose");
-var bodyparser = require("body-parser");
+var bodyParser = require("body-parser");
 
 var loginRouter = require("./api/v1/routes/login");
 var logoutRouter = require("./api/v1/routes/logout");
@@ -20,8 +20,6 @@ var customerRouter = require("./api/v1/routes/customer");
 var posRouter = require("./api/v1/routes/pos");
 var staffRouter = require("./api/v1/routes/staff");
 var indexRouter = require("./api/v1/routes/index");
-
-var isLoginMiddleware = require("./api/v1/middlewares/authAccount");
 
 dotenv.config();
 
@@ -56,9 +54,8 @@ app.use(
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
-  bodyparser.json({
-    limit: "50mb",
-  })
+  bodyParser.json({limit: "50mb"}),
+  bodyParser.urlencoded({ limit: "50mb", extended: true })
 );
 app.use(helmet());
 app.use(cors());

@@ -7,7 +7,7 @@ const productController = {
     viewAllProducts: async (req, res) => {
         try {
             let products = await Products.find({}).exec();
-            let arr = []
+            let arr = [];
 
             products.forEach(element => {
                 let date = new Date(element.dateCreated)
@@ -40,12 +40,25 @@ const productController = {
             res.render("error");
         }
     },
-    viewCreateProduct: (req, res) => {
+    viewCreateProduct: async (req, res) => {
         try {
+            let catagories = await Categories.find({}).exec();
+            let arr = [];
+
+            catagories.forEach(element => {
+                arr.push({
+                    name: element.name,
+                    id: element._id
+                })
+            });
+
+            console.log(catagories)
+            
             res.render("productForm", {
                 pathIsLevelTwo: true,
                 stylesheets: styles.formCSS,
-                javascripts: scripts.formJS
+                javascripts: scripts.formJS,
+                catagoriesData: arr
             })
         } catch (error) {
             res.render("error")
@@ -68,11 +81,7 @@ const productController = {
     // Them san pham moi, chua lam
     addProduct: (req, res) => {
         try {
-            res.render("productForm", {
-                pathIsLevelTwo: true,
-                stylesheets: styles.formCSS,
-                javascripts: scripts.formJS
-            })
+            res.status(200).json(req.body);
         } catch (error) {
             res.render("error")
         }

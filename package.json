@@ -17,6 +17,7 @@
     "dotenv": "^16.3.1",
     "express": "~4.16.1",
     "express-handlebars": "^7.1.2",
+    "express-validator": "^7.0.1",
     "hbs": "~4.0.4",
     "helmet": "^7.0.0",
     "http-errors": "~1.6.3",
