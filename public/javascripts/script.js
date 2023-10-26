@@ -147,6 +147,8 @@ function getDataFromCartToReciept() {
   var discount = $(".discount a").text();
   var subTotal = $(".sub-price-all").text();
   var totalAmount = $(".sub-price-take").text();
+  var customerPhone = $("#phoneNumber").val();
+  $("#customerFindedID").text(customerPhone);
 
   // Tạo hoặc cập nhật dữ liệu trong modal theo nhu cầu
   $("#invoiceModal .modal-body tbody").empty(); // Xóa dữ liệu cũ
@@ -160,9 +162,16 @@ function getDataFromCartToReciept() {
   });
 
   $("#totalAmount").text(totalAmount);
+
+  return {products, totalAmount, customerPhone}
 }
 
 document.getElementById("printOutReciept").onclick = function () {
+  const {products, totalAmount, customerPhone} = getDataFromCartToReciept();
+  $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: totalAmount, customerPhone:customerPhone }, function (data) {
+    console.log(data);
+  });
+
   printElement(document.getElementById("printAreaContent"));
 };
 

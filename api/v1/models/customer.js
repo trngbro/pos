@@ -28,7 +28,7 @@ const sampleCustomers = [
       history: []
     },
     {
-      phone: "094456789",
+      phone: "0943456789",
       name: "Phạm Nhật Vượng",
       address: "Landmark 81, Quận Bình Thạnh, Hồ Chí MInh",
       history: []

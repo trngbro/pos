@@ -1,8 +1,9 @@
 const Products = require("../models/product");
 const Customers = require("../models//customer");
+const { Bills, insertBill } = require("../models/bill");
 
 const styles = require('../helpers/stylesheetsConfig')
-const scripts = require('../helpers/javascriptConfig')
+const scripts = require('../helpers/javascriptConfig');
 
 const posControllers = {
     renderPOSPage: async (req, res) => {
@@ -52,6 +53,17 @@ const posControllers = {
             } else {
                 res.status(204).json({ name: null });
             }
+        } catch (error) {
+            res.status(404).json({ name: "Not found customer" });
+        }   
+    },
+
+    makeANewReciept: async (req, res) => {
+        try {
+            const {products, totalAmount, customerPhone} = req.body;
+            await insertBill(JSON.parse(products), customerPhone);
+
+            res.status(200);
         } catch (error) {
             res.status(404).json({ name: "Not found customer" });
         }   
