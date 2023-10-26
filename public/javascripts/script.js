@@ -187,3 +187,36 @@ function printElement(elem) {
   $printSection.style.fontSize = "200%";
   window.print();
 }
+
+$(document).ready(function () {
+  $("#phoneNumber").on("input", function () {
+    const phoneNumberField = $("#phoneNumber");
+    phoneNumberField.removeClass("error");
+  });
+  $("#payloadCustomer").click(function () {
+      const phoneNumber = $("#phoneNumber").val();
+      const phoneNumberField = $("#phoneNumber");
+      const phonePattern = /^0\d{9}$/;
+
+      if(!phonePattern.test(phoneNumber)){
+        phoneNumberField.addClass("error");
+      }
+      else{
+        phoneNumberField.removeClass("error");
+        $.post("/pos/findUser", { phone: phoneNumber }, function (data) {
+          if (data !== undefined) {
+              $("#customerFindedName").val(data.name);
+          } else {
+              $("#customerFindedName").val("User not found");
+          }
+        });
+      }
+
+      
+  });
+
+  $("#refreshNewOne").click(function () {
+      $("#phoneNumber").val("");
+      $("#customerFindedName").val("");
+  });
+});

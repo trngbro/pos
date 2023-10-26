@@ -1,4 +1,5 @@
-const Products = require("../models/product")
+const Products = require("../models/product");
+const Customers = require("../models//customer");
 
 const styles = require('../helpers/stylesheetsConfig')
 const scripts = require('../helpers/javascriptConfig')
@@ -39,6 +40,20 @@ const posControllers = {
             })
         } catch (error) {
             res.render('error')
+        }   
+    },
+
+    payloadCustomer: async (req, res) => {
+        try {
+            const phoneNumber = req.body.phone;
+            const customer = await Customers.findOne({ phone: phoneNumber });
+            if (customer) {
+                res.status(200).json({ name: customer.name });
+            } else {
+                res.status(204).json({ name: null });
+            }
+        } catch (error) {
+            res.status(404).json({ name: "Not found customer" });
         }   
     }
 }
