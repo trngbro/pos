@@ -1,3 +1,4 @@
+const Joi = require('joi');
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -62,4 +63,15 @@ Users.insertMany(sampleUsers)
         console.log("Has error/ or data was had before at Users model");
     });
 
-module.exports = Users;
+const validate = (user) => {
+    const schema = Joi.object({
+        name: Joi.string().min(3).max(255).required(),
+        mail: Joi.string().email().required(),
+        type: Joi.string().valid('staff', 'admin').required(),
+        password: Joi.string().required(),
+        user: Joi.string(),
+    });
+    return schema.validate(user);
+};
+
+module.exports = {Users, validate};
