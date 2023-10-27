@@ -49,7 +49,7 @@ const posControllers = {
             const phoneNumber = req.body.phone;
             const customer = await Customers.findOne({ phone: phoneNumber });
             if (customer) {
-                res.status(200).json({ name: customer.name });
+                res.status(200).json({ name: customer.name, phone: customer.phone });
             } else {
                 res.status(204).json({ name: null });
             }

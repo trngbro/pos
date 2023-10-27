@@ -87,8 +87,28 @@ $(document).ready(function() {
     calculateReciept();
   });
 
+  $("#makeRecieptFromCart").popover({
+    trigger: "focus", // Đặt trigger thành "manual" để bạn có thể kiểm soát việc hiển thị popover
+  });
+
   $("#makeRecieptFromCart").on("click", function(event) {
-    getDataFromCartToReciept();
+    event.preventDefault();
+
+    const isEmptyCustomer = $("#customerFindedID").text().trim() === "";
+    const isEmptyCartList = $("#cart").children().length == 0
+
+    console.log(isEmptyCartList, isEmptyCustomer)
+    
+    if (isEmptyCustomer || isEmptyCartList) {
+        $("#invoiceModal").modal("hide");
+        $("#makeRecieptFromCart").popover("show");
+    } else {
+        $("#invoiceModal").modal("show");
+        $("#makeRecieptFromCart").popover("hide");
+        getDataFromCartToReciept();
+    }
+
+    event.stopPropagation();
   });
 
   function calculateReciept(){
@@ -148,7 +168,6 @@ function getDataFromCartToReciept() {
   var subTotal = $(".sub-price-all").text();
   var totalAmount = $(".sub-price-take").text();
   var customerPhone = $("#phoneNumber").val();
-  $("#customerFindedID").text(customerPhone);
 
   // Tạo hoặc cập nhật dữ liệu trong modal theo nhu cầu
   $("#invoiceModal .modal-body tbody").empty(); // Xóa dữ liệu cũ
@@ -183,9 +202,6 @@ document.getElementById("printOutReciept").onclick = function () {
         return;
     }
   });
-
-  console.log("Pass")
-  printElement(document.getElementById("printAreaContent"));
 
   $(".sub-price-all").text(0);
   $(".sub-price-take").text(0); 
@@ -232,6 +248,7 @@ $(document).ready(function () {
         $.post("/pos/findUser", { phone: phoneNumber }, function (data) {
           if (data !== undefined) {
               $("#customerFindedName").val(data.name);
+              $("#customerFindedID").text(data.phone);
           } else {
               $("#customerFindedName").val("User not found");
           }
@@ -244,5 +261,6 @@ $(document).ready(function () {
   $("#refreshNewOne").click(function () {
       $("#phoneNumber").val("");
       $("#customerFindedName").val("");
+      $("#customerFindedID").text("");
   });
 });
