@@ -22,6 +22,10 @@ var posRouter = require("./api/v1/routes/pos");
 var staffRouter = require("./api/v1/routes/staff");
 var revenuesRouter = require("./api/v1/routes/revenues");
 
+var fn_helper = require("./api/v1/helpers/functionalHelper")
+
+process.env.NODE_NO_WARNINGS = 1;
+
 dotenv.config();
 
 mongoose
@@ -39,20 +43,22 @@ var app = express();
 app.engine('hbs', exphbs.engine({
   defaultLayout: "layout",
   helpers: {
+    currentFormat: fn_helper.formatCurrency,
+    getStaffName: fn_helper.getStaffNameFromSalerData
   },
   partialsDir: __dirname + '/views/partials'
 }))
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(logger("dev", { 
+app.use(logger("dev", {
   skip: function (req, res) {
-    return req.url.includes("/vendors") 
-        || req.url.includes("/images") 
-        || req.url.includes("/javascripts") 
-        || req.url.includes("/stylesheets")
-        || req.url.includes("/favicon.ico");
-  } 
+    return req.url.includes("/vendors") ||
+      req.url.includes("/images") ||
+      req.url.includes("/javascripts") ||
+      req.url.includes("/stylesheets") ||
+      req.url.includes("/favicon.ico");
+  }
 })); //dev
 app.use(express.json());
 app.use(
@@ -63,8 +69,13 @@ app.use(
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
-  bodyParser.json({limit: "50mb"}),
-  bodyParser.urlencoded({ limit: "50mb", extended: true })
+  bodyParser.json({
+    limit: "50mb"
+  }),
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true
+  })
 );
 app.use(helmet());
 app.use(cors());
@@ -95,7 +106,9 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render("404", {layout: false});
+  res.render("404", {
+    layout: false
+  });
 });
 
 module.exports = app;

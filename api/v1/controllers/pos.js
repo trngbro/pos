@@ -60,8 +60,9 @@ const posControllers = {
 
     makeANewReciept: async (req, res) => {
         try {
-            const {products, totalAmount, customerPhone} = req.body;
-            await insertBill(JSON.parse(products), customerPhone);
+            const {products, totalAmount, customerPhone, userLogs} = req.body;
+
+            await insertBill(JSON.parse(products), customerPhone, userLogs);
 
             res.status(200);
         } catch (error) {

@@ -166,9 +166,16 @@ function getDataFromCartToReciept() {
   return {products, totalAmount, customerPhone}
 }
 
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return "emptyCookies"
+}
+
 document.getElementById("printOutReciept").onclick = function () {
   const {products, totalAmount, customerPhone} = getDataFromCartToReciept();
-  $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: totalAmount, customerPhone:customerPhone }, function (data) {
+  $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: totalAmount, customerPhone:customerPhone, userLogs: getCookie("userLog") }, function (data) {
     if (data && data.status === 200) {
       console.log("Receipt data received successfully.");
       printElement(document.getElementById("printAreaContent"));

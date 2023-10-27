@@ -60,7 +60,7 @@
                                 aria-controls="datatable-responsive"
                                 rowspan="1"
                                 colspan="1"
-                                style="width: 5%;"
+                                style="width: 30%;"
                                 aria-sort="ascending"
                                 aria-label="First name: activate to sort column descending"
                               >SSN_ID</th>
@@ -70,94 +70,62 @@
                                 aria-controls="datatable-responsive"
                                 rowspan="1"
                                 colspan="1"
-                                style="width: 20%;"
+                                style="width: 30%;"
                                 aria-label="Last name: activate to sort column ascending"
-                              >Name</th>
+                              >Saler</th>
                               <th
                                 class="sorting"
                                 tabindex="0"
                                 aria-controls="datatable-responsive"
                                 rowspan="1"
                                 colspan="1"
-                                style="width: 5%;"
+                                style="width: 15%;"
                                 aria-label="Position: activate to sort column ascending"
-                              >OG Price</th>
+                              >Total</th>
                               <th
                                 class="sorting"
                                 tabindex="0"
                                 aria-controls="datatable-responsive"
                                 rowspan="1"
                                 colspan="1"
-                                style="width: 5%;"
+                                style="width: 10%;"
                                 aria-label="Office: activate to sort column ascending"
-                              >SL Price</th>
+                              >Payment Type</th>
                               <th
                                 class="sorting"
                                 tabindex="0"
                                 aria-controls="datatable-responsive"
                                 rowspan="1"
                                 colspan="1"
-                                style="width: 15%;"
+                                style="width: 10%;"
                                 aria-label="Age: activate to sort column ascending"
-                              >Category</th>
+                              >Date Created</th>
                               <th
                                 class="sorting"
                                 tabindex="0"
                                 aria-controls="datatable-responsive"
                                 rowspan="1"
                                 colspan="1"
-                                style="width: 15%;"
-                                aria-label="Start date: activate to sort column ascending"
-                              >Created</th>
-                              <th
-                                class="sorting"
-                                tabindex="0"
-                                aria-controls="datatable-responsive"
-                                rowspan="1"
-                                colspan="1"
-                                style="width: 5%;"
-                                aria-label="Salary: activate to sort column ascending"
-                              >Quantity</th>
-                              <th
-                                class="sorting"
-                                tabindex="0"
-                                aria-controls="datatable-responsive"
-                                rowspan="1"
-                                colspan="1"
-                                style="width: 5%;"
-                                aria-label="Extn.: activate to sort column ascending"
-                              >Sold</th>
-                              <th
-                                class="sorting"
-                                tabindex="0"
-                                aria-controls="datatable-responsive"
-                                rowspan="1"
-                                colspan="1"
-                                style="width: 25%; display: none;"
+                                style="width: 5%; display: none;"
                                 aria-label="E-mail: activate to sort column ascending"
-                              >Action</th>
+                              >Products</th>
                             </tr>
                           </thead>
                           <tbody>
-                            
-                            {{!-- {{#each productTableData}}
-                              <tr role="row" class="odd" data-barcode="{{customer}}">
-                                <td class="sorting_1 {{barcode}}" tabindex="0">{{barcode}}</td>
-                                {{!-- <td class="{{barcode}}">{{name}}</td>
-                                <td class="{{barcode}}">{{originalPrice}}</td>
-                                <td class="{{barcode}}">{{salePrice}}</td>
-                                <td class="{{barcode}}">{{categoryName}}</td>
-                                <td class="{{barcode}}" id="date{{barcode}}" data="{{date}}">{{dateCreated}}</td>
-                                <td class="{{barcode}}">{{qty}}</td>
-                                <td class="{{barcode}}">{{sold}}</td>
+                            {{#each billsTableData}}
+                              <tr role="row" class="odd" data-ssn="{{ssn}}">
+                                <td class="sorting_1 {{ssn}}" tabindex="0">{{ssn}}</td>
+                                <td class="{{ssn}}">{{getStaffName saler}}</td>
+                                <td class="{{ssn}}">{{currentFormat total}}</td>
+                                <td class="{{ssn}}">{{paymentType}}</td>
+                                <td class="{{ssn}}" id="date{{ssn}}" data="{{date}}">{{dateCreated}}</td>
                                 <td
                                   style="display: none;"
                                 >
-                                  <button data-toggle="modal" data-target="#delete" data="{{barcode}}" class="btn-delete-product">Delete</button>
-                                  <button data-toggle="modal" data-target="#editform" id="{{barcode}}" class="btn-edit-product">Edit</button>
+                                  <button data-toggle="modal" data-target="#editform" id="{{ssn}}" class="btn-edit-product">Edit</button>
                                 </td>
                               </tr>
-                            {{/each}} --}}
+                            {{/each}}
                         </table>
                       </div>
                     </div>

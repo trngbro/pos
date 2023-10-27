@@ -86,8 +86,8 @@ function password_hash(inputString) {
     return toHexString(h0) + toHexString(h1) + toHexString(h2) + toHexString(h3);
 }
 
-function encode(uid, type, status) {
-    const inputString = `${uid}:${type}:${status}`;
+function encode(uid, name, type, status) {
+    const inputString = `${uid}:${name}:${type}:${status}`;
 
     const encodedString = base64.encode(inputString);
 
@@ -98,9 +98,9 @@ function decode(encodedString) {
     const decodedString = base64.decode(encodedString);
 
     // Tách chuỗi thành uid, type và status
-    const [uid, type, status] = decodedString.split(':');
+    const [uid = "", name = "", type = "", status = ""] = decodedString.split(':');
 
-    return { uid, type, status };
+    return { uid, name, type, status };
 }
 
 module.exports = { encode, decode, password_hash };

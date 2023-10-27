@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Customer = require("./customer");
-
+const cryto = require("../helpers/crypto")
 
 async function getCustomerIDFromPhoneNumber(phoneNumber) {
     try {
@@ -16,7 +16,11 @@ async function getCustomerIDFromPhoneNumber(phoneNumber) {
     }
 }
 
-async function insertBill(products, phoneNumber) {
+async function insertBill(products, phoneNumber, userLogs) {
+    const salerData = cryto.decode(decodeURIComponent(userLogs));
+
+    const saler = salerData.name + "<<>>" + salerData.uid;
+    
     try {
         const customerID = await getCustomerIDFromPhoneNumber(phoneNumber);
         if (!customerID) {
@@ -40,10 +44,10 @@ async function insertBill(products, phoneNumber) {
             customer: customerID,
             products: transformedProducts,
             total: total,
-            paymentType: "Cash"
+            paymentType: "Cash",
+            saler: saler
         });
 
-        // Save the bill to the database
         await newBill.save();
 
         return true;
@@ -85,37 +89,44 @@ const billSchema = new mongoose.Schema({
 const Bills = mongoose.model("Bill", billSchema);
 
 const insertSampleBills = async () => {
-    const sampleCustomerID = await getCustomerIDFromPhoneNumber("0947605644");
-    if (!sampleCustomerID) {
-        console.error("Bill 'customer' not found.");
+    const hasData = await Bills.findOne();
+
+    if (hasData) {
+        console.log("Bills data are ready before");
         return;
-    }
+    } else {
+        const sampleCustomerID = await getCustomerIDFromPhoneNumber("0947605644");
+        if (!sampleCustomerID) {
+            console.error("Bill 'customer' not found.");
+            return;
+        }
 
-    const sampleBills = [
-        {
-            customer: sampleCustomerID,
-            products: [
-                { productBarcode: '0987654321123', qty: 2 },
-                { productBarcode: '1234561230123', qty: 3 },
-            ],
-            saler: "test<<>>653b16a9163f32a648e43b5d",
-            total: 500,
-        },
-        {
-            customer: sampleCustomerID,
-            products: [
-                { productBarcode: '1234561230123', qty: 1 },
-            ],
-            saler: "test<<>>653b16a9163f32a648e43b5d",
-            total: 150,
-        },
-    ];
+        const sampleBills = [
+            {
+                customer: sampleCustomerID,
+                products: [
+                    { productBarcode: '0987654321123', qty: 2 },
+                    { productBarcode: '1234561230123', qty: 3 },
+                ],
+                saler: "test<<>>653b16a9163f32a648e43b5d",
+                total: 500,
+            },
+            {
+                customer: sampleCustomerID,
+                products: [
+                    { productBarcode: '1234561230123', qty: 1 },
+                ],
+                saler: "test<<>>653b16a9163f32a648e43b5d",
+                total: 150,
+            },
+        ];
 
-    try {
-        await Bills.insertMany(sampleBills);
-        console.log("Bills data are inserted");
-    } catch (error) {
-        console.log("Has error/ or data was had before at bills model");
+        try {
+            await Bills.insertMany(sampleBills);
+            console.log("Bills data are inserted");
+        } catch (error) {
+            console.log("Has error/ or data was had before at bills model");
+        }
     }
 }
 
