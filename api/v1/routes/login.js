@@ -6,6 +6,7 @@ const router = require("express").Router();
 router.get("/", loginController.rederLoginPage);
 router.post("", loginController.loginChecking);
 router.post("/identify", loginController.identifyUser);
+router.get("/identify/:id/:token", loginController.verfyAccount);
 router.put("/identify", loginController.resetAccount)
 
 module.exports = router;

@@ -65,12 +65,33 @@ const loginController = {
             console.log("Pass")
 
 
-            const message = `${process.env.BASE_URL}/user/verify/${user.id}/${token.token}`;
+            const message = `${process.env.BASE_URL}/login/identify/${user.id}/${token.token}`;
             await sendEmail(user.mail, "Verify Email", message);
 
             res.send("An Email sent to your account please verify");
         } catch (error) {
             res.status(400).json("Error");
+        }
+    },
+    verfyAccount: async (req, res) => {
+        try {
+            const user = await Users.findOne({ _id: req.params.id });
+            if (!user) return res.status(400).send("Invalid link");
+        
+            const token = await Token.findOne({
+              userId: user._id,
+              token: req.params.token,
+            });
+            if (!token) return res.status(400).send("Invalid link");
+
+        
+            await Users.findByIdAndUpdate(user._id, { status: "active" });
+
+            await Token.findByIdAndRemove(token._id);
+        
+            res.status(200).send("email verified sucessfully");
+        } catch (error) {
+            res.status(400).send(error);
         }
     },
     resetAccount: (req, res) => {
