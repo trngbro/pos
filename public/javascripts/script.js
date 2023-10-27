@@ -169,10 +169,20 @@ function getDataFromCartToReciept() {
 document.getElementById("printOutReciept").onclick = function () {
   const {products, totalAmount, customerPhone} = getDataFromCartToReciept();
   $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: totalAmount, customerPhone:customerPhone }, function (data) {
-    console.log(data);
+    if (data && data.status === 200) {
+      console.log("Receipt data received successfully.");
+      printElement(document.getElementById("printAreaContent"));
+    } else {
+        return;
+    }
   });
 
+  console.log("Pass")
   printElement(document.getElementById("printAreaContent"));
+
+  $(".sub-price-all").text(0);
+  $(".sub-price-take").text(0); 
+  $("#cart").find("tr").remove();
 };
 
 function printElement(elem) {

@@ -1,0 +1,249 @@
+<div class="right_col" role="main" style="min-height: 4604.8px;">
+  <div class="">
+    <div class="page-title">
+      <div class="title_left">
+        <h3>Products <small>all current in store</small></h3>
+      </div>
+
+      <div class="title_right">
+        <div
+          class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search"
+        >
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix"></div>
+
+    <div class="row">
+
+      <div class="col-md-12 col-sm-12">
+        <div class="x_panel">
+          <div class="x_title">
+            <ul class="nav navbar-right panel_toolbox">
+              <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+              </li>
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card-box table-responsive">
+                  <p class="text-muted font-13 m-b-30">
+                    This is using for search, delete and update product
+                  </p>
+
+                  <div
+                    id="datatable-responsive_wrapper"
+                    class="dataTables_wrapper container-fluid dt-bootstrap no-footer"
+                  >
+                    
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <table
+                          id="datatable-responsive"
+                          class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
+                          cellspacing="0"
+                          width="100%"
+                          role="grid"
+                          aria-describedby="datatable-responsive_info"
+                          style="width: 100%;"
+                        >
+                          <thead>
+                            <tr role="row">
+                              <th
+                                class="sorting_asc"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 5%;"
+                                aria-sort="ascending"
+                                aria-label="First name: activate to sort column descending"
+                              >SSN_ID</th>
+                              <th
+                                class="sorting"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 20%;"
+                                aria-label="Last name: activate to sort column ascending"
+                              >Name</th>
+                              <th
+                                class="sorting"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 5%;"
+                                aria-label="Position: activate to sort column ascending"
+                              >OG Price</th>
+                              <th
+                                class="sorting"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 5%;"
+                                aria-label="Office: activate to sort column ascending"
+                              >SL Price</th>
+                              <th
+                                class="sorting"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 15%;"
+                                aria-label="Age: activate to sort column ascending"
+                              >Category</th>
+                              <th
+                                class="sorting"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 15%;"
+                                aria-label="Start date: activate to sort column ascending"
+                              >Created</th>
+                              <th
+                                class="sorting"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 5%;"
+                                aria-label="Salary: activate to sort column ascending"
+                              >Quantity</th>
+                              <th
+                                class="sorting"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 5%;"
+                                aria-label="Extn.: activate to sort column ascending"
+                              >Sold</th>
+                              <th
+                                class="sorting"
+                                tabindex="0"
+                                aria-controls="datatable-responsive"
+                                rowspan="1"
+                                colspan="1"
+                                style="width: 25%; display: none;"
+                                aria-label="E-mail: activate to sort column ascending"
+                              >Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            
+                            {{!-- {{#each productTableData}}
+                              <tr role="row" class="odd" data-barcode="{{customer}}">
+                                <td class="sorting_1 {{barcode}}" tabindex="0">{{barcode}}</td>
+                                {{!-- <td class="{{barcode}}">{{name}}</td>
+                                <td class="{{barcode}}">{{originalPrice}}</td>
+                                <td class="{{barcode}}">{{salePrice}}</td>
+                                <td class="{{barcode}}">{{categoryName}}</td>
+                                <td class="{{barcode}}" id="date{{barcode}}" data="{{date}}">{{dateCreated}}</td>
+                                <td class="{{barcode}}">{{qty}}</td>
+                                <td class="{{barcode}}">{{sold}}</td>
+                                <td
+                                  style="display: none;"
+                                >
+                                  <button data-toggle="modal" data-target="#delete" data="{{barcode}}" class="btn-delete-product">Delete</button>
+                                  <button data-toggle="modal" data-target="#editform" id="{{barcode}}" class="btn-edit-product">Edit</button>
+                                </td>
+                              </tr>
+                            {{/each}} --}}
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editform" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lable">Edit Products</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form>
+          <div class="form-group">
+            <label for="id">Barcode</label>
+            <input type="text" class="form-control" required="required" readonly="readonly" id="barcode" name="barcode">
+          </div>
+           <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" autocomplete="off" id="name" name="name">
+          </div>
+           <div class="form-group">
+            <label for="ogPrice">OG Price</label>
+            <input type="text" class="form-control" id="ogPrice" name="originalPrice">
+          </div>
+           <div class="form-group">
+            <label for="slPrice">SL Price</label>
+            <input type="number" class="form-control" id="slPrice" name="salePrice">
+          </div>
+           <div class="form-group">
+            <label for="category">Category</label>
+            <input type="text" class="form-control" id="category" name="category">
+          </div>
+           <div class="form-group">
+            <label for="created">Created</label>
+            <input type="datetime-local" class="form-control" id="created" name="dateCreated" value="2023-10-24T06:59">
+          </div>
+           <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input type="number" class="form-control" required="required" readonly="readonly"  id="quantity" name="qty">
+          </div>
+           <div class="form-group">
+            <label for="sold">Sold</label>
+            <input type="number" class="form-control" required="required" readonly="readonly"  id="sold" name="sold">
+          </div>
+        </form>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button id="editSpecticalItem" type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lable">Are you sure to delete this product?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="d-data"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-warning confirmedDeletedProduct">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

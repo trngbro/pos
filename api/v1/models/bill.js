@@ -76,6 +76,10 @@ const billSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    saler: {
+        type: String,
+        required: true
+    }
 });
 
 const Bills = mongoose.model("Bill", billSchema);
@@ -94,6 +98,7 @@ const insertSampleBills = async () => {
                 { productBarcode: '0987654321123', qty: 2 },
                 { productBarcode: '1234561230123', qty: 3 },
             ],
+            saler: "test<<>>653b16a9163f32a648e43b5d",
             total: 500,
         },
         {
@@ -101,6 +106,7 @@ const insertSampleBills = async () => {
             products: [
                 { productBarcode: '1234561230123', qty: 1 },
             ],
+            saler: "test<<>>653b16a9163f32a648e43b5d",
             total: 150,
         },
     ];

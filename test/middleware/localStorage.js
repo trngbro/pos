@@ -1,4 +1,3 @@
-const fn = require("../../api/v1/middlewares/localStorageSupport")
+const fn = require("../../api/v1/helpers/crypto")
 
-console.log(fn.checkItemExist("user", true))
-console.log(fn.checkItemExist("user", false))
+console.log(fn.password_hash("admin"))

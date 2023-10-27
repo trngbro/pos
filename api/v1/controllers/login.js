@@ -16,13 +16,12 @@ const loginController = {
     },
     loginChecking: async (req, res) => {
         try {
-            const user = await User.find({user: req.body.username, password: req.body.password}).exec();
+            const user = await User.find({user: req.body.username, password: crypto.password_hash(req.body.password)}).exec();
             if(user[0]._id){
                 res.cookie('userLog', crypto.encode(user[0].id, user[0].type, user[0].status))
-                res.redirect('home')
+                res.redirect('home');
             }
             else{
-                console.log("Passed")
                 res.render('login', {
                     layout: true,
                     status: "Email or password is not corrected"

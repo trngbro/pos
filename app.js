@@ -20,7 +20,7 @@ var warehouseRouter = require("./api/v1/routes/warehouse");
 var customerRouter = require("./api/v1/routes/customer");
 var posRouter = require("./api/v1/routes/pos");
 var staffRouter = require("./api/v1/routes/staff");
-var indexRouter = require("./api/v1/routes/index");
+var revenuesRouter = require("./api/v1/routes/revenues");
 
 dotenv.config();
 
@@ -73,13 +73,13 @@ app.use(cors());
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
 app.use("/home", homeRouter);
+app.use("/pos", posRouter);
+app.use("/revenues", revenuesRouter)
 app.use("/categories", categoryRouter);
 app.use("/products", productRouter);
 app.use("/warehouse", warehouseRouter);
 app.use("/customers", customerRouter);
-app.use("/pos", posRouter);
 app.use("/accounts", staffRouter);
-app.use("/", indexRouter);
 
 
 // catch 404 and forward to error handler
