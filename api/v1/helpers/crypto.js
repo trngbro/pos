@@ -90,18 +90,41 @@ function password_hash(inputString) {
 function encode(uid, name, type, status) {
     const inputString = `${uid}:${name}:${type}:${status}`;
 
-    const encodedString = base64.encode(inputString);
+    const encoder = new TextEncoder();
+    const data = encoder.encode(inputString);
+    const encodedString = btoa(String.fromCharCode.apply(null, data));
 
     return encodedString;
 }
 
 function decode(encodedString) {
-    const decodedString = base64.decode(encodedString);
+    const decodedData = atob(encodedString);
+    const dataView = new DataView(new ArrayBuffer(decodedData.length));
 
-    // Tách chuỗi thành uid, type và status
+    for (let i = 0; i < decodedData.length; i++) {
+        dataView.setUint8(i, decodedData.charCodeAt(i));
+    }
+
+    const decoder = new TextDecoder();
+    const decodedString = decoder.decode(dataView);
+
+    // Tách chuỗi thành uid, name, type và status
     const [uid = "", name = "", type = "", status = ""] = decodedString.split(':');
 
     return { uid, name, type, status };
 }
+
+// Sử dụng hàm encode và decode
+const uid = "123";
+const name = "Nguyễn Văn A";
+const type = "User";
+const status = "Active";
+
+const encodedString = encode(uid, name, type, status);
+console.log(encodedString);
+
+const decodedObject = decode(encodedString);
+console.log(decodedObject);
+  
 
 module.exports = { encode, decode, password_hash };

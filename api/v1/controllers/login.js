@@ -3,6 +3,7 @@ const Token = require("../models/token")
 const crypto = require("../helpers/crypto")
 const sendEmail = require("../helpers/sendEmail")
 const crypto_fromLib = require('crypto');
+const { throws } = require("assert");
 const loginController = {
     rederLoginPage: (req, res) => {
         try {
@@ -23,13 +24,14 @@ const loginController = {
                 res.cookie('userLog', crypto.encode(user[0].id, user[0].name, user[0].type, user[0].status));
                 res.redirect('home');
             }
-            else{
+            else {
                 res.render('login', {
                     layout: true,
                     status: "Email or password is not corrected"
                 })
             }
         } catch (error) {
+            console.log(error)
             res.redirect('login?login=password-or-username-be-not-correct')
         }
     },
@@ -47,10 +49,12 @@ const loginController = {
                 name: req.body.name,
                 mail: req.body.mail,
                 type: req.body.type,
-                password: crypto.password_hash(req.body.password),
+                password: crypto.password_hash(detectUsername(req.body.mail)),
                 user: detectUsername(req.body.mail),
             }).save();
-            console.log(crypto_fromLib.randomBytes(32).toString("hex"))
+            
+            console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            console.log(user);
 
             let token = await new Token({
                 userId: user._id,

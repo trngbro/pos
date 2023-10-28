@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        default: "block",
+        default: "noaccess",
     },
     type: {
         type: String,
@@ -67,9 +67,7 @@ const validate = (user) => {
     const schema = Joi.object({
         name: Joi.string().min(3).max(255).required(),
         mail: Joi.string().email().required(),
-        type: Joi.string().valid('staff', 'admin').required(),
-        password: Joi.string().required(),
-        user: Joi.string(),
+        type: Joi.string().valid('staff', 'admin').required()
     });
     return schema.validate(user);
 };

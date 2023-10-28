@@ -9,8 +9,11 @@ function authuAccount(req, res, next) {
         if(crypto.decode(userData).status == "active"){
             next();
         }
+        else if(crypto.decode(userData).status == 'noaccess'){
+            res.render('401');
+        }
         else if(crypto.decode(userData).status == 'block'){
-            res.render('noauth');
+            res.render('403');
         }
         else{
             res.redirect('notfound');

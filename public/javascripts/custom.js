@@ -5653,13 +5653,6 @@ $(document).ready(function() {
       // Get user input values
       const name = $('#name').val();
       const email = $('#email').val();
-      const password = $('#password').val();
-      const repassword = $('#repassword').val();
-
-      console.log(name)
-      console.log(email)
-      console.log(password)
-      console.log(repassword)
 
       // Form validation
       if (name.length < 2) {
@@ -5673,16 +5666,10 @@ $(document).ready(function() {
         return;
       }
 
-      if (password.length < 6 || password !== repassword) {
-        alert('Passwords must be at least 6 characters and match');
-        return;
-      }
-
       // Form data submission (assuming you have a server-side endpoint)
       const formData = {
         name: name,
         mail: email,
-        password: password,
         type: "staff"
       };
 
