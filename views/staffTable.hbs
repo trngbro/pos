@@ -55,16 +55,6 @@
                           <thead>
                             <tr role="row">
                               <th
-                                class="sorting_asc"
-                                tabindex="0"
-                                aria-controls="datatable-responsive"
-                                rowspan="1"
-                                colspan="1"
-                                style="width: 5%;"
-                                aria-sort="ascending"
-                                aria-label="First name: activate to sort column descending"
-                              >Phone</th>
-                              <th
                                 class="sorting"
                                 tabindex="0"
                                 aria-controls="datatable-responsive"
@@ -122,34 +112,21 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr role="row" class="odd">
-                              <td class="sorting_1" tabindex="0">0947605644</td>
-                              <td>Trung-Nghia Nguyen</td>
-                              <td>nguyentrungnghia@tdtu.edu.vn</td>
-                              <td>trnghia</td>
-                              <td>active</td>
-                              <td>admin</td>
-                              <td
-                                style="display: none;"
-                              >
-                                <button data-toggle="modal" data-target="#delete">Delete</button>
-                                <button data-toggle="modal" data-target="#editform">Edit</button>
-                              </td>
-                            </tr>
-                            <tr role="row" class="even">
-                              <td tabindex="0" class="sorting_1">0559280502</td>
-                              <td>Nguyen Trung Nghia</td>
-                              <td>ngtrnghia@it.tdtu.edu.vn</td>
-                              <td>nghiast</td>
-                              <td>block</td>
-                              <td>staff</td>
-                              <td
-                                class="center-block" style="display: block;"
-                              >
-                                <button data-toggle="modal" data-target="#delete">Delete</button>
-                                <button data-toggle="modal" data-target="#editform">Edit</button>
-                              </td>
-                            </tr>
+                            {{#each staffData}}
+                              <tr role="row" class="odd">
+                                <td>{{name}}</td>
+                                <td>{{mail}}</td>
+                                <td>{{user}}</td>
+                                <td>{{status}}</td>
+                                <td>{{type}}</td>
+                                <td
+                                  style="display: none;"
+                                >
+                                  <button data-toggle="modal" data-target="#toggle">Toggle type</button>
+                                  <button data-toggle="modal" data-target="#editform">Edit</button>
+                                </td>
+                              </tr>
+                            {{/each}}
                           </tbody>
                         </table>
                       </div>
@@ -223,7 +200,7 @@
 </div>
 
 
-<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+<div class="modal fade" id="toggle" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

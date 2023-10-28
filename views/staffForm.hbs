@@ -24,51 +24,42 @@
           </div>
           <div class="x_content">
             <br>
-            <form class="form-horizontal form-label-left">
-              <div class="form-group row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-3">Phone <span class="required">*</span>
-                </label>
-                <div class="col-md-9 col-sm-9 col-xs-9">
-                  <input type="tel" class="form-control" required="required" autocomplete="off">
-                  <span class="fa fa-phone form-control-feedback right" aria-hidden="true"></span>
-                </div>
-              </div>
+            <form class="form-horizontal form-label-left" id="registration-form">
               <div class="item form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="first-name">Name <span
-                    class="required">*</span>
-                </label>
-                <div class="col-md-9 col-sm-9 ">
-                  <input type="text" id="first-name" required="required" class="form-control" autocomplete="off">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="name">Name <span class="required">*</span></label>
+                <div class="col-md-9 col-sm-9">
+                  <input type="text" id="name" required="required" class="form-control" autocomplete="off">
                   <span class="fa fa-pencil form-control-feedback right" aria-hidden="true"></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-3">Email <span class="required">*</span>
-                </label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-3">Email <span class="required">*</span></label>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                  <input type="text" class="form-control" required="required" autocomplete="off">
+                  <input type="email" id="email" class="form-control" required="required" autocomplete="off">
                   <span class="fa fa-send form-control-feedback right" aria-hidden="true"></span>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-3">Address <span class="required">*</span>
-                </label>
+                <label class="control-label col-md-3 col-sm-3 col-xs-3">Password <span class="required">*</span></label>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                  <input type="text" class="form-control" required="required" autocomplete="off">
+                  <input type="password" id="password" class="form-control" required="required" autocomplete="off">
                   <span class="fa fa-home form-control-feedback right" aria-hidden="true"></span>
                 </div>
               </div>
-
-
-              <div class="ln_solid"></div>
-
               <div class="form-group row">
-                <div class="col-md-9 offset-md-3">
-                  <button type="submit" class="btn btn-primary">Cancel</button>
-                  <button type="submit" class="btn btn-success">Submit</button>
+                <label class="control-label col-md-3 col-sm-3 col-xs-3">Repassword <span class="required">*</span></label>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                  <input type="password" id="repassword" class="form-control" required="required" autocomplete="off">
+                  <span class="fa fa-home form-control-feedback right" aria-hidden="true"></span>
                 </div>
               </div>
-
+              <div class="ln_solid"></div>
+              <div class="form-group row">
+                <div class="col-md-9 offset-md-3">
+                  <button type="reset" class="btn btn-primary" id="cancel-button">Cancel</button>
+                  <button type="submit" class="btn btn-success" id="submit-button">Submit</button>
+                </div>
+              </div>
             </form>
           </div>
         </div>

@@ -6,7 +6,7 @@
     "start": "nodemon ./bin/www",
     "dev": "nodemon ./bin/www",
     "demo": "node demo",
-    "test": "mocha",
+    "test": "mocha test/helpers/ && mocha",
     "testHelper": "mocha test/helpers/", 
     "__comment__": "npm run testHelper --for testHelper script"
   },

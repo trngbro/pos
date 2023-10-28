@@ -1,8 +1,8 @@
-const Categories = require("../models/category")
-const Products = require("../models/product")
-const generate = require("../helpers/generate")
-const styles = require('../helpers/stylesheetsConfig')
-const scripts = require('../helpers/javascriptConfig')
+const Categories = require("../models/category");
+const Products = require("../models/product");
+const generate = require("../helpers/generate");
+const styles = require('../helpers/stylesheetsConfig');
+const scripts = require('../helpers/javascriptConfig');
 
 const productController = {
     viewAllProducts: async (req, res) => {

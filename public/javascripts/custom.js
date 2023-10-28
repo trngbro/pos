@@ -5644,6 +5644,74 @@ $(document).ready(function() {
         reader.readAsDataURL(fileInput);
       }
     });
+});
+
+$(document).ready(function() {
+    $('#registration-form').on('submit', function(event) {
+      event.preventDefault();
+
+      // Get user input values
+      const name = $('#name').val();
+      const email = $('#email').val();
+      const password = $('#password').val();
+      const repassword = $('#repassword').val();
+
+      console.log(name)
+      console.log(email)
+      console.log(password)
+      console.log(repassword)
+
+      // Form validation
+      if (name.length < 2) {
+        alert('Name must have at least 2 characters');
+        return;
+      }
+
+      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!emailPattern.test(email)) {
+        alert('Invalid email format');
+        return;
+      }
+
+      if (password.length < 6 || password !== repassword) {
+        alert('Passwords must be at least 6 characters and match');
+        return;
+      }
+
+      // Form data submission (assuming you have a server-side endpoint)
+      const formData = {
+        name: name,
+        mail: email,
+        password: password,
+        type: "staff"
+      };
+
+      // You can use AJAX to send the data to the server
+      $.ajax({
+        url: '/login/identify',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            alert("An Email sent to your account please verify");
+        },
+        error: function(response) {
+            if (response.status == 409) {
+                alert("User with given email already exist!");
+            } else if (response.status == 422) {
+                alert("An error/s user info");
+            } else if (response.status == 400) {
+                alert("an error occurred while sending email, try again");
+            } else {
+                alert('Unknown error');
+            }
+        }
+      });
+    });
+
+    $('#cancel-button').on('click', function() {
+      // Reset the form to clear all input values
+      $('#registration-form')[0].reset();
+    });
   });
 
 $(document).ready(function () {
