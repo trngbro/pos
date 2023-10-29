@@ -153,6 +153,29 @@ function init_sidebar() {
 // /Sidebar
 
 
+function setImagesFromCookie() {
+    // Lấy giá trị của cookie có tên "userImge"
+    const userImageCookie = decodeURIComponent(
+      document.cookie.replace(
+        /(?:(?:^|.*;\s*)userImge\s*\=\s*([^;]*).*$)|^.*$/,
+        "$1"
+      )
+    );
+  
+    if (userImageCookie) {
+      // Tìm tất cả các thẻ img có class "userImageFromCookieByBase64"
+      const userImages = document.querySelectorAll('.userImageFromCookieByBase64');
+  
+      // Gán giá trị cookie vào thuộc tính src của các thẻ img
+      userImages.forEach(img => {
+        img.src = userImageCookie;
+      });
+    }
+}
+  
+// Gọi hàm để thực hiện việc cài đặt ảnh từ cookie
+setImagesFromCookie();
+
 
 // Panel toolbox
 $(document).ready(function () {

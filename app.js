@@ -21,8 +21,12 @@ var customerRouter = require("./api/v1/routes/customer");
 var posRouter = require("./api/v1/routes/pos");
 var staffRouter = require("./api/v1/routes/staff");
 var revenuesRouter = require("./api/v1/routes/revenues");
+var indexRouter = require("./api/v1/routes/index");
 
-var fn_helper = require("./api/v1/helpers/functionalHelper")
+var fn_helper = require("./api/v1/helpers/functionalHelper");
+
+var isLogin = require("./api/v1/middlewares/authAccount");
+var isAdmin = require("./api/v1/middlewares/checkPermission");
 
 process.env.NODE_NO_WARNINGS = 1;
 
@@ -81,10 +85,13 @@ app.use(helmet());
 app.use(cors());
 // app.use(logger("common"));
 
+app.use("", indexRouter)
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
-app.use("/home", homeRouter);
+app.use("", isLogin)
 app.use("/pos", posRouter);
+app.use("", isAdmin)
+app.use("/home", homeRouter);
 app.use("/revenues", revenuesRouter)
 app.use("/categories", categoryRouter);
 app.use("/products", productRouter);

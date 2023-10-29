@@ -114,17 +114,4 @@ function decode(encodedString) {
     return { uid, name, type, status };
 }
 
-// Sử dụng hàm encode và decode
-const uid = "123";
-const name = "Nguyễn Văn A";
-const type = "User";
-const status = "Active";
-
-const encodedString = encode(uid, name, type, status);
-console.log(encodedString);
-
-const decodedObject = decode(encodedString);
-console.log(decodedObject);
-  
-
 module.exports = { encode, decode, password_hash };

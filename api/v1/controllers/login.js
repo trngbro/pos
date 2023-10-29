@@ -3,7 +3,7 @@ const Token = require("../models/token")
 const crypto = require("../helpers/crypto")
 const sendEmail = require("../helpers/sendEmail")
 const crypto_fromLib = require('crypto');
-const { throws } = require("assert");
+
 const loginController = {
     rederLoginPage: (req, res) => {
         try {
@@ -21,7 +21,9 @@ const loginController = {
         try {
             const user = await Users.find({user: req.body.username, password: crypto.password_hash(req.body.password)}).exec();
             if(user[0]._id){
+                console.log(user[0].id, user[0].name, user[0].type, user[0].status)
                 res.cookie('userLog', crypto.encode(user[0].id, user[0].name, user[0].type, user[0].status));
+                res.cookie('userName', user[0].name).cookie('userImageUser', user[0].image);
                 res.redirect('home');
             }
             else {
@@ -141,7 +143,7 @@ const loginController = {
             res.status(400).json("An error occurred while sending mail");
         }
     },
-    verifyAccount: async (req, res) => {
+    verifyAccount: async (req, res, next) => {
         try {
             const user = await Users.findOne({ _id: req.params.id });
             if (!user) return res.status(400).send("Invalid link");
@@ -153,11 +155,15 @@ const loginController = {
             if (!token) return res.status(400).send("Invalid link");
 
         
-            await Users.findByIdAndUpdate(user._id, { status: "active" });
+            await Users.findByIdAndUpdate(user._id, { status: "block" });
 
             await Token.findByIdAndRemove(token._id);
         
-            res.status(200).send("email verified sucessfully");
+            req.body = {
+                userIdMustChangePassword: user._id,
+            };
+
+            next();
         } catch (error) {
             res.status(400).send(error);
         }
@@ -167,6 +173,13 @@ const loginController = {
             
         } catch (error) {
             res.redirect('error');
+        }
+    },
+    firstChangePassword: async (req, res) => {
+        try {
+            if(!req.body.userIdMustChangePassword)  return res.status(303).send("must ")
+        } catch (error) {
+            
         }
     }
 }

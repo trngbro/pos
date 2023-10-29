@@ -10,10 +10,10 @@ function authuAccount(req, res, next) {
             next();
         }
         else if(crypto.decode(userData).status == 'noaccess'){
-            res.render('401');
+            res.redirect('/login/verify');
         }
         else if(crypto.decode(userData).status == 'block'){
-            res.render('403');
+            res.redirect('/blocking');
         }
         else{
             res.redirect('notfound');

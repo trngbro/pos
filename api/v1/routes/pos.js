@@ -1,10 +1,9 @@
 const pos = require('../controllers/pos');
-const isLogin = require('../middlewares/authAccount');
 
 const router = require("express").Router();
 
-router.get("/", isLogin, pos.renderPOSPage);
-router.post("/findUser", isLogin, pos.payloadCustomer);
-router.post("/makeReciept", isLogin, pos.makeANewReciept);
+router.get("/", pos.renderPOSPage);
+router.post("/findUser", pos.payloadCustomer);
+router.post("/makeReciept", pos.makeANewReciept);
 
 module.exports = router
