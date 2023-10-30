@@ -254,10 +254,8 @@ $(document).ready(function () {
           }
         });
       }
-
-      
   });
-
+  
   $("#refreshNewOne").click(function () {
       $("#phoneNumber").val("");
       $("#customerFindedName").val("");
