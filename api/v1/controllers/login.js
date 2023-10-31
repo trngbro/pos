@@ -158,7 +158,7 @@ const loginController = {
         
             req.body = {
                 userIdMustChangePassword: user._id,
-                user: user.username,
+                user: user.user,
             };
 
             next();
@@ -168,10 +168,12 @@ const loginController = {
     },
     resetAccount: async (req, res) => {
         try {
+            console.log(req.body)
             await Users.findByIdAndUpdate(req.body.userId, { password: crypto.password_hash(req.body.password), status: "active" });
-            res.redirect("login", {layout: false})
+            console.log("Pass")
+            res.status(200).send("successed change")
         } catch (error) {
-            res.redirect('error');
+            res.status(400).send("some errors went changing password");
         }
     },
     firstChangePassword: async (req, res) => {
