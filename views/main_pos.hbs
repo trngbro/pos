@@ -40,6 +40,46 @@
       .error {
         color: #ef5f5f;
       }
+      .dropbtn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+      }
+      
+      .dropbtn {
+        width: 30px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+      
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+      
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+      
+      .dropdown-content a:hover {background-color: #f1f1f1;}
+      .dropdown:hover .dropdown-content {display: block;}
+      .dropdown:hover .dropbtn {background-color: #3e8e41;}
     </style>
 
     <style type="text/css" media="print">
@@ -74,17 +114,15 @@
           <!-- col.// -->
           <div class="col-lg-3 col-sm-6">
             <div class="widgets-wrap d-flex justify-content-end">
-              <div class="widget-header">
-                <a href="#" class="icontext">
-                  <a
-                    href="home"
-                    class="btn btn-primary m-btn m-btn--icon m-btn--icon-only"
-                  >
-                    <i class="fa fa-home"></i>
-                  </a>
-                </a>
-              </div>
               <!-- widget .// -->
+              <div class="dropdown" style="float:right;">
+                <img class="dropbtn" src="../images/default.png" alt="">
+                <div class="dropdown-content">
+                  <a href="#">Infomation</a>
+                  <a href="#">Logout</a>
+                  <a href="#">Other</a>
+                </div>
+              </div>
             </div>
             <!-- widgets-wrap.// -->
           </div>
@@ -122,7 +160,7 @@
                             class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"
                           > <i class="fa fa-cart-plus"></i> Add </a>
                           <div class="price-wrap h5">
-                            <span class="price-new">{{salePrice}} VNĐ</span>
+                            <span class="price-new">{{currentFormat salePrice}}</span>
                           </div>
                           <!-- price-wrap.// -->
                         </div>
@@ -218,6 +256,36 @@
         </div>
       </div><!-- container //  -->
     </section>
+
+    <div class="modal" id="customerModal">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Add Customer</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="customerPhoneNumber">Phone Number:</label>
+              <input type="text" class="form-control" id="customerPhoneNumber">
+            </div>
+            <div class="form-group">
+              <label for="customerName">Name:</label>
+              <input type="text" class="form-control" id="customerName">
+            </div>
+            <div class="form-group">
+              <label for="customerAddress">Address:</label>
+              <input type="text" class="form-control" id="customerAddress">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="saveCustomer">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="modal" id="invoiceModal">
       <div class="modal-dialog modal-md">

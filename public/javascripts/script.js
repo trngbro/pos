@@ -21,9 +21,9 @@ $(document).ready(function() {
   function updateRow(trigger){
     var $row = $(trigger).closest("tr");
     var quantity = parseInt($row.find(".quantity").text());
-    var price = parseInt($row.find(".a-price").text().replace("VNĐ", "").replace(" ", ""));
+    var price = parseInt($row.find(".a-price").text().replace(/[^0-9]/g, ''));
     var subTotal = quantity * price;
-    $row.find(".sub-price").text(subTotal.toFixed(2) + "VNĐ");
+    $row.find(".sub-price").text(subTotal.toFixed(2).replace(/[^0-9]/g, '') + "VNĐ");
   }
   $(".add-to-cart").click(function(event) {
     event.preventDefault();
@@ -38,7 +38,7 @@ $(document).ready(function() {
 
       var priceCell = existingRow.find(".a-price");
       var subPriceCell = existingRow.find(".sub-price");
-      var currentPrice = parseInt(subPriceCell.text().replace("VNĐ", "").replace(" ", "")) + parseInt(priceCell.text().replace("VNĐ", "").replace(" ", ""));
+      var currentPrice = parseInt(subPriceCell.text().replace(/[^0-9]/g, '')) + parseInt(priceCell.text().replace(/[^0-9]/g, ''));
       existingRow.find(".sub-price").text(currentPrice + " VNĐ");
     } 
     else {
@@ -114,12 +114,12 @@ $(document).ready(function() {
   function calculateReciept(){
     var subPriceAll = 0;
     $("#cart tr").each(function() {
-      var aPrice = parseFloat($(this).find(".sub-price").text().replace(" VNĐ", ""));
+      var aPrice = parseFloat($(this).find(".sub-price").text().replace(/[^0-9]/g, ''));
       subPriceAll += aPrice; 
     })
 
-    $(".sub-price-all").text(subPriceAll.toFixed(2));
-    $(".sub-price-take").text(subPriceAll.toFixed(2));  
+    $(".sub-price-all").text(subPriceAll.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+    $(".sub-price-take").text(subPriceAll.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));  
   }
 
   // Xử lý sự kiện xóa khỏi giỏ hàng
@@ -251,10 +251,45 @@ $(document).ready(function () {
               $("#customerFindedID").text(data.phone);
           } else {
               $("#customerFindedName").val("User not found");
+              $("#customerPhoneNumber").val(phoneNumber);
+              $("#customerModal").modal("show");
           }
         });
       }
   });
+
+  $(document).ready(function () {
+    $("#saveCustomer").click(function () {
+      var phoneNumber = $("#customerPhoneNumber").val();
+      var name = $("#customerName").val();
+      var address = $("#customerAddress").val();
+      var phonePattern = /^0\d{9}$/;
+  
+      if (!phonePattern.test(phoneNumber)) {
+        alert("Phone number must be 10 digits and start with 0");
+        return; 
+      }
+  
+      $.ajax({
+        url: "/pos/addCustomer", // Replace with the actual server endpoint
+        method: "POST",
+        data: {
+          name: name,
+          phone: phoneNumber,
+          address: address,
+        },
+        success: function (response) {
+          alert("Add a new customer successfully!")
+        },
+        error: function (error) {
+          alert("Do not add this customer!")
+        },
+      });
+  
+      $("#customerModal").modal("hide");
+    });
+  });
+  
   
   $("#refreshNewOne").click(function () {
       $("#phoneNumber").val("");

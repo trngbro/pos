@@ -1,54 +1,345 @@
-<!DOCTYPE html>
 <html lang="en">
+
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <!-- jQuery -->
+    <!-- Bootstrap4 files-->
+    <link
+      href="../public/vendors/pos.assets/css/bootstrap.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="../public/vendors/pos.assets/css/ui.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="../public/vendors/pos.assets/fonts/fontawesome/css/fontawesome-all.min.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <link
+      href="../public/vendors/pos.assets/css/OverlayScrollbars.css"
+      type="text/css"
+      rel="stylesheet"
+    />
+    <!-- Font awesome 5 -->
+    <style>
+      @media screen { #printSection { display: none; } } @media print { body * {
+      visibility:hidden; } #printSection, #printSection * { visibility:visible;
+      } #printSection { position:absolute; left:0; top:0; } } .avatar {
+      vertical-align: middle; width: 35px; height: 35px; border-radius: 50%; }
+      .bg-default, .btn-default { background-color: #f2f3f8; } .btn-error {
+      color: #ef5f5f; }
 
-    <title>CellphoneZ</title>
+      .error {
+        color: #ef5f5f;
+      }
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../public/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="../public/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="../public/vendors/animate.css/animate.min.css" rel="stylesheet">
-    <script src="../public/vendors/jquery/dist/jquery.min.js"></script>
+      dropbtn {
+        background-color: #04AA6D;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+      }
+      
+      .dropbtn {
+        width: 30px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+      
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+      
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+      
+      .dropdown-content a:hover {background-color: #f1f1f1;}
+      .dropdown:hover .dropdown-content {display: block;}
+      .dropdown:hover .dropbtn {background-color: #3e8e41;}
+    </style>
 
-    <!-- Custom Theme Style -->
-    <link href="../public/stylesheets/custom.min.css" rel="stylesheet">
-
-    <script src="../public/javascripts/sample.js"></script>
+    <style type="text/css" media="print">
+      .noPrint{ display: none; }
+    </style>
+    <!-- custom style -->
   </head>
 
-  <body class="login">
-    <div>
-      <div class="login_wrapper">
-        <div class="animate form login_form">
-          <section class="change_password_content">
-              <h1>Change password</h1>
-              <div>
-                <input type="text" name="{{userId}}" id="userToChangePwd" class="form-control" placeholder="Username" required="" value="{{user}}" readonly/>
+  <body>
+    <section class="header-main" id="nonPrintable">
+      <div class="container">
+        <div class="row align-items-center">
+
+          <div class="col-lg-6 col-sm-6">
+            <form action="#" class="search-wrap">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="search-input"
+                  placeholder="Search"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fa fa-search"></i>
+                  </button>
+                </div>
               </div>
-              <div>
-                <input type="password" name="password_change_input" id="password1" class="form-control" placeholder="Password" required="" value="" />
+            </form>
+            <!-- search-wrap .end// -->
+          </div>
+          <!-- col.// -->
+          <div class="col-lg-3 col-sm-6">
+            <div class="widgets-wrap d-flex justify-content-end">
+              <div class="widget-header">
+                <a href="#" class="icontext">
+                  <a
+                    href="home"
+                    class="btn btn-primary m-btn m-btn--icon m-btn--icon-only"
+                  >
+                    <i class="fa fa-home"></i>
+                  </a>
+                </a>
               </div>
-              <div>
-                <input type="password" name="password_change_input" id="password2" class="form-control" placeholder="Password" required="" value="" />
+              <div class="dropdown" style="float:right;">
+                <img class="dropbtn" src="../public/images/default.png" alt="">
+                <div class="dropdown-content">
+                  <a href="#">Infomation</a>
+                  <a href="#">Logout</a>
+                  <a href="#">Other</a>
+                </div>
               </div>
-              <div>
-                <button id="change_password_btn" class="btn btn-default submit" type="button">Log in</button>
+              <!-- widget .// -->
+            </div>
+            <!-- widgets-wrap.// -->
+          </div>
+          <!-- col.// -->
+        </div>
+        <!-- row.// -->
+      </div>
+      <!-- container.// -->
+    </section>
+    <!-- ========================= SECTION CONTENT ========================= -->
+    <section class="section-content padding-y-sm bg-default">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-8 card padding-y-sm card">
+
+            <span id="items">
+              <div class="row">
+                {{#each productTableData}}
+                  <div class="col-md-3">
+                    <figure class="card card-product">
+                      <span class="badge-new"> NEW </span>
+                      <span
+                        class="product-id"
+                        style="display: none;"
+                      >{{barcode}}</span>
+                      <div class="img-wrap">
+                        <img src="{{images}}" alt="Red dot" />
+
+                      </div>
+                      <figcaption class="info-wrap">
+                        <a href="#" class="title">{{name}}</a>
+                        <div class="action-wrap">
+                          <a
+                            href="#"
+                            class="btn btn-primary btn-sm float-right add-to-cart add-to-cal"
+                          > <i class="fa fa-cart-plus"></i> Add </a>
+                          <div class="price-wrap h5">
+                            <span class="price-new">{{salePrice}} VNĐ</span>
+                          </div>
+                          <!-- price-wrap.// -->
+                        </div>
+                        <!-- action-wrap -->
+                      </figcaption>
+                    </figure>
+                    <!-- card // -->
+                  </div>
+                  <!-- col // -->
+                {{/each}}
               </div>
-          </section>
+              <!-- row.// -->
+            </span>
+          </div>
+          <div class="col-md-4">
+            <h5>Customer Info</h3>
+            <div id="AddonCustomer">
+              <div class="row">
+                <div class="col-12 input-group mb-3">
+                  <input type="text" id="phoneNumber" class="form-control" placeholder="Enter Phone Number">
+                  <div class="input-group-append">
+                    <button id="payloadCustomer" class="btn btn-primary">Add</button>
+                  </div>
+                </div>
+                <div class="col-12 input-group mb-3">
+                  <input type="text" id="customerFindedName" class="form-control" readonly>
+                  <div class="input-group-append">
+                    <button id="refreshNewOne" class="btn btn-primary">Reset</button>
+                  </div>
+                </div>
+                <span
+                  id="customerFindedID"
+                  style="display: none;"
+                ></span>
+              </div>
+            </div>
+            <br>
+            <h5>Cart</h5>
+            <div id="print-area" class="card">
+              <span>
+                <table class="table table-hover shopping-cart-wrap">
+                  <thead class="text-muted">
+                    <tr>
+                      <th scope="col">Item</th>
+                      <th scope="col" width="120">Qty</th>
+                      <th scope="col" width="120">Price</th>
+                      <th scope="col" class="text-right" width="200">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody id="cart">
+                  </tbody>
+                </table>
+              </span>
+            </div>
+            <!-- card.// -->
+            <div class="box">
+              <dl class="dlist-align">
+                <dt>Discount:</dt>
+                <dd class="text-right discount"><a href="#">0%</a></dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Sub Total:</dt>
+                <dd class="text-right sub-price-all">0</dd>
+              </dl>
+              <dl class="dlist-align">
+                <dt>Total: </dt>
+                <dd class="text-right h4 b sub-price-take"> 0 VND </dd>
+              </dl>
+              <div class="row">
+                <div class="col-md-6">
+                  <a
+                    href="#"
+                    class="btn btn-default btn-error btn-lg btn-block cancel-cart"
+                  ><i class="fa fa-times-circle"></i>
+                    Cancel
+                  </a>
+                </div>
+                <div class="col-md-6">
+                  <button
+                    type="button"
+                    id="makeRecieptFromCart"
+                    class="btn btn-primary btn-lg btn-block charge-reciept"
+                    data-toggle="modal"
+                    data-target="#invoiceModal"
+                    title="Kiểm tra lại thông tin" 
+                    data-content="Cần khách hàng cho đơn hàng này hoặc đơn hàng chưa có sản phẩm"
+                  ><i class="fa fa-shopping-bag"> Charge</i></button>
+                </div>
+              </div>
+            </div>
+            <!-- box.// -->
+          </div>
+        </div>
+      </div><!-- container //  -->
+    </section>
+
+    <div class="modal" id="invoiceModal">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Invoice</h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+            >&times;</button>
+          </div>
+          <!-- Modal body -->
+          <div class="modal-body" id="printAreaContent">
+            <div class="text-center">
+              <img
+                style="min-height: 60px;"
+                src="favicon.ico"
+                alt="Company Logo"
+              />
+              <h2 style="margin: 10px">CellphoneZ</h2>
+              <p><a href="https://trngbro.github.io/more/portfolio/">
+              Phone: 0947605644 - Address: D7, HCMC</a></p>
+            </div>
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Unit Price</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-between">
+              <p class="text-left">Tax</p>
+              <p class="text-right tax-number">8% đã bao gồm</p>
+            </div>
+            <div class="d-flex justify-content-between">
+              <p class="text-left">Total Amount</p>
+              <p id="totalAmount" class="text-right">100</p>
+            </div>
+          </div>
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              id="printOutReciept"
+              class="btn btn-primary"
+              data-dismiss="modal"
+            >Print out</button>
+          </div>
         </div>
       </div>
     </div>
-    <div id="loginFailAlertForLogin" class="alert alert-danger" style="display:none; position: fixed; top: 50%; right: 0; width: 40%;">
-      <strong>Fail!</strong> Password not match.
-    </div>
+
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+    <script
+      src="../public/vendors/pos.assets/js/jquery-2.0.0.min.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="../public/vendors/pos.assets/js/bootstrap.bundle.min.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="../public/vendors/pos.assets/js/OverlayScrollbars.js"
+      type="text/javascript"
+    ></script>
+    <script src="../public/javascripts/script.js"></script>
   </body>
+
 </html>

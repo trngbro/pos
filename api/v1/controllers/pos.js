@@ -68,6 +68,22 @@ const posControllers = {
         } catch (error) {
             res.status(404).json({ name: "Not found customer" });
         }   
+    },
+
+    addCustomerIfNotExist: async (req, res) => {
+        try {
+            const customer = new Customers({
+                name: req.body.name,
+                phone: req.body.phone,
+                address: req.body.address
+            })
+
+            await customer.save();
+            
+            res.status(200).send("Successed")
+        } catch (error) {
+            res.status(400).send("{error}")
+        }
     }
 }
 
