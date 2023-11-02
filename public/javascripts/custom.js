@@ -5722,7 +5722,56 @@ $(document).ready(function() {
       // Reset the form to clear all input values
       $('#registration-form')[0].reset();
     });
+});
+
+$(document).ready(function() {
+    $("#submitedChangePassword").click(function() {
+      var oldPassword = $("#oldPassword").val();
+      var newPassword = $("#newPassword").val();
+      var confirmPassword = $("#confirmPassword").val();
+      var uid = $("#uidChanging").val();
+      if (!newPassword || !confirmPassword || !oldPassword || !uid) {
+        alert("Tất cả thông tin không được để trống.");
+        return;
+      }
+      // Kiểm tra xem newPassword và confirmPassword có khớp nhau không
+      if (newPassword !== confirmPassword) {
+        alert("Mật khẩu mới và xác nhận mật khẩu không khớp.");
+        return;
+      }
+  
+      // Thực hiện POST request đến /changePassword
+      console.log("Pass")
+      $.ajax({
+        type: "POST",
+        url: "/user/changePassword",
+        data: {
+          oldPassword: oldPassword,
+          newPassword: newPassword,
+          confirmPassword: confirmPassword,
+          uid: uid
+        },
+        success: function(data) {
+          console.log(data);
+          if (data && data.status === 200) {
+            alert("Sửa mật khẩu thành công.");
+          } else if (data && data.status === 403) {
+            alert("Thông tin nhập vào không hợp lệ.");
+          } else if(data && data.status === 401){
+            alert("Mật khẩu cũ không chính xác.");
+          } else {
+            alert("Lỗi khi đổi mật khẩu.");
+          }
+        },
+        error: function() {
+          alert("Lỗi khi gửi yêu cầu đổi mật khẩu.");
+        }
+      });   
+      console.log("Pass w")
+
+    });
   });
+  
 
 $(document).ready(function () {
     init_sparklines();

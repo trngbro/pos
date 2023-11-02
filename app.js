@@ -22,6 +22,7 @@ var posRouter = require("./api/v1/routes/pos");
 var staffRouter = require("./api/v1/routes/staff");
 var revenuesRouter = require("./api/v1/routes/revenues");
 var indexRouter = require("./api/v1/routes/index");
+var userRouter = require("./api/v1/routes/user");
 
 var fn_helper = require("./api/v1/helpers/functionalHelper");
 
@@ -89,6 +90,7 @@ app.use("", indexRouter)
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
 app.use("", isLogin)
+app.use("/user", userRouter);
 app.use("/pos", posRouter);
 app.use("", isAdmin)
 app.use("/home", homeRouter);
