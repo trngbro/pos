@@ -8,5 +8,6 @@ router.delete("/:barcode", productController.deleteProduct);
 router.get("/create", productController.viewCreateProduct);
 router.post("/create", formValidate, productController.addProduct);
 router.post("/create", productController.addProductCatchError);
+router.post("/update", productController.updateProduct);
 
 module.exports = router; 

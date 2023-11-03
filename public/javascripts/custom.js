@@ -5584,12 +5584,12 @@ $(document).ready(function () {
             method: 'DELETE',
         })
             .then(response => {
-                if (response.status === 204) {
-                    $(`[data-barcode="${dataText}"]`).remove();
-                } else if (response.status === 404) {
-                    console.log('Product not found.');
+                if(response.status === 401){
+                    alert("Do not delete this product because it is sold")
+                } else if (response.status === 200){
+                    alert("This product had deleted!")
                 } else {
-                    console.error('Request failed.');
+                    alert("Somethings error")
                 }
             })
             .catch(error => {
@@ -5598,6 +5598,28 @@ $(document).ready(function () {
         $('#delete').modal('hide');
     })
 })
+
+
+$(document).ready(function () {
+    $("#editSpecticalItem").click(function () {
+        const barcode = $('#barcode').val();
+        const name = $('#name').val();
+        const salePrice  = $('#slPrice').val();
+
+        console.log(barcode, name, salePrice);
+        console.log("barcode, name, salePrice");
+        $.post("/products/update", { pid: barcode, name:name, salePrice: salePrice }, function (data) {
+            console.log(data)
+            if (data === "Successed") {
+                alert("Updated successfully")
+            } else {
+                alert("Fail to updated")
+            }
+        })
+        $('#editform').modal('hide');
+    })
+})
+
 
 //delete & edit customer
 

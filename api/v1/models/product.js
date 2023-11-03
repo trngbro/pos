@@ -45,7 +45,10 @@ const productSchema = new mongoose.Schema({
         default: Date.now,
     },
     qty: Number,
-    sold: Number,
+    sold: {
+        type: Number,
+        default: 0
+    },
 });
 
 const Product = mongoose.model("Product", productSchema);

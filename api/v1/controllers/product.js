@@ -65,18 +65,29 @@ const productController = {
     },
     deleteProduct: async (req, res) => {
         const barcode = req.params.barcode;
-        Products.findOneAndDelete({ barcode: barcode })
-            .then((product) => {
+        
+        Products.findOne({ barcode: barcode })
+            .then(async (product) => {
                 if (!product) {
-                    res.status(404).send('Product not found.');
+                    return res.status(404).send('Product not found.');
+                }
+                
+                if (product.sold > 0) {
+                    return res.status(401).send('Product cannot be deleted as it has been sold.');
+                }
+    
+                const result = await Products.findOneAndDelete({ barcode: barcode });
+                if (result) {
+                    return res.status(200).send();
                 } else {
-                    res.status(204).send(); 
+                    return res.status(500).send('Internal Server Error');
                 }
             })
             .catch((err) => {
                 res.status(500).send('Internal Server Error');
             });
     },
+    
     addProduct: async (req, res) => {
         try {
             const { name, ogprice, saleprice, category, categoryID, base64Image } = req.body;
@@ -95,9 +106,9 @@ const productController = {
 
             await product.save();
 
-            res.status(200).json(product)
+            res.redirect("../products")
         } catch (error) {
-            res.status(500).json(error)
+            res.status(500).send(error)
         }
     },
     addProductCatchError: (req, res) => {
@@ -105,6 +116,16 @@ const productController = {
             res.status(303).json("Lỗi tải lên");
         } catch (error) {
             res.render("error")
+        }
+    },
+    updateProduct: async (req, res) => {
+        console.log(req.body)
+        try {
+            await Products.findOneAndUpdate({barcode: req.body.pid}, {name: req.body.name, salePrice: req.body.salePrice})
+            console.log("Pass yet")
+            res.status(200).send("Successed")
+        } catch (error) {
+            res.status(400).send("Failed")
         }
     }
 }
