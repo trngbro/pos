@@ -114,27 +114,27 @@
                           <tbody>
                             {{#each staffData}}
                               <tr role="row" class="odd">
-                                <td class="{{mail}}">{{name}}</td>
-                                <td class="{{mail}}">{{mail}}</td>
-                                <td class="{{mail}}">{{user}}</td>
-                                <td class="{{mail}}">
+                                <td class="{{user}}">{{name}}</td>
+                                <td class="{{user}}">{{mail}}</td>
+                                <td class="{{user}}">{{user}}</td>
+                                <td class="{{user}}">
                                   {{#comparingString status "noaccess"}}
-                                    <button class="btn-userRow" data-mail="{{mail}}" data-toggle="modal" data-target="#resendNewLink">Resend</button>
+                                    <button class="btn-userRow btn-resend" data-mail="{{mail}}" data-toggle="modal" data-target="#resendNewLink">Resend</button>
                                   {{else}}
-                                    {{status}}
+                                    <p class="{{user}}">{{status}}</p>
                                   {{/comparingString}}
                                 </td>
-                                <td>{{type}}</td>
+                                <td class="{{user}}">{{type}}</td>
                                 <td
                                   style="display: none;"
                                 >
-                                  <button class="btn-userRow" data-mail="{{mail}}" data-toggle="modal" data-target="#toggle">Toggle type</button>
-                                  <button class="btn-userRow" data-mail="{{mail}}" data-toggle="modal" data-target="#editform">Edit</button>
+                                  <button class="btn-userRow btn-toggle" data-mail="{{mail}}" data-toggle="modal" data-target="#toggle">Toggle type</button>
+                                  <button class="btn-userRow" data-mail="{{user}}" data-toggle="modal" data-target="#editform">Edit</button>
                                 </td>
                               </tr>
                             {{/each}}
 
-                            <script src="javascripts/accounts.js"></script>
+                          
                           </tbody>
                         </table>
                       </div>

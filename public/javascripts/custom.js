@@ -156,23 +156,23 @@ function init_sidebar() {
 function setImagesFromCookie() {
     // Lấy giá trị của cookie có tên "userImge"
     const userImageCookie = decodeURIComponent(
-      document.cookie.replace(
-        /(?:(?:^|.*;\s*)userImge\s*\=\s*([^;]*).*$)|^.*$/,
-        "$1"
-      )
+        document.cookie.replace(
+            /(?:(?:^|.*;\s*)userImge\s*\=\s*([^;]*).*$)|^.*$/,
+            "$1"
+        )
     );
-  
+
     if (userImageCookie) {
-      // Tìm tất cả các thẻ img có class "userImageFromCookieByBase64"
-      const userImages = document.querySelectorAll('.userImageFromCookieByBase64');
-  
-      // Gán giá trị cookie vào thuộc tính src của các thẻ img
-      userImages.forEach(img => {
-        img.src = userImageCookie;
-      });
+        // Tìm tất cả các thẻ img có class "userImageFromCookieByBase64"
+        const userImages = document.querySelectorAll('.userImageFromCookieByBase64');
+
+        // Gán giá trị cookie vào thuộc tính src của các thẻ img
+        userImages.forEach(img => {
+            img.src = userImageCookie;
+        });
     }
 }
-  
+
 // Gọi hàm để thực hiện việc cài đặt ảnh từ cookie
 setImagesFromCookie();
 
@@ -5540,7 +5540,22 @@ function init_echarts() {
     }
 
 }
-  
+
+//view & toggle account type
+
+$(document).ready(function () {
+    $(".btn-toggle").click(function () {
+        var mail = $(this).attr('data-mail')
+        $('#emailPlaceholderToggle').html(mail)
+    })
+
+    $(".btn-resend").click(function () {
+        var mail = $(this).attr('data-mail')
+        $('#emailPlaceholderResend').html(mail)
+    })
+
+})
+
 
 //delete & edit products
 $(document).ready(function () {
@@ -5562,7 +5577,7 @@ $(document).ready(function () {
         $('#sold').val(data2[7])
     })
 })
-  
+
 
 $(document).ready(function () {
     $(".btn-delete-product").click(function () {
@@ -5581,12 +5596,12 @@ $(document).ready(function () {
     $("#delete .confirmedDeletedProduct").click(function () {
         const dataText = $('#d-data').text().split(" - ")[0];
         fetch(`/products/${dataText}`, {
-            method: 'DELETE',
-        })
+                method: 'DELETE',
+            })
             .then(response => {
-                if(response.status === 401){
+                if (response.status === 401) {
                     alert("Do not delete this product because it is sold")
-                } else if (response.status === 200){
+                } else if (response.status === 200) {
                     alert("This product had deleted!")
                 } else {
                     alert("Somethings error")
@@ -5604,11 +5619,15 @@ $(document).ready(function () {
     $("#editSpecticalItem").click(function () {
         const barcode = $('#barcode').val();
         const name = $('#name').val();
-        const salePrice  = $('#slPrice').val();
+        const salePrice = $('#slPrice').val();
 
         console.log(barcode, name, salePrice);
         console.log("barcode, name, salePrice");
-        $.post("/products/update", { pid: barcode, name:name, salePrice: salePrice }, function (data) {
+        $.post("/products/update", {
+            pid: barcode,
+            name: name,
+            salePrice: salePrice
+        }, function (data) {
             console.log(data)
             if (data === "Successed") {
                 alert("Updated successfully")
@@ -5652,198 +5671,198 @@ $(document).ready(function () {
     })
 })
 
-$(document).ready(function() {
-    $('#addProductForm').submit(function(event) {
-      event.preventDefault();
-      const fileInput = document.getElementById('formFileFromCreateProduct').files[0];
-  
-      if (fileInput) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const image = new Image();
-          image.src = e.target.result;
-          
-          image.onload = function() {
-            // Tạo một canvas để vẽ lại ảnh với chất lượng giảm
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = image.width;
-            canvas.height = image.height;
-            
-            // Vẽ lại ảnh với chất lượng giảm
-            ctx.drawImage(image, 0, 0, image.width, image.height);
-            
-            // Lấy dữ liệu ảnh với chất lượng giảm
-            const base64Image = canvas.toDataURL('image/jpeg', 0.2); // Chỉnh số 0.7 cho chất lượng mong muốn
-            
-            // Đặt giá trị vào trường ẩn
-            $('<input>').attr({
-                type: 'hidden',
-                name: 'base64Image',
-                value: base64Image
-            }).appendTo('#addProductForm');
-  
-            // Gỡ bỏ sự kiện submit và gửi lại form
-            $('#addProductForm').unbind('submit').submit();
-          };
-        };
-        reader.readAsDataURL(fileInput);
-      }
-    });
-});
+$(document).ready(function () {
+    $('#addProductForm').submit(function (event) {
+        event.preventDefault();
+        const fileInput = document.getElementById('formFileFromCreateProduct').files[0];
 
-$(document).ready(function() {
-    $('#registration-form').on('submit', function(event) {
-      event.preventDefault();
+        if (fileInput) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const image = new Image();
+                image.src = e.target.result;
 
-      // Get user input values
-      const name = $('#name').val();
-      const email = $('#email').val();
+                image.onload = function () {
+                    // Tạo một canvas để vẽ lại ảnh với chất lượng giảm
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = image.width;
+                    canvas.height = image.height;
 
-      // Form validation
-      if (name.length < 2) {
-        alert('Name must have at least 2 characters');
-        return;
-      }
+                    // Vẽ lại ảnh với chất lượng giảm
+                    ctx.drawImage(image, 0, 0, image.width, image.height);
 
-      const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      if (!emailPattern.test(email)) {
-        alert('Invalid email format');
-        return;
-      }
+                    // Lấy dữ liệu ảnh với chất lượng giảm
+                    const base64Image = canvas.toDataURL('image/jpeg', 0.2); // Chỉnh số 0.7 cho chất lượng mong muốn
 
-      // Form data submission (assuming you have a server-side endpoint)
-      const formData = {
-        name: name,
-        mail: email,
-        type: "staff"
-      };
+                    // Đặt giá trị vào trường ẩn
+                    $('<input>').attr({
+                        type: 'hidden',
+                        name: 'base64Image',
+                        value: base64Image
+                    }).appendTo('#addProductForm');
 
-      // You can use AJAX to send the data to the server
-      $.ajax({
-        url: '/login/identify',
-        type: 'POST',
-        data: formData,
-        success: function(response) {
-            alert("An Email sent to your account please verify");
-        },
-        error: function(response) {
-            if (response.status == 409) {
-                alert("User with given email already exist!");
-            } else if (response.status == 422) {
-                alert("An error/s user info");
-            } else if (response.status == 400) {
-                alert("an error occurred while sending email, try again");
-            } else {
-                alert('Unknown error');
-            }
-        }
-      });
-    });
-
-    $('#cancel-button').on('click', function() {
-      // Reset the form to clear all input values
-      $('#registration-form')[0].reset();
-    });
-});
-
-$(document).ready(function() {
-    $("#submitedChangePassword").click(function() {
-      var oldPassword = $("#oldPassword").val();
-      var newPassword = $("#newPassword").val();
-      var confirmPassword = $("#confirmPassword").val();
-      var uid = $("#uidChanging").val();
-      if (!newPassword || !confirmPassword || !oldPassword || !uid) {
-        alert("Tất cả thông tin không được để trống.");
-        return;
-      }
-      // Kiểm tra xem newPassword và confirmPassword có khớp nhau không
-      if (newPassword !== confirmPassword) {
-        alert("Mật khẩu mới và xác nhận mật khẩu không khớp.");
-        return;
-      }
-  
-      // Thực hiện POST request đến /changePassword
-      console.log("Pass")
-      $.ajax({
-        type: "POST",
-        url: "/user/changePassword",
-        data: {
-          oldPassword: oldPassword,
-          newPassword: newPassword,
-          confirmPassword: confirmPassword,
-          uid: uid
-        },
-        success: function(data) {
-          console.log(data);
-          if (data && data.status === 200) {
-            alert("Sửa mật khẩu thành công.");
-          } else if (data && data.status === 403) {
-            alert("Thông tin nhập vào không hợp lệ.");
-          } else if(data && data.status === 401){
-            alert("Mật khẩu cũ không chính xác.");
-          } else {
-            alert("Lỗi khi đổi mật khẩu.");
-          }
-        },
-        error: function() {
-          alert("Lỗi khi gửi yêu cầu đổi mật khẩu.");
-        }
-      });   
-      console.log("Pass w")
-
-    });
-  });
-  
-  $(document).ready(function () {
-    $("#imageChanging").on("change", function() {
-        var input = this;
-        var img = $("#uploadedImage");
-      
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-      
-          reader.onload = function(e) {
-            var uploadedImage = new Image();
-            uploadedImage.src = e.target.result;
-
-            uploadedImage.onload = function() {
-              // Tạo một canvas để vẽ lại ảnh với kích thước mới
-              const canvas = document.createElement('canvas');
-              const ctx = canvas.getContext('2d');
-              const maxSize = 1000; // Kích thước mới bạn muốn
-
-              // Tính toán kích thước mới dựa trên tỷ lệ
-              var newWidth, newHeight;
-              if (uploadedImage.width > uploadedImage.height) {
-                newWidth = maxSize;
-                newHeight = (uploadedImage.height / uploadedImage.width) * maxSize;
-              } else {
-                newWidth = (uploadedImage.width / uploadedImage.height) * maxSize;
-                newHeight = maxSize;
-              }
-
-              canvas.width = newWidth;
-              canvas.height = newHeight;
-
-              // Vẽ lại ảnh với kích thước mới
-              ctx.drawImage(uploadedImage, 0, 0, newWidth, newHeight);
-
-              // Lấy dữ liệu ảnh mới
-              const base64Image = canvas.toDataURL('image/jpeg', 0.05);
-
-              // Hiển thị hình ảnh đã thay đổi kích thước
-              img.attr("src", base64Image);
+                    // Gỡ bỏ sự kiện submit và gửi lại form
+                    $('#addProductForm').unbind('submit').submit();
+                };
             };
-          };
-      
-          reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(fileInput);
         }
     });
 });
 
 $(document).ready(function () {
-    $("#submitedChangeImage").on("click", function() {
+    $('#registration-form').on('submit', function (event) {
+        event.preventDefault();
+
+        // Get user input values
+        const name = $('#name').val();
+        const email = $('#email').val();
+
+        // Form validation
+        if (name.length < 2) {
+            alert('Name must have at least 2 characters');
+            return;
+        }
+
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        if (!emailPattern.test(email)) {
+            alert('Invalid email format');
+            return;
+        }
+
+        // Form data submission (assuming you have a server-side endpoint)
+        const formData = {
+            name: name,
+            mail: email,
+            type: "staff"
+        };
+
+        // You can use AJAX to send the data to the server
+        $.ajax({
+            url: '/login/identify',
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                alert("An Email sent to your account please verify");
+            },
+            error: function (response) {
+                if (response.status == 409) {
+                    alert("User with given email already exist!");
+                } else if (response.status == 422) {
+                    alert("An error/s user info");
+                } else if (response.status == 400) {
+                    alert("an error occurred while sending email, try again");
+                } else {
+                    alert('Unknown error');
+                }
+            }
+        });
+    });
+
+    $('#cancel-button').on('click', function () {
+        // Reset the form to clear all input values
+        $('#registration-form')[0].reset();
+    });
+});
+
+$(document).ready(function () {
+    $("#submitedChangePassword").click(function () {
+        var oldPassword = $("#oldPassword").val();
+        var newPassword = $("#newPassword").val();
+        var confirmPassword = $("#confirmPassword").val();
+        var uid = $("#uidChanging").val();
+        if (!newPassword || !confirmPassword || !oldPassword || !uid) {
+            alert("Tất cả thông tin không được để trống.");
+            return;
+        }
+        // Kiểm tra xem newPassword và confirmPassword có khớp nhau không
+        if (newPassword !== confirmPassword) {
+            alert("Mật khẩu mới và xác nhận mật khẩu không khớp.");
+            return;
+        }
+
+        // Thực hiện POST request đến /changePassword
+        console.log("Pass")
+        $.ajax({
+            type: "POST",
+            url: "/user/changePassword",
+            data: {
+                oldPassword: oldPassword,
+                newPassword: newPassword,
+                confirmPassword: confirmPassword,
+                uid: uid
+            },
+            success: function (data) {
+                console.log(data);
+                if (data && data.status === 200) {
+                    alert("Sửa mật khẩu thành công.");
+                } else if (data && data.status === 403) {
+                    alert("Thông tin nhập vào không hợp lệ.");
+                } else if (data && data.status === 401) {
+                    alert("Mật khẩu cũ không chính xác.");
+                } else {
+                    alert("Lỗi khi đổi mật khẩu.");
+                }
+            },
+            error: function () {
+                alert("Lỗi khi gửi yêu cầu đổi mật khẩu.");
+            }
+        });
+        console.log("Pass w")
+
+    });
+});
+
+$(document).ready(function () {
+    $("#imageChanging").on("change", function () {
+        var input = this;
+        var img = $("#uploadedImage");
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var uploadedImage = new Image();
+                uploadedImage.src = e.target.result;
+
+                uploadedImage.onload = function () {
+                    // Tạo một canvas để vẽ lại ảnh với kích thước mới
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    const maxSize = 1000; // Kích thước mới bạn muốn
+
+                    // Tính toán kích thước mới dựa trên tỷ lệ
+                    var newWidth, newHeight;
+                    if (uploadedImage.width > uploadedImage.height) {
+                        newWidth = maxSize;
+                        newHeight = (uploadedImage.height / uploadedImage.width) * maxSize;
+                    } else {
+                        newWidth = (uploadedImage.width / uploadedImage.height) * maxSize;
+                        newHeight = maxSize;
+                    }
+
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+
+                    // Vẽ lại ảnh với kích thước mới
+                    ctx.drawImage(uploadedImage, 0, 0, newWidth, newHeight);
+
+                    // Lấy dữ liệu ảnh mới
+                    const base64Image = canvas.toDataURL('image/jpeg', 0.05);
+
+                    // Hiển thị hình ảnh đã thay đổi kích thước
+                    img.attr("src", base64Image);
+                };
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+});
+
+$(document).ready(function () {
+    $("#submitedChangeImage").on("click", function () {
         var base64Image = $("#uploadedImage").attr("src");
         var userId = $("#uidChangingImage").val();
         var maxSize = 10000; // Độ dài tối đa mong muốn
@@ -5855,7 +5874,10 @@ $(document).ready(function () {
 function sendImageData(userId, base64Image) {
     console.log(base64Image)
     console.log(userId)
-    $.post("user/changeImage", { uid: userId, image: base64Image }, function(data) {
+    $.post("user/changeImage", {
+        uid: userId,
+        image: base64Image
+    }, function (data) {
         if (data && data.status === 200) {
             alert("Hình ảnh đã được thay đổi thành công.");
         } else {
@@ -5902,4 +5924,3 @@ $(document).ready(function () {
     init_autosize();
     init_autocomplete();
 });
-
