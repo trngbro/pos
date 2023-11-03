@@ -114,19 +114,27 @@
                           <tbody>
                             {{#each staffData}}
                               <tr role="row" class="odd">
-                                <td>{{name}}</td>
-                                <td>{{mail}}</td>
-                                <td>{{user}}</td>
-                                <td>{{status}}</td>
+                                <td class="{{mail}}">{{name}}</td>
+                                <td class="{{mail}}">{{mail}}</td>
+                                <td class="{{mail}}">{{user}}</td>
+                                <td class="{{mail}}">
+                                  {{#comparingString status "noaccess"}}
+                                    <button class="btn-userRow" data-mail="{{mail}}" data-toggle="modal" data-target="#resendNewLink">Resend</button>
+                                  {{else}}
+                                    {{status}}
+                                  {{/comparingString}}
+                                </td>
                                 <td>{{type}}</td>
                                 <td
                                   style="display: none;"
                                 >
-                                  <button data-toggle="modal" data-target="#toggle">Toggle type</button>
-                                  <button data-toggle="modal" data-target="#editform">Edit</button>
+                                  <button class="btn-userRow" data-mail="{{mail}}" data-toggle="modal" data-target="#toggle">Toggle type</button>
+                                  <button class="btn-userRow" data-mail="{{mail}}" data-toggle="modal" data-target="#editform">Edit</button>
                                 </td>
                               </tr>
                             {{/each}}
+
+                            <script src="javascripts/accounts.js"></script>
                           </tbody>
                         </table>
                       </div>
@@ -148,7 +156,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="lable">Edit Products</h5>
+        <h5 class="modal-title" id="lable">Edit User</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -157,8 +165,8 @@
 
         <form>
           <div class="form-group">
-            <label for="exampleFormControlInput1">Barcode</label>
-            <input type="text" class="form-control" required="required" readonly="readonly" id="barcode">
+            <label for="exampleFormControlInput1">Email</label>
+            <span id="emailPlaceholder"></span>
           </div>
            <div class="form-group">
             <label for="exampleFormControlInput1">Name</label>
@@ -204,13 +212,33 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="lable">Are you sure to delete this product?</h5>
+        <h5 class="modal-title" id="lable">Change status of this account?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        barcode + name
+        <p>Email: <span id="emailPlaceholderToggle"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-warning">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="resendNewLink" tabindex="-1" role="dialog" aria-labelledby="update" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="lable">Resend a link?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="objectToResendLinkedLogin" class="modal-body">
+        <p>Email: <span id="emailPlaceholderResend"></span></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>

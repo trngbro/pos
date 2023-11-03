@@ -176,7 +176,6 @@ function setImagesFromCookie() {
 // Gọi hàm để thực hiện việc cài đặt ảnh từ cookie
 setImagesFromCookie();
 
-
 // Panel toolbox
 $(document).ready(function () {
     $('.collapse-link').on('click', function () {
@@ -2934,6 +2933,7 @@ function init_DataTables() {
 
 /* CHART - MORRIS  */
 
+
 function init_morris_charts() {
 
     if (typeof (Morris) === 'undefined') {
@@ -5540,7 +5540,7 @@ function init_echarts() {
     }
 
 }
-
+  
 
 //delete & edit products
 $(document).ready(function () {
@@ -5562,6 +5562,7 @@ $(document).ready(function () {
         $('#sold').val(data2[7])
     })
 })
+  
 
 $(document).ready(function () {
     $(".btn-delete-product").click(function () {
@@ -5772,6 +5773,76 @@ $(document).ready(function() {
     });
   });
   
+  $(document).ready(function () {
+    $("#imageChanging").on("change", function() {
+        var input = this;
+        var img = $("#uploadedImage");
+      
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+      
+          reader.onload = function(e) {
+            var uploadedImage = new Image();
+            uploadedImage.src = e.target.result;
+
+            uploadedImage.onload = function() {
+              // Tạo một canvas để vẽ lại ảnh với kích thước mới
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              const maxSize = 1000; // Kích thước mới bạn muốn
+
+              // Tính toán kích thước mới dựa trên tỷ lệ
+              var newWidth, newHeight;
+              if (uploadedImage.width > uploadedImage.height) {
+                newWidth = maxSize;
+                newHeight = (uploadedImage.height / uploadedImage.width) * maxSize;
+              } else {
+                newWidth = (uploadedImage.width / uploadedImage.height) * maxSize;
+                newHeight = maxSize;
+              }
+
+              canvas.width = newWidth;
+              canvas.height = newHeight;
+
+              // Vẽ lại ảnh với kích thước mới
+              ctx.drawImage(uploadedImage, 0, 0, newWidth, newHeight);
+
+              // Lấy dữ liệu ảnh mới
+              const base64Image = canvas.toDataURL('image/jpeg', 0.05);
+
+              // Hiển thị hình ảnh đã thay đổi kích thước
+              img.attr("src", base64Image);
+            };
+          };
+      
+          reader.readAsDataURL(input.files[0]);
+        }
+    });
+});
+
+$(document).ready(function () {
+    $("#submitedChangeImage").on("click", function() {
+        var base64Image = $("#uploadedImage").attr("src");
+        var userId = $("#uidChangingImage").val();
+        var maxSize = 10000; // Độ dài tối đa mong muốn
+        console.log(base64Image)
+        sendImageData(userId, base64Image);
+    });
+});
+
+function sendImageData(userId, base64Image) {
+    console.log(base64Image)
+    console.log(userId)
+    $.post("user/changeImage", { uid: userId, image: base64Image }, function(data) {
+        if (data && data.status === 200) {
+            alert("Hình ảnh đã được thay đổi thành công.");
+        } else {
+            alert("Có lỗi xảy ra khi thay đổi hình ảnh.");
+        }
+    });
+}
+
+
 
 $(document).ready(function () {
     init_sparklines();

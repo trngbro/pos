@@ -42,7 +42,7 @@ const userControllers = {
     
                 if (user) {
                     // Cập nhật mật khẩu mới
-                    const thisu = await Users.findOneAndUpdate({ _id: uid }, { password: crypto.password_hash(newPassword) });
+                    const thisu = await Users.findOneAndUpdate({ id: uid }, { password: crypto.password_hash(newPassword) });
                     console.log(thisu)
                     res.status(200).json({ status: 200, message: "Sửa mật khẩu thành công." });
                 } else {
@@ -53,6 +53,29 @@ const userControllers = {
             }
         } catch (error) {
             res.status(500).json({ status: 500, message: "Lỗi khi đổi mật khẩu." });
+        }
+    },
+
+    changeImage: async (req, res) => {
+        try {
+            const { uid, image } = req.body;
+    
+            if (uid) {
+                // Kiểm tra xem người dùng có tồn tại và mật khẩu cũ đúng không
+                const user = await Users.findById(uid);
+                
+                console.log(req.body.image)
+    
+                await Users.findOneAndUpdate({ id: uid }, { image: image });
+                res.status(200).json({ status: 200, message: "Cập nhật hình thành công." });
+
+                console.log(await Users.findById(uid))
+                
+            } else {
+                res.status(403).json({ status: 403, message: "Người dùng hiện không cập nhật được hình ảnh" });
+            }
+        } catch (error) {
+            res.status(500).json({ status: 500, message: "Lỗi khi cập nhật hình ảnh" });
         }
     }
     

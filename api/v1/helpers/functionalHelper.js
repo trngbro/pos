@@ -29,5 +29,9 @@ module.exports = {
             const unicodeValue = parseInt(match.substr(2), 16);
             return String.fromCharCode(unicodeValue);
         });
+    },
+
+    equalStringWithString: function(a, b, options){
+        return a === b ? options.fn(this) : options.inverse(this);
     }
 };

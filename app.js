@@ -49,7 +49,8 @@ app.engine('hbs', exphbs.engine({
   defaultLayout: "layout",
   helpers: {
     currentFormat: fn_helper.formatCurrency,
-    getStaffName: fn_helper.getStaffNameFromSalerData
+    getStaffName: fn_helper.getStaffNameFromSalerData,
+    comparingString: fn_helper.equalStringWithString
   },
   partialsDir: __dirname + '/views/partials'
 }))
