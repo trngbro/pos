@@ -1921,8 +1921,8 @@ function init_daterangepicker() {
     var optionSet1 = {
         startDate: moment().subtract(29, 'days'),
         endDate: moment(),
-        minDate: '01/01/2012',
-        maxDate: '12/31/2015',
+        minDate: '01/01/2022',
+        maxDate: '12/31/2023',
         dateLimit: {
             days: 60
         },
@@ -2046,6 +2046,7 @@ function init_daterangepicker_right() {
     });
     $('#reportrange_right').on('apply.daterangepicker', function (ev, picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
+        //Sự kiện submit lịch
     });
     $('#reportrange_right').on('cancel.daterangepicker', function (ev, picker) {
         console.log("cancel event fired");
@@ -5548,10 +5549,46 @@ $(document).ready(function () {
         var mail = $(this).attr('data-mail')
         $('#emailPlaceholderToggle').html(mail)
     })
+    $("#toggle .btn-warning").click(function () {
+        var mail = $("#emailPlaceholderToggle").text();
+        $.post(`/accounts/toggleStatus`, {
+            mail: mail
+        }, function (data) {
+            console.log(data)
+            if (data === "Successed") {
+                alert("Toggle successfully")
+            } else {
+                alert("Fail to updated")
+            }
+        })
+        const mailPrefix = mail.split("@")[0];
+        if($(`p.${mailPrefix}.userStatus`).text("") == "active"){
+            $(`p.${mailPrefix}.userStatus`).text('block');
+        }
+        else if($(`p.${mailPrefix}.userStatus`).text("") == "block"){
+            $(`p.${mailPrefix}.userStatus`).text("active")
+        } 
+        else{}
+        $('#toggle').modal('hide');
+    })
 
     $(".btn-resend").click(function () {
         var mail = $(this).attr('data-mail')
         $('#emailPlaceholderResend').html(mail)
+    })
+    $("#resendNewLink .btn-warning").click(function () {
+        var mail = $("#emailPlaceholderResend").text();
+        $.post(`/accounts/resendLink`, {
+            mail: mail
+        }, function (data) {
+            console.log(data)
+            if (data === "Successed") {
+                alert("Resend new link verification, valid within 1 minute")
+            } else {
+                alert("Fail to resend")
+            }
+        })
+        $('#resendNewLink').modal('hide');
     })
 
 })
