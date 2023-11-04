@@ -5554,6 +5554,20 @@ $(document).ready(function () {
         $('#emailPlaceholderResend').html(mail)
     })
 
+    $(".btn-viewUser").click(function () {
+        var user = $(this).attr('data-user')
+        var data = $('.' + user);
+        var data2 = []
+        data.each(function () {
+            data2.push($(this).text())
+        })
+        $('#edImg').attr("src", data2[0])
+        $('#edName').val(data2[1])
+        $('#edEmail').val(data2[2])
+        $('#edUser').val(data2[3])
+        $('#edStatus').val(data2[4])
+        $('#edType').val(data2[5])
+    })
 })
 
 

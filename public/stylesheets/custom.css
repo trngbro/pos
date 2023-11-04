@@ -5067,5 +5067,9 @@ ul.notifications {
 .calendar-exibit .calendar-table {
   padding: 0 0 4px 0; }
 
-
+#edImg{
+  height: 50%;
+  width: 50%;
+  margin-left: 25%;
+}
   

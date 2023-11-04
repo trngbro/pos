@@ -1,4 +1,6 @@
-const {Users} = require("../models/user")
+const {
+    Users
+} = require("../models/user")
 const styles = require('../helpers/stylesheetsConfig');
 const scripts = require('../helpers/javascriptConfig');
 
@@ -15,7 +17,8 @@ const staffControllers = {
                     name: element.name,
                     dateCreated: element.dateCreated,
                     status: element.status,
-                    type: element.type
+                    type: element.type,
+                    image: element.image
                 })
             });
 
@@ -26,7 +29,9 @@ const staffControllers = {
                 staffData: arr
             })
         } catch (error) {
-            res.render("error", {error: error})
+            res.render("error", {
+                error: error
+            })
         }
     },
     createANewStaff: (req, res) => {
