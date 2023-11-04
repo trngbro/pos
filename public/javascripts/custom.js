@@ -5720,9 +5720,59 @@ $(document).ready(function () {
             data2.push($(this).text())
         })
 
-        $('#d-data').html(data2[0] + " - " + data2[1])
+        $.get(`/customers/${data2[0]}`, {}, function (data) {
+            if (data === "Fail") {
+                alert("Fail to get")
+            } else {
+                populateModalTable(JSON.parse(data));
+            }
+        })
     })
 })
+
+function populateModalTable(jsonData) {
+    var tableBody = $('#data-table-body');
+    tableBody.empty(); 
+  
+    jsonData.forEach(function (item) {
+      var row = '<tr>';
+      row += '<td>' + item._id+ '</td>';
+      row += '<td>' + item.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }); + '</td>';
+      row += '<td>' + item.paymentType + '</td>';
+      row += '<td>' + item.saler.split("<<>>")[0]  + '</td>';
+      row += '<td>' + formatDate(item.dateCreated) + '</td>';
+      row += '<td>' + '<button type="button" class="btn btn-primary btn-more-detail">More</button>' + '</td>';
+      row += '</tr>';
+  
+      tableBody.append(row);
+    });
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+  
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Months are 0-based, so add 1
+    const year = date.getFullYear();
+  
+    // Format day, month, and year with leading zeros if needed
+    const formattedDay = day < 10 ? '0' + day : day;
+    const formattedMonth = month < 10 ? '0' + month : month;
+  
+    // Create the final formatted date string in the "dd/mm/yyyy" format
+    const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
+  
+    return formattedDate;
+}
+
+$(document).ready(function () {
+    $('#delete .btn-more-detail').click(function () {
+      const dataId = $(this).closest('tr').find('td:first').text();
+      alert('Bill ID: ' + dataId);
+    });
+});
+  
+  
 
 $(document).ready(function () {
     $('#addProductForm').submit(function (event) {

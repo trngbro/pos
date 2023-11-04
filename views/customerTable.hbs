@@ -103,30 +103,20 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr role="row" class="odd">
-                              <td class="sorting_1 84947605644" tabindex="0">84947605644</td>
-                              <td class="84947605644">Trung-Nghia Nguyen</td>
-                              <td class="84947605644">0947605644</td>
-                              <td class="84947605644">29, 81. St, Tan Quy Ward, District 7, Ho Chi Minh City</td>
-                              <td
-                                style="display: none;"
-                              >
-                                <button data-toggle="modal" data-target="#delete" data="84947605644" class="btn-delete-customer">Delete</button>
-                                <button data-toggle="modal" data-target="#editform" id="84947605644" class="btn-edit-customer">Edit</button>
-                              </td>
-                            </tr>
-                            <tr role="row" class="even">
-                              <td tabindex="0" class="sorting_1 84599280502">84599280502</td>
-                              <td class="84599280502">Nguyen Trung Nghia</td>
-                              <td class="84599280502">0599280502</td>
-                              <td class="84599280502">1168/9, Le Van Luong. St, Phuoc Kieng Ward, Nha Be Province, Ho Chi Minh City</td>
-                              <td
-                                style="display: none;"
-                              >
-                                <button data-toggle="modal" data-target="#delete" data="84599280502" class="btn-delete-customer">Delete</button>
-                                <button data-toggle="modal" data-target="#editform" id="84599280502" class="btn-edit-customer">Edit</button>
-                              </td>
-                            </tr>
+                            {{#each customersData}}
+                              <tr role="row" class="odd">
+                                <td class="sorting_1 {{id}}" tabindex="0">{{id}}</td>
+                                <td class="{{id}}">{{name}}</td>
+                                <td class="{{id}}">{{phone}}</td>
+                                <td class="{{id}}">{{address}}</td>
+                                <td
+                                  style="display: none;"
+                                >
+                                  <button data-toggle="modal" data-target="#delete" data="{{id}}" class="btn-delete-customer">View</button>
+                                  <button data-toggle="modal" data-target="#editform" id="{{id}}" class="btn-edit-customer">Edit</button>
+                                </td>
+                              </tr>
+                            {{/each}}
                           </tbody>
                         </table>
                       </div>
@@ -185,21 +175,35 @@
 </div>
 
 
+<!-- Modal -->
 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="lable">Are you sure to delete this customer?</h5>
+        <h5 class="modal-title" id="viewDataModalLabel">View Data</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p id="d-data"></p>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Bill id</th>
+              <th>Total of</th>
+              <th>Payment</th>
+              <th>Wholesale</th>
+              <th>Date purchange</th>
+              <th>More</th>
+            </tr>
+          </thead>
+          <tbody id="data-table-body">
+            <!-- Data will be inserted here -->
+          </tbody>
+        </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-primary">Yes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
