@@ -1,14 +1,10 @@
-<<<<<<< HEAD
 const {
     Users
 } = require("../models/user")
-=======
-const {Users} = require("../models/user");
 const Token = require("../models/token");
 const crypto = require("../helpers/crypto");
 const sendEmail = require("../helpers/sendEmail");
 const crypto_fromLib = require('crypto');
->>>>>>> e7f196949983171c4ecf0a69b08ad59d3df2bace
 const styles = require('../helpers/stylesheetsConfig');
 const scripts = require('../helpers/javascriptConfig');
 
@@ -67,19 +63,28 @@ const staffControllers = {
     toggleStatus: async (req, res) => {
         try {
             console.log(req.body.mail)
-            if(req.body.mail){
-                const user = await Users.findOne({mail:req.body.mail});
+            if (req.body.mail) {
+                const user = await Users.findOne({
+                    mail: req.body.mail
+                });
                 console.log(user.status === "active")
-                if(user.status === "active"){
-                    await Users.findOneAndUpdate({mail:req.body.mail}, {status:"block"});
+                if (user.status === "active") {
+                    await Users.findOneAndUpdate({
+                        mail: req.body.mail
+                    }, {
+                        status: "block"
+                    });
                     console.log("done")
                 }
-                if(user.status === "block"){
-                    await Users.findOneAndUpdate({mail:req.body.mail}, {status: "active"});
+                if (user.status === "block") {
+                    await Users.findOneAndUpdate({
+                        mail: req.body.mail
+                    }, {
+                        status: "active"
+                    });
                 }
                 res.status(200).send("Successed");
-            }
-            else{
+            } else {
                 res.status(400).send("Fail");
             }
         } catch (error) {
@@ -88,13 +93,15 @@ const staffControllers = {
     },
     resendVerify: async (req, res) => {
         try {
-            if(req.body.mail){
-                const user = await Users.findOne({mail:req.body.mail});
+            if (req.body.mail) {
+                const user = await Users.findOne({
+                    mail: req.body.mail
+                });
                 let token = await new Token({
                     userId: user._id,
                     token: crypto_fromLib.randomBytes(32).toString("hex"),
                 }).save();
-    
+
                 const test = `
                     <html>
                     <head>
@@ -150,11 +157,11 @@ const staffControllers = {
                                 <h2>Welcome to Cellphonez</h2>
                             </div>
                             <div class="content">
-                                <p>Hello `+ user.name +`,</p>
+                                <p>Hello ` + user.name + `,</p>
                                 <p>We're excited to have you as part of our community. But before we get started, we need to confirm your email address to ensure the security of your account.</p>
                                 <p><b>Please verify your email within the next 1 minute.</b></p>
                                 <p><i>To verify your email, simply click the button below:<i></p>
-                                <a class="button" href="` + `${process.env.BASE_URL}/login/identify/${user.id}/${token.token}` +`">Verify My Email</a>
+                                <a class="button" href="` + `${process.env.BASE_URL}/login/identify/${user.id}/${token.token}` + `">Verify My Email</a>
                                 
                                 <p><span class="note">Note: This link is only valid for 1 minute.</span></p>
                                 <p>Once you've verified your email, you'll have a part access to all the exciting features and content on CellphoneZ.</p>
@@ -167,12 +174,11 @@ const staffControllers = {
                     </body>
                     </html>
                 `
-    
+
                 await sendEmail(user.mail, "Verify Email", test);
 
                 res.status(200).send("Successed");
-            }
-            else{
+            } else {
                 res.status(400).send("Fail");
             }
         } catch (error) {
