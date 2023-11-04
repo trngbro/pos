@@ -23,6 +23,7 @@ var staffRouter = require("./api/v1/routes/staff");
 var revenuesRouter = require("./api/v1/routes/revenues");
 var indexRouter = require("./api/v1/routes/index");
 var userRouter = require("./api/v1/routes/user");
+var blockRouter = require("./api/v1/routes/blocking");
 
 var fn_helper = require("./api/v1/helpers/functionalHelper");
 
@@ -87,6 +88,7 @@ app.use(helmet());
 app.use(cors());
 // app.use(logger("common"));
 
+app.use("/blocking", blockRouter);
 app.use("", indexRouter)
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);

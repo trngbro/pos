@@ -152,7 +152,7 @@ const loginController = {
             if (!token) return res.status(400).send("Invalid link");
 
         
-            await Users.findByIdAndUpdate(user._id, { status: "block" });
+            await Users.findByIdAndUpdate(user._id, { status: "notchange" });
 
             await Token.findByIdAndRemove(token._id);
         
