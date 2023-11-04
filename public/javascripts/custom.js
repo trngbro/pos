@@ -5672,6 +5672,8 @@ $(document).ready(function () {
                 alert("Fail to updated")
             }
         })
+        $(`td.${barcode}.prodName`).text(name);
+        $(`td.${barcode}.prodPrice`).text(salePrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
         $('#editform').modal('hide');
     })
 })

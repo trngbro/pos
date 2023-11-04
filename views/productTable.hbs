@@ -143,9 +143,9 @@
                             {{#each productTableData}}
                               <tr role="row" class="odd" data-barcode="{{barcode}}">
                                 <td class="sorting_1 {{barcode}}" tabindex="0">{{barcode}}</td>
-                                <td class="{{barcode}}">{{name}}</td>
+                                <td class="{{barcode}} prodName">{{name}}</td>
                                 <td class="{{barcode}}">{{currentFormat originalPrice}}</td>
-                                <td class="{{barcode}}">{{currentFormat salePrice}}</td>
+                                <td class="{{barcode}} prodPrice">{{currentFormat salePrice}}</td>
                                 <td class="{{barcode}}">{{categoryName}}</td>
                                 <td class="{{barcode}}" id="date{{barcode}}" data="{{date}}">{{dateCreated}}</td>
                                 <td class="{{barcode}}">{{qty}}</td>
@@ -194,7 +194,7 @@
           </div>
            <div class="form-group">
             <label for="ogPrice">OG Price</label>
-            <input type="text" class="form-control" id="ogPrice" name="originalPrice">
+            <input type="text" class="form-control" readonly="readonly" id="ogPrice" name="originalPrice">
           </div>
            <div class="form-group">
             <label for="slPrice">SL Price</label>
@@ -202,19 +202,19 @@
           </div>
            <div class="form-group">
             <label for="category">Category</label>
-            <input type="text" class="form-control" id="category" name="category">
+            <input type="text" class="form-control" readonly="readonly" id="category" name="category">
           </div>
            <div class="form-group">
             <label for="created">Created</label>
-            <input type="datetime-local" class="form-control" id="created" name="dateCreated" value="2023-10-24T06:59">
+            <input type="datetime-local" class="form-control" readonly="readonly" id="created" name="dateCreated" value="2023-10-24T06:59">
           </div>
            <div class="form-group">
             <label for="quantity">Quantity</label>
-            <input type="number" class="form-control" required="required" readonly="readonly"  id="quantity" name="qty">
+            <input type="number" class="form-control" readonly="readonly" required="required" readonly="readonly"  id="quantity" name="qty">
           </div>
            <div class="form-group">
             <label for="sold">Sold</label>
-            <input type="number" class="form-control" required="required" readonly="readonly"  id="sold" name="sold">
+            <input type="number" class="form-control" readonly="readonly" required="required" readonly="readonly"  id="sold" name="sold">
           </div>
         </form>
         

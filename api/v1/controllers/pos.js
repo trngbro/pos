@@ -64,6 +64,13 @@ const posControllers = {
 
             await insertBill(JSON.parse(products), customerPhone, userLogs);
 
+            JSON.parse(products).forEach(async product => {
+                const temp = await Products.findOne({barcode: product.product_id})
+                const newQty = parseInt(temp.qty) - parseInt(product.quantity)
+                const newSold = parseInt(temp.sold) + parseInt(product.quantity)
+                await Products.findByIdAndUpdate(temp._id, {qty: newQty, sold: newSold})
+            })
+
             res.status(200);
         } catch (error) {
             res.status(404).json({ name: "Not found customer" });

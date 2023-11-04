@@ -23,7 +23,7 @@ $(document).ready(function() {
     var quantity = parseInt($row.find(".quantity").text());
     var price = parseInt($row.find(".a-price").text().replace(/[^0-9]/g, ''));
     var subTotal = quantity * price;
-    $row.find(".sub-price").text(subTotal.toFixed(2).replace(/[^0-9]/g, '') + "VNĐ");
+    $row.find(".sub-price").text(subTotal.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
   }
   $(".add-to-cart").click(function(event) {
     event.preventDefault();
@@ -39,7 +39,7 @@ $(document).ready(function() {
       var priceCell = existingRow.find(".a-price");
       var subPriceCell = existingRow.find(".sub-price");
       var currentPrice = parseInt(subPriceCell.text().replace(/[^0-9]/g, '')) + parseInt(priceCell.text().replace(/[^0-9]/g, ''));
-      existingRow.find(".sub-price").text(currentPrice + " VNĐ");
+      existingRow.find(".sub-price").text(currentPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
     } 
     else {
       var newRow = $("<tr data-product-id='" + productId + "'>");
@@ -194,7 +194,9 @@ function getCookie(name) {
 
 document.getElementById("printOutReciept").onclick = function () {
   const {products, totalAmount, customerPhone} = getDataFromCartToReciept();
-  $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: totalAmount, customerPhone:customerPhone, userLogs: getCookie("userLog") }, function (data) {
+  const formatttm = parseInt(totalAmount.replace(/[^\d]/g, ""))
+  console.log(formatttm)
+  $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: formatttm, customerPhone:customerPhone, userLogs: getCookie("userLog") }, function (data) {
     if (data && data.status === 200) {
       console.log("Receipt data received successfully.");
       printElement(document.getElementById("printAreaContent"));
