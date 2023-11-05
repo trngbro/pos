@@ -2106,6 +2106,21 @@ $(document).ready(function () {
 })
 
 document.addEventListener('DOMContentLoaded', function () {
+    if (window.location.pathname === '/logout') {
+        localStorage.clear();
+    }
+
+    var image = localStorage.getItem("image");
+    var name = localStorage.getItem("name");
+
+    if (image && name) {
+        $(".userImageFromCookieByBase64").attr("src", image);
+        $(".profile_info h2").text(name);
+    } else {
+    }
+})
+
+document.addEventListener('DOMContentLoaded', function () {
     if (window.location.pathname === '/home') {
         $.get(`/home/getDashboardData`, {}, function (data) {
             if (data === "Fail") {
@@ -2200,6 +2215,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     hideHover: 'auto',
                     resize: true
                 });
+            }
+        })
+
+        $.get(`/home/getUserData`, {}, function (data) {
+            if (data === "Fail") {
+
+            } else {
+                localStorage.setItem("image", JSON.parse(data).image);
+                localStorage.setItem("name", JSON.parse(data).name);
             }
         })
     }

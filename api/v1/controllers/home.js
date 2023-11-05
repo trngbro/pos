@@ -1,6 +1,7 @@
 const crypto = require('../helpers/crypto');
 const moment = require('moment')
 const {Bills, insertBill} = require("../models/bill");
+const {Users, validate} = require("../models/user");
 const Products = require("../models/product");
 
 const styles = require('../helpers/stylesheetsConfig')
@@ -26,6 +27,15 @@ const homeController = {
                 return moment(bill.dateCreated).isBetween(moment(startDate), moment(endDate).add(1, 'day'), null, '[]');
             });
             res.status(200).send(JSON.stringify(filteredBills))
+        } catch (error) {
+            res.status(500).send("Fail")
+            
+        }  
+    },
+    getUserData: async (req, res) => {
+        try {
+            const user = await Users.findById(crypto.decode(req.cookies.userLog).uid)
+            res.status(200).send(JSON.stringify(user))
         } catch (error) {
             res.status(500).send("Fail")
             
