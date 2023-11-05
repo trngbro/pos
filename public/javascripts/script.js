@@ -149,6 +149,21 @@ $(document).ready(function() {
         }
     });
   });
+
+  $('form.search-wrap').on('submit', function(event) {
+    // Lấy giá trị nhập vào ô tìm kiếm
+    event.preventDefault();
+    searchValue = $('#search-input').val();
+    $.get(`/pos/getProductByBarcode`, {barcode:searchValue}, function (data) {
+      if (data === "Fail") {
+          
+      } else if(data == "Notfound") {
+          alert("Product do not exist")
+      } else {
+
+      }
+    })
+  })
 });
 
 function getDataFromCartToReciept() {

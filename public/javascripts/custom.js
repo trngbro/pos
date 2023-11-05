@@ -5977,7 +5977,30 @@ $(document).ready(function () {
     $(document).on("click", ".btn-more-detail", function () {
         var id = $(this).attr('data-id');
         console.log(id);
-        alert(id);
+        $.get(`/customers/detail/${id}`, {}, function (data) {
+            if (data === "Fail") {
+                alert("Fail to get")
+            } else {
+                const detail = JSON.parse(data);
+                $("#detail").modal("show")
+                $("#orderId strong").text(detail._id);
+                $("#salerName strong").text(detail.saler.split("<<>>")[0]);
+                $("#payment strong").text(detail.paymentType);
+                $("#date strong").text(detail.dateCreated);
+
+                var tableBody = $("#detail table tbody");
+                tableBody.empty();
+
+                detail.products.forEach(item => 
+                    tableBody.append(
+                        `<tr>
+                            <td>${item._id}</td>
+                            <td>${item.productBarcode}</td>
+                            <td>` + item.qty || "1" + `</td>
+                        </tr>`
+                ));
+            }
+        })
     });
 });
 

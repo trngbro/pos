@@ -93,6 +93,20 @@ const posControllers = {
         } catch (error) {
             res.status(400).send("{error}")
         }
+    },
+
+    getProductByBarcode: async (req, res) => {
+        try {
+            const value = await Products.findOne({barcode:req.body.barcode})
+            if(value){
+                res.status(200).send(JSON.parse(value));
+            }
+            else {
+                res.status(404).send("Notfound");
+            }
+        } catch (error) {
+            res.status(400).send("{error}")
+        }
     }
 }
 

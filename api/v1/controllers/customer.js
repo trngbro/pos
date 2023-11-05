@@ -34,6 +34,16 @@ const homeController = {
         } catch (error) {
             res.status(500).send("Fail")
         }
+    },
+    viewDetailAOrderByOrderID: async (req, res) => {
+        try {
+            console.log(req.params.id)
+            const allBill = await Bills.findById(req.params.id);
+            console.log(allBill)
+            res.status(200).send(JSON.stringify(allBill))
+        } catch (error) {
+            res.status(500).send("Fail")
+        }
     }
 }
 
