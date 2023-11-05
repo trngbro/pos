@@ -1983,6 +1983,68 @@ function init_daterangepicker() {
 
 }
 
+$(document).ready(function() {
+    $('#reportrange span').on('DOMSubtreeModified', function () {
+        if($(this).text() == ""){
+
+        }
+        else{
+            $.post(`/home/getRevenuesOnPickedTime`, {
+                dateString: $(this).text()
+            }, function (data) {
+                console.log(data)
+                if (data === "Fail") {
+                    alert("Somethings wrong")
+                } else {
+                    alert("Successed update")
+                    const tbody = $(".report-content table tbody");
+                    tbody.empty();
+                    JSON.parse(data).forEach((item) => {
+                        tbody.append(
+                            `<tr>
+                                <td>${item._id}</td>
+                                <td>` + item.saler.split("<<>>")[0] +`</td>
+                                <td>` + item.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) +`</td>
+                            </tr>`
+                        );
+                    });
+                    const total = JSON.parse(data).reduce((acc, item) => {
+                        return acc + parseInt(item.total);
+                    }, 0);
+                    $(".report-content table tfoot td:last-child strong").text(total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }))
+                }
+            })
+
+            $.post(`/home/getSalerOnPickedTime`, {
+                dateString: $(this).text()
+            }, function (data) {
+                console.log(data)
+                if (data === "Fail") {
+                    alert("Somethings wrong")
+                } else {
+                    alert("Successed update")
+                    const tbody = $(".report-content-wholesale table tbody");
+                    tbody.empty();
+                    JSON.parse(data).forEach((item) => {
+                        tbody.append(
+                            `<tr>
+                                <td>` + item.saler.split("<<>>")[0] +`</td>
+                                <td>` + item.totalBills +`</td>
+                                <td>` + item.totalSales.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) +`</td>
+                            </tr>`
+                        );
+                    });
+                    const total = JSON.parse(data).reduce((acc, item) => {
+                        return acc + parseInt(item.totalBills);
+                    }, 0);
+                    $(".report-content-wholesale table tfoot td:last-child strong").text(total + " bills")
+                }
+            })
+        }
+        
+    })
+})
+
 function init_daterangepicker_right() {
 
     if (typeof ($.fn.daterangepicker) === 'undefined') {
@@ -2046,7 +2108,6 @@ function init_daterangepicker_right() {
     });
     $('#reportrange_right').on('apply.daterangepicker', function (ev, picker) {
         console.log("apply event fired, start/end dates are " + picker.startDate.format('MMMM D, YYYY') + " to " + picker.endDate.format('MMMM D, YYYY'));
-        //Sự kiện submit lịch
     });
     $('#reportrange_right').on('cancel.daterangepicker', function (ev, picker) {
         console.log("cancel event fired");
