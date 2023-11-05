@@ -1983,12 +1983,11 @@ function init_daterangepicker() {
 
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     $('#reportrange span').on('DOMSubtreeModified', function () {
-        if($(this).text() == ""){
+        if ($(this).text() == "") {
 
-        }
-        else{
+        } else {
             $.post(`/home/getRevenuesOnPickedTime`, {
                 dateString: $(this).text()
             }, function (data) {
@@ -2003,15 +2002,21 @@ $(document).ready(function() {
                         tbody.append(
                             `<tr>
                                 <td>${item._id}</td>
-                                <td>` + item.saler.split("<<>>")[0] +`</td>
-                                <td>` + item.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) +`</td>
+                                <td>` + item.saler.split("<<>>")[0] + `</td>
+                                <td>` + item.total.toLocaleString('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND'
+                            }) + `</td>
                             </tr>`
                         );
                     });
                     const total = JSON.parse(data).reduce((acc, item) => {
                         return acc + parseInt(item.total);
                     }, 0);
-                    $(".report-content table tfoot td:last-child strong").text(total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }))
+                    $(".report-content table tfoot td:last-child strong").text(total.toLocaleString('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }))
                 }
             })
 
@@ -2028,9 +2033,12 @@ $(document).ready(function() {
                     JSON.parse(data).forEach((item) => {
                         tbody.append(
                             `<tr>
-                                <td>` + item.saler.split("<<>>")[0] +`</td>
-                                <td>` + item.totalBills +`</td>
-                                <td>` + item.totalSales.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) +`</td>
+                                <td>` + item.saler.split("<<>>")[0] + `</td>
+                                <td>` + item.totalBills + `</td>
+                                <td>` + item.totalSales.toLocaleString('vi-VN', {
+                                style: 'currency',
+                                currency: 'VND'
+                            }) + `</td>
                             </tr>`
                         );
                     });
@@ -2041,7 +2049,7 @@ $(document).ready(function() {
                 }
             })
         }
-        
+
     })
 })
 
@@ -5623,13 +5631,11 @@ $(document).ready(function () {
             }
         })
         const mailPrefix = mail.split("@")[0];
-        if($(`p.${mailPrefix}.userStatus`).text("") == "active"){
+        if ($(`p.${mailPrefix}.userStatus`).text("") == "active") {
             $(`p.${mailPrefix}.userStatus`).text('block');
-        }
-        else if($(`p.${mailPrefix}.userStatus`).text("") == "block"){
+        } else if ($(`p.${mailPrefix}.userStatus`).text("") == "block") {
             $(`p.${mailPrefix}.userStatus`).text("active")
-        } 
-        else{}
+        } else {}
         $('#toggle').modal('hide');
     })
 
@@ -5748,7 +5754,10 @@ $(document).ready(function () {
             }
         })
         $(`td.${barcode}.prodName`).text(name);
-        $(`td.${barcode}.prodPrice`).text(salePrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+        $(`td.${barcode}.prodPrice`).text(salePrice.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }));
         $('#editform').modal('hide');
     })
 })
@@ -5773,7 +5782,7 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
-    $(".btn-delete-customer").click(function () {
+    $(".btn-view-customer").click(function () {
         var id = $(this).attr('data')
         var data = $('.' + id);
         var data2 = []
@@ -5793,47 +5802,59 @@ $(document).ready(function () {
 
 function populateModalTable(jsonData) {
     var tableBody = $('#data-table-body');
-    tableBody.empty(); 
-  
+    tableBody.empty();
+
     jsonData.forEach(function (item) {
-      var row = '<tr>';
-      row += '<td>' + item._id+ '</td>';
-      row += '<td>' + item.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }); + '</td>';
-      row += '<td>' + item.paymentType + '</td>';
-      row += '<td>' + item.saler.split("<<>>")[0]  + '</td>';
-      row += '<td>' + formatDate(item.dateCreated) + '</td>';
-      row += '<td>' + '<button type="button" class="btn btn-primary btn-more-detail">More</button>' + '</td>';
-      row += '</tr>';
-  
-      tableBody.append(row);
+        var row = '<tr>';
+        row += '<td>' + item._id + '</td>';
+        row += '<td>' + item.total.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+        }); + '</td>';
+        row += '<td>' + item.paymentType + '</td>';
+        row += '<td>' + item.saler.split("<<>>")[0] + '</td>';
+        row += '<td>' + formatDate(item.dateCreated) + '</td>';
+        row += '<td>' + '<button type="button" data-id="' + item._id + '" class="btn btn-primary btn-more-detail">More</button>' + '</td>';
+        row += '</tr>';
+
+        tableBody.append(row);
     });
 }
 
+$(document).ready(function () {
+    $(document).on("click", ".btn-more-detail", function () {
+        var id = $(this).attr('data-id');
+        console.log(id);
+        alert(id);
+    });
+});
+
+
 function formatDate(dateString) {
     const date = new Date(dateString);
-  
+
     const day = date.getDate();
     const month = date.getMonth() + 1; // Months are 0-based, so add 1
     const year = date.getFullYear();
-  
+
     // Format day, month, and year with leading zeros if needed
     const formattedDay = day < 10 ? '0' + day : day;
     const formattedMonth = month < 10 ? '0' + month : month;
-  
+
     // Create the final formatted date string in the "dd/mm/yyyy" format
     const formattedDate = `${formattedDay}/${formattedMonth}/${year}`;
-  
+
     return formattedDate;
 }
 
 $(document).ready(function () {
     $('#delete .btn-more-detail').click(function () {
-      const dataId = $(this).closest('tr').find('td:first').text();
-      alert('Bill ID: ' + dataId);
+        const dataId = $(this).closest('tr').find('td:first').text();
+        alert('Bill ID: ' + dataId);
     });
 });
-  
-  
+
+
 
 $(document).ready(function () {
     $('#addProductForm').submit(function (event) {
