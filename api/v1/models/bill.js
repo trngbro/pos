@@ -31,7 +31,7 @@ async function insertBill(products, phoneNumber, userLogs) {
         const transformedProducts = products.map((product) => {
             return {
                 productBarcode: product.product_id,
-                qty: product.qty,
+                qty: product.quantity,
             };
         });
 
