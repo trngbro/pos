@@ -36,7 +36,6 @@ async function insertBill(products, phoneNumber, userLogs) {
         });
 
         const total = products.reduce((acc, product) => {
-            console.log(product)
             return acc + parseInt(product.quantity.replace(/[^\d]/g, "")) * parseInt(product.subprice.replace(/[^\d]/g, ""));
         }, 0);
 

@@ -1,5 +1,5 @@
 const Customer = require("../models/customer")
-const {Bills, insertBill} = require("../models/bill")
+const {Bills, insertBill} = require("../models/bill");
 const styles = require('../helpers/stylesheetsConfig');
 const scripts = require('../helpers/javascriptConfig');
 
