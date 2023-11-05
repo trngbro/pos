@@ -1,84 +1,77 @@
+const assert = require('assert');
 const chai = require('chai');
+chai.use(require('chai-string'));
 const expect = chai.expect;
-const { password_hash, encode, decode } = require("../../api/v1/helpers/crypto");
+const { formatCurrency, getStaffNameFromSalerData, toUnicodeEscapedString, fromUnicodeEscapedString, equalStringWithString } = require('../../test/helpers/functionalHelper');
 
-describe('password_hash', () => {
-  it('should return an empty string when called without input', () => {
-    const result = password_hash();
-    expect(result).to.equal(undefined); 
-  });
-    
-  it('should return a non-empty string when called with a string input', () => {
-    const result = password_hash('abc123');
-    expect(result).to.be.a('string');
-    expect(result).to.not.equal('');
-  });
+// Kiểm tra hàm formatCurrency
+describe('formatCurrency', function () {
+    it('should format a number as currency', function () {
+        const formattedValue = formatCurrency(1000000);
+        expect(formattedValue).to.include('1.000.000');
+    });
 
-  it('should return a non-empty string when called with different input types', () => {
-    const result1 = password_hash(123);
-    const result2 = password_hash({ key: 'value' });
+    it('should convert and format a string as currency', function () {
+        const formattedValue = formatCurrency('1500000');
+        expect(formattedValue).to.include('1.500.000');
+    });
 
-    expect(result1).to.be.a('string');
-    expect(result1).to.not.equal('');
-
-    expect(result2).to.be.a('string');
-    expect(result2).to.not.equal('');
-  });
+    it('should return the same value if it is not a number or a string', function () {
+        const value = { prop: 'value' };
+        const result = formatCurrency(value);
+        expect(result).to.equal(value);
+    });
 });
 
-describe('encode', () => {
-  it('should return a string when called without input', () => {
-    const result = encode();
-    expect(result).to.be.a('string');
-  });
+// Kiểm tra hàm getStaffNameFromSalerData
+describe('getStaffNameFromSalerData', function () {
+    it('should extract staff name from a string with "<<>>"', function () {
+        const staffName = getStaffNameFromSalerData('Giang<<>>Nghia');
+        assert.strictEqual(staffName, 'Giang');
+    });
 
-  it('should return a string when called with empty strings', () => {
-    const result = encode('', '', '', '');
-    expect(result).to.be.a('string');
-  });
-
-  it('should return a string when called with mixed input types', () => {
-    const result1 = encode(123, { name: 'John' }, 'type', 456);
-    const result2 = encode('123', '[object Object]', 'type', '456');
-
-    expect(result1).to.be.a('string');
-    expect(result2).to.be.a('string');
-  });
+    it('should return a default value if the input is not a string', function () {
+        const result = getStaffNameFromSalerData(12345);
+        assert.strictEqual(result, 'name');
+    });
 });
 
-describe('decode', () => {
-  it('should throw an error when called with an invalid input', () => {
-    expect(() => decode('invalidString')).to.throw();
-  });
+// Kiểm tra hàm toUnicodeEscapedString và fromUnicodeEscapedString
+describe('Unicode Escaped String', function () {
+    it('should convert a string to a Unicode-escaped string', function () {
+        const escapedString = toUnicodeEscapedString('Hello');
+        assert.strictEqual(escapedString.toLowerCase(), '\\u0048\\u0065\\u006c\\u006c\\u006f'.toLowerCase());
+    });
 
-  it('should return an object with uid, name, type, and status when called with a valid input', () => {
-    const result = decode('b3AxOm9wMjpvcDM6b3A0');
-    expect(result).to.deep.equal({ uid: 'op1', name: 'op2', type: 'op3', status: 'op4' });
-  });
+    it('should convert a Unicode-escaped string back to the original string', function () {
+        const originalString = fromUnicodeEscapedString('\\u0048\\u0065\\u006c\\u006c\\u006f');
+        assert.strictEqual(originalString, 'Hello');
+    });
 });
 
-describe('cross-checking', () => {
-  it('encode() multiple times should return the same result', () => {
-    const input = ['uid', 'name', 'type', 'status'];
-    const result1 = encode(...input);
-    const result2 = encode(...input);
-    expect(result1).to.equal(result2);
-  });
+// Kiểm tra hàm equalStringWithString
+describe('equalStringWithString', function () {
+    it('should call the true block if two strings are equal', function () {
+        const result = equalStringWithString('abc', 'abc', {
+            fn: function () {
+                return 'true block';
+            },
+            inverse: function () {
+                return 'false block';
+            },
+        });
+        assert.strictEqual(result, 'true block');
+    });
 
-  it('decode() multiple times should return the same result', () => {
-    const input = 'b3AxOm9wMjpvcDM6b3A0';
-    const result1 = decode(input);
-    const result2 = decode(input);
-    expect(result1).to.deep.equal(result2);
-  });
-
-  it('encode(decode()) should equal to encode()', () => {
-    const input = ['uid', 'name', 'type', 'status'];
-    const encodedInput = encode(...input);
-    const decodedInput = decode(encodedInput);
-    const result = encode(...input);
-
-    expect(encodedInput).to.equal(result);
-    expect(decodedInput).to.deep.equal({ uid: 'uid', name: 'name', type: 'type', status: 'status' });
-  });
+    it('should call the false block if two strings are not equal', function () {
+        const result = equalStringWithString('abc', 'def', {
+            fn: function () {
+                return 'true block';
+            },
+            inverse: function () {
+                return 'false block';
+            },
+        });
+        assert.strictEqual(result, 'false block');
+    });
 });
