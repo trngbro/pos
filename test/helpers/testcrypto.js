@@ -2,22 +2,30 @@ const chai = require('chai');
 const expect = chai.expect;
 const { password_hash, encode, decode } = require("../../api/v1/helpers/crypto");
 
+// Đoạn code kiểm tra hàm password_hash
 describe('password_hash', () => {
   it('should return an empty string when called without input', () => {
+    // Gọi hàm password_hash mà không có đầu vào
     const result = password_hash();
+    // Kiểm tra kết quả trả về là undefined (mã hoá mật khẩu mà không có đầu vào)
     expect(result).to.equal(undefined); 
   });
     
   it('should return a non-empty string when called with a string input', () => {
+    // Gọi hàm password_hash với đầu vào là một chuỗi
     const result = password_hash('abc123');
+    // Kiểm tra rằng kết quả trả về là một chuỗi (mã hoá mật khẩu)
     expect(result).to.be.a('string');
+    // Kiểm tra rằng kết quả trả về không rỗng
     expect(result).to.not.equal('');
   });
 
   it('should return a non-empty string when called with different input types', () => {
+    // Gọi hàm password_hash với đầu vào là một số
     const result1 = password_hash(123);
+    // Gọi hàm password_hash với đầu vào là một đối tượng
     const result2 = password_hash({ key: 'value' });
-
+    // Kiểm tra rằng cả hai kết quả trả về là chuỗi và không rỗng(mã hoá mật khẩu)
     expect(result1).to.be.a('string');
     expect(result1).to.not.equal('');
 
@@ -25,7 +33,7 @@ describe('password_hash', () => {
     expect(result2).to.not.equal('');
   });
 });
-
+// Tương tự cho các phần kiểm tra encode và decode
 describe('encode', () => {
   it('should return a string when called without input', () => {
     const result = encode();
@@ -56,7 +64,7 @@ describe('decode', () => {
     expect(result).to.deep.equal({ uid: 'op1', name: 'op2', type: 'op3', status: 'op4' });
   });
 });
-
+// Phần cross-checking kiểm tra sự nhất quán giữa encode và decode
 describe('cross-checking', () => {
   it('encode() multiple times should return the same result', () => {
     const input = ['uid', 'name', 'type', 'status'];
