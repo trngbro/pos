@@ -5,7 +5,6 @@ const expect = chai.expect;
 const { formatCurrency, getStaffNameFromSalerData, toUnicodeEscapedString, fromUnicodeEscapedString, equalStringWithString } = require('../../test/helpers/functionalHelper');
 
 // Kiểm tra hàm formatCurrency
-// Kiểm tra hàm formatCurrency
 describe('formatCurrency', function () {
     it('should format a number as currency', function () {
         const formattedValue = formatCurrency(1000000);
@@ -23,7 +22,6 @@ describe('formatCurrency', function () {
         expect(result).to.equal(value);
     });
 });
-
 
 // Kiểm tra hàm getStaffNameFromSalerData
 describe('getStaffNameFromSalerData', function () {
