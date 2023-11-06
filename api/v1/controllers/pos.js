@@ -99,13 +99,13 @@ const posControllers = {
         try {
             const value = await Products.findOne({barcode:req.body.barcode})
             if(value){
-                res.status(200).send(JSON.parse(value));
+                res.status(200).send(JSON.stringify(value));
             }
             else {
                 res.status(404).send("Notfound");
             }
         } catch (error) {
-            res.status(400).send("{error}")
+            res.status(400).send("Fail")
         }
     }
 }

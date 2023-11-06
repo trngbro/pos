@@ -139,6 +139,78 @@ $(document).ready(function() {
     // Lấy giá trị nhập vào ô tìm kiếm
     var searchText = $(this).val().toLowerCase();
 
+    if(/^\d{13}$/.test(searchText)){
+      var $col3Elements = $("div.col-md-3").filter(function() {
+        return $(this).find(".product-id").text() === searchText;
+      });
+      $col3Elements.each(function() {
+        var $col3 = $(this);
+        
+        // Lấy thông tin sản phẩm từ các phần tử con trong $col3
+        var productName = $col3.find(".title").text();
+        var price = $col3.find(".price-new").text();
+        var productImage = $col3.find("img").attr("src");
+        var productId = $col3.find(".product-id").text();
+
+        var existingRow = $("#cart tr[data-product-id='" + productId + "']");
+        
+        if (existingRow.length) {
+          var quantityCell = existingRow.find(".quantity");
+          var currentQuantity = parseInt(quantityCell.text());
+          quantityCell.text(currentQuantity + 1);
+    
+          var priceCell = existingRow.find(".a-price");
+          var subPriceCell = existingRow.find(".sub-price");
+          var currentPrice = parseInt(subPriceCell.text().replace(/[^0-9]/g, '')) + parseInt(priceCell.text().replace(/[^0-9]/g, ''));
+          existingRow.find(".sub-price").text(currentPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
+        } 
+        else {
+          var newRow = $("<tr data-product-id='" + productId + "'>");
+          newRow.html(
+            `
+              <td>
+                <figure class="media">
+                
+                  <div class="img-wrap"><img src="`+ productImage +`" class="img-thumbnail img-xs"></div>
+                  <figcaption class="media-body">
+                    <h6 class="title text-truncate"> ` + productName + ` </h6>
+                  </figcaption>
+                </figure>
+              </td>
+              <td class="text-center">
+                <div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
+                  <button type="button" class="m-btn btn btn-default minus"><i class="fa fa-minus"></i></button>
+                  <button type="button" class="m-btn btn btn-default quantity" disabled>1</button>
+                  <button type="button" class="m-btn btn btn-default plus"><i class="fa fa-plus"></i></button>
+                </div>
+              </td>
+              <td>
+                <div class="price-wrap">
+                  <var class="sub-price">` + price +`</var>
+                  <span class="a-price" style="display: none;">` + price + `</span>
+                </div> <!-- price-wrap .// -->
+              </td>
+              <td class="text-right">
+                <a href="" class="btn btn-outline-danger delete-from-cart"> <i class="fa fa-trash"></i></a>
+              </td>
+            `
+            );
+    
+    
+          // Thêm sản phẩm vào giỏ hàng (thẻ có id "cart")
+          $("#cart").append(newRow);
+          
+        }
+        calculateReciept();
+      })
+
+      if($col3Elements){
+        alert("Please check again")
+      }
+
+      $(this).val("")
+    }
+
     // Lọc và hiển thị sản phẩm dựa trên giá trị tìm kiếm
     $('.col-md-3').each(function () {
         var title = $(this).find('.title').text().toLowerCase();
@@ -154,15 +226,7 @@ $(document).ready(function() {
     // Lấy giá trị nhập vào ô tìm kiếm
     event.preventDefault();
     searchValue = $('#search-input').val();
-    $.get(`/pos/getProductByBarcode`, {barcode:searchValue}, function (data) {
-      if (data === "Fail") {
-          
-      } else if(data == "Notfound") {
-          alert("Product do not exist")
-      } else {
-
-      }
-    })
+    
   })
 });
 
