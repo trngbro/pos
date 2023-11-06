@@ -212,7 +212,7 @@ document.getElementById("printOutReciept").onclick = function () {
   const formatttm = parseInt(totalAmount.replace(/[^\d]/g, ""))
   console.log(formatttm)
   $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: formatttm, customerPhone:customerPhone, userLogs: getCookie("userLog") }, function (data) {
-    if (data && data.status === 200) {
+    if (data === "Done") {
       console.log("Receipt data received successfully.");
       printElement(document.getElementById("printAreaContent"));
     } else {

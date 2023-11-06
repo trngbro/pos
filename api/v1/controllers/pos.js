@@ -73,7 +73,7 @@ const posControllers = {
                 await Products.findByIdAndUpdate(temp._id, {qty: newQty, sold: newSold})
             })
 
-            res.status(200);
+            res.status(200).send("Done");
         } catch (error) {
             res.status(404).json({ name: "Not found customer" });
         }   
