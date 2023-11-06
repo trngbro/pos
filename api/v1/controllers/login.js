@@ -7,6 +7,7 @@ const crypto_fromLib = require('crypto');
 const loginController = {
     rederLoginPage: (req, res) => {
         try {
+            console.log(req.url)
             if(req.cookies.userLog){
                 res.redirect('home')
             }
@@ -15,6 +16,13 @@ const loginController = {
             }
         } catch (error) {
             res.redirect('logout');
+        }
+    },
+    renderPage: (req, res) => {
+        try {
+            res.redirect('../logout');
+        } catch (error) {
+            res.redirect('../logout');
         }
     },
     loginChecking: async (req, res) => {
@@ -143,13 +151,13 @@ const loginController = {
     verifyAccount: async (req, res, next) => {
         try {
             const user = await Users.findOne({ _id: req.params.id });
-            if (!user) return res.status(400).send("Invalid link");
+            if (!user) return res.render("blocking", {layout: false});
         
             const token = await Token.findOne({
               userId: user._id,
               token: req.params.token,
             });
-            if (!token) return res.status(400).send("Invalid link");
+            if (!token) return res.render("blocking", {layout: false});
 
         
             await Users.findByIdAndUpdate(user._id, { status: "notchange" });

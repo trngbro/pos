@@ -19,6 +19,7 @@
 <body class="nav-md">
   <div class="container body">
     <div class="main_container">
+      {{#unless isOff}}
       <div class="col-md-3 left_col">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
@@ -132,6 +133,8 @@
           <!-- /menu footer buttons -->
         </div>
       </div>
+      {{/unless}}
+
 
       <!-- top navigation -->
       <div class="top_nav">
@@ -147,7 +150,7 @@
                   <img class="userImageFromCookieByBase64" style="max-width: 30px;" src="">
                 </a>
                 <div class="dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="javascript:;"> Profile</a>
+                  <a class="dropdown-item" href="./user"> Profile</a>
                   <a class="dropdown-item" href="javascript:;">
                     <span class="badge bg-red pull-right">50%</span>
                     <span>KPI</span>

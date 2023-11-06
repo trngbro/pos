@@ -92,6 +92,8 @@ const productController = {
         try {
             const { name, ogprice, saleprice, category, categoryID, base64Image } = req.body;
 
+            console.log(name, ogprice, saleprice, category, categoryID, base64Image)
+
             const product = new Products({
                 barcode: await generate.generateUniqueBarcode(),
                 name: name,

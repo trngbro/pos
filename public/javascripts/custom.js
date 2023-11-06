@@ -6078,16 +6078,20 @@ $(document).ready(function () {
 
                     // Lấy dữ liệu ảnh với chất lượng giảm
                     const base64Image = canvas.toDataURL('image/jpeg', 0.2); // Chỉnh số 0.7 cho chất lượng mong muốn
-
-                    // Đặt giá trị vào trường ẩn
-                    $('<input>').attr({
-                        type: 'hidden',
-                        name: 'base64Image',
-                        value: base64Image
-                    }).appendTo('#addProductForm');
-
-                    // Gỡ bỏ sự kiện submit và gửi lại form
-                    $('#addProductForm').unbind('submit').submit();
+                    if (base64Image && base64Image.length > 0) {
+                        // Đặt giá trị vào trường ẩn
+                        $('<input>').attr({
+                            type: 'hidden',
+                            name: 'base64Image',
+                            value: base64Image
+                        }).appendTo('#addProductForm');
+                        
+                        // Gỡ bỏ sự kiện submit và gửi lại form
+                        $('#addProductForm').unbind('submit').submit();
+                    } else {
+                        // Xử lý khi không thể lấy mã Base64, ví dụ:
+                        alert('Do not support this file, please choose image raw');
+                    }
                 };
             };
             reader.readAsDataURL(fileInput);
@@ -6166,7 +6170,7 @@ $(document).ready(function () {
             return;
         }
 
-        // Thực hiện POST request đến /changePassword
+        // Thực hiện POST request đến /changePassword 
         console.log("Pass")
         $.ajax({
             type: "POST",
@@ -6179,12 +6183,13 @@ $(document).ready(function () {
             },
             success: function (data) {
                 console.log(data);
-                if (data && data.status === 200) {
-                    alert("Sửa mật khẩu thành công.");
-                } else if (data && data.status === 403) {
-                    alert("Thông tin nhập vào không hợp lệ.");
-                } else if (data && data.status === 401) {
-                    alert("Mật khẩu cũ không chính xác.");
+                if (data == "Wrong old password") {
+                    alert("Mật khẩu cũ không hợp lệ");
+                } else if (data == "Successed") {
+                    alert("Đổi mật khẩu thành công.");
+                    $("#changePasswordform").modal("hide");
+                } else if (data == "Mistake") {
+                    alert("Các mật khẩu mới không chính xác");
                 } else {
                     alert("Lỗi khi đổi mật khẩu.");
                 }
@@ -6262,10 +6267,17 @@ function sendImageData(userId, base64Image) {
         uid: userId,
         image: base64Image
     }, function (data) {
-        if (data && data.status === 200) {
+        if (data == "Successed") {
             alert("Hình ảnh đã được thay đổi thành công.");
+            $(".profile-avatar").attr('src', base64Image);
+            $(".userImageFromCookieByBase64").attr('src', base64Image);
+            localStorage.setItem("image", base64Image);
+            $("#changeImageform").modal('hide');
+
+        } else if (data == "Fail") {
+            alert("Không thể thay đổi ảnh này");
         } else {
-            alert("Có lỗi xảy ra khi thay đổi hình ảnh.");
+            alert("Có lỗi xảy ra khi thay đổi hình ảnh.")
         }
     });
 }

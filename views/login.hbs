@@ -23,7 +23,11 @@
     <!-- Custom Theme Style -->
     <link href="stylesheets/custom.min.css" rel="stylesheet">
 
-    <script src="javascripts/script.js"></script>
+    <script src="javascripts/sample.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   </head>
 
   <body class="login">
@@ -96,8 +100,10 @@
         </div>
       </div>
     </div>
-    <div id="loginFailAlertForLogin" class="alert alert-danger" style="display:none; position: fixed; top: 50%; right: 0; width: 40%;">
-      <strong>Fail!</strong> Username or password are not correct.
+
+    <div id="loginFailAlertForLogin" class="alert alert-danger alert-dismissible fade in" style="display:none; position: fixed; top: 5%; right: 5%; width: 40%;">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+      <strong>Error!</strong> Login infomation are wrong.
     </div>
   </body>
 </html>

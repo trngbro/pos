@@ -378,3 +378,18 @@ $(document).ready(function () {
       $("#customerFindedID").text("");
   });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (window.location.pathname === '/logout') {
+      localStorage.clear();
+  }
+
+  var image = localStorage.getItem("image");
+  var name = localStorage.getItem("name");
+
+  if (image && name) {
+      $(".userImageFromCookieByBase64").attr("src", image);
+      $(".profile_info strong").text(name);
+  } else {
+  }
+})

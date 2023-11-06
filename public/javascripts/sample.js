@@ -25,3 +25,21 @@ $(document).ready(function() {
     }
   });
 });
+
+
+$(document).ready(function() {
+  if (window.location.search.includes("?login=password-or-username-be-not-correct")) {
+    $("#loginFailAlertForLogin").show();
+    $(".login_content input").css("color", "red")
+  }
+
+  $(".login_content input").on("input", function(){
+    $(".login_content input").css("color", "#000")
+    $("#loginFailAlertForLogin").hide();
+  })
+
+  $("#loginFailAlertForLogin .close").click(function(){
+    $(".login_content input").css("color", "#000")
+    $("#loginFailAlertForLogin").hide();
+  })
+});

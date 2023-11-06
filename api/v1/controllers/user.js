@@ -10,6 +10,7 @@ const userControllers = {
             const thisUser = await Users.findById(crypto.decode(req.cookies.userLog).uid)
             res.render("userInfoPage", {
                 pathIsLevelTwo: false,
+                isOff: true,
                 stylesheets: styles.homeCSS,
                 javascripts: scripts.homeJS,
                 userId: thisUser._id,
@@ -20,7 +21,7 @@ const userControllers = {
             })  
         } catch (error) {
             res.render("userInfoPage", {
-                pathIsLevelTwo: false,
+                pathIsLevelTwo: true,
                 stylesheets: styles.homeCSS,
                 javascripts: scripts.homeJS,
                 userId: "empty",
@@ -38,18 +39,17 @@ const userControllers = {
     
             if (newPassword === confirmPassword) {
                 // Kiểm tra xem người dùng có tồn tại và mật khẩu cũ đúng không
-                const user = await Users.find({ id: uid, password: crypto.password_hash(oldPassword) });
-    
+                const user = await Users.findOne({ _id: uid, password: crypto.password_hash(oldPassword) }).exec();
                 if (user) {
                     // Cập nhật mật khẩu mới
-                    const thisu = await Users.findOneAndUpdate({ id: uid }, { password: crypto.password_hash(newPassword) });
-                    console.log(thisu)
-                    res.status(200).json({ status: 200, message: "Sửa mật khẩu thành công." });
+                    const thisu = await Users.findOneAndUpdate({ _id: user._id }, { password: crypto.password_hash(newPassword) });
+                    
+                    res.status(200).send("Successed");
                 } else {
-                    res.status(401).json({ status: 401, message: "Mật khẩu cũ không chính xác." });
+                    res.status(401).send("Wrong old password");
                 }
             } else {
-                res.status(403).json({ status: 403, message: "Mật khẩu mới và xác nhận mật khẩu không khớp." });
+                res.status(403).send("Mistake");
             }
         } catch (error) {
             res.status(500).json({ status: 500, message: "Lỗi khi đổi mật khẩu." });
@@ -61,18 +61,12 @@ const userControllers = {
             const { uid, image } = req.body;
     
             if (uid) {
-                // Kiểm tra xem người dùng có tồn tại và mật khẩu cũ đúng không
-                const user = await Users.findById(uid);
-                
-                console.log(req.body.image)
-    
-                await Users.findOneAndUpdate({ id: uid }, { image: image });
-                res.status(200).json({ status: 200, message: "Cập nhật hình thành công." });
-
-                console.log(await Users.findById(uid))
+                const u = await Users.findOneAndUpdate({ _id: uid }, { image: image });
+                console.log(u.image)
+                res.status(200).send("Successed");
                 
             } else {
-                res.status(403).json({ status: 403, message: "Người dùng hiện không cập nhật được hình ảnh" });
+                res.status(403).send("Fail");
             }
         } catch (error) {
             res.status(500).json({ status: 500, message: "Lỗi khi cập nhật hình ảnh" });
