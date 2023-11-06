@@ -6,9 +6,7 @@
     "start": "nodemon ./bin/www",
     "dev": "nodemon ./bin/www",
     "demo": "node demo",
-    "test": "mocha test/helpers/ && mocha",
-    "testHelper": "mocha test/helpers/",
-    "__comment__": "npm run testHelper --for testHelper script"
+    "test": "mocha 'test/**/*.js'"
   },
   "dependencies": {
     "base-64": "^1.0.0",
@@ -30,7 +28,9 @@
     "mongoose": "^7.6.3",
     "morgan": "~1.9.1",
     "nodemailer": "^6.9.7",
-    "nodemon": "^3.0.1"
+    "nodemailer-stub-transport": "^1.1.0",
+    "nodemon": "^3.0.1",
+    "sinon": "^17.0.1"
   },
   "devDependencies": {
     "chai": "^4.3.10",
