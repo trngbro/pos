@@ -1,4 +1,4 @@
-const Category = require('../models/category'); 
+const Category = require('../models/category');
 
 async function getCategoryIdFromName(category) {
     try {
@@ -18,13 +18,13 @@ function validateFormProduct(req, res, next) {
             if (validCategoryNames == null) {
                 console.log("1")
                 next('route');
-            } else if(! /^-?\d*\.?\d+$/.test(ogprice)){
+            } else if (! /^-?\d*\.?\d+$/.test(ogprice)) {
                 console.log("2")
                 next('route');
-            } else if(! /^-?\d*\.?\d+$/.test(saleprice)){
+            } else if (! /^-?\d*\.?\d+$/.test(saleprice)) {
                 console.log("3")
                 next('route');
-            } else if(! base64Image.startsWith("data:image/jpeg;base64")){
+            } else if (!base64Image.startsWith("data:image/jpeg;base64")) {
                 console.log("4")
                 next('route');
             } else {
@@ -35,10 +35,10 @@ function validateFormProduct(req, res, next) {
                 next();
             }
         }
-    )
-    .catch((error) => {
-        throw error;
-    });
+        )
+        .catch((error) => {
+            throw error;
+        });
 }
 
 module.exports = validateFormProduct;

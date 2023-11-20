@@ -52,7 +52,7 @@ const productController = {
                     id: element._id
                 })
             });
-            
+
             res.render("productForm", {
                 pathIsLevelTwo: true,
                 stylesheets: styles.formCSS,
@@ -65,17 +65,17 @@ const productController = {
     },
     deleteProduct: async (req, res) => {
         const barcode = req.params.barcode;
-        
+
         Products.findOne({ barcode: barcode })
             .then(async (product) => {
                 if (!product) {
                     return res.status(404).send('Product not found.');
                 }
-                
+
                 if (product.sold > 0) {
                     return res.status(401).send('Product cannot be deleted as it has been sold.');
                 }
-    
+
                 const result = await Products.findOneAndDelete({ barcode: barcode });
                 if (result) {
                     return res.status(200).send();
@@ -87,7 +87,7 @@ const productController = {
                 res.status(500).send('Internal Server Error');
             });
     },
-    
+
     addProduct: async (req, res) => {
         try {
             const { name, ogprice, saleprice, category, categoryID, base64Image } = req.body;
@@ -123,7 +123,7 @@ const productController = {
     updateProduct: async (req, res) => {
         console.log(req.body)
         try {
-            await Products.findOneAndUpdate({barcode: req.body.pid}, {name: req.body.name, salePrice: req.body.salePrice})
+            await Products.findOneAndUpdate({ barcode: req.body.pid }, { name: req.body.name, salePrice: req.body.salePrice })
             console.log("Pass yet")
             res.status(200).send("Successed")
         } catch (error) {

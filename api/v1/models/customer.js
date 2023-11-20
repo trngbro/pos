@@ -15,23 +15,23 @@ const customerSchema = new mongoose.Schema({
     history: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Bill",
-    }, ],
+    },],
 });
 
-const Customer =  mongoose.model("Customer", customerSchema);
+const Customer = mongoose.model("Customer", customerSchema);
 
 const sampleCustomers = [
     {
-      phone: "0947605644",
-      name: "Nguyễn Trung Nghĩa",
-      address: "29 Đường 81, Phường Tân Quy, Quận 7, Hồ Chí MInh",
-      history: []
+        phone: "0947605644",
+        name: "Nguyễn Trung Nghĩa",
+        address: "29 Đường 81, Phường Tân Quy, Quận 7, Hồ Chí MInh",
+        history: []
     },
     {
-      phone: "0943456789",
-      name: "Phạm Nhật Vượng",
-      address: "Landmark 81, Quận Bình Thạnh, Hồ Chí MInh",
-      history: []
+        phone: "0943456789",
+        name: "Phạm Nhật Vượng",
+        address: "Landmark 81, Quận Bình Thạnh, Hồ Chí MInh",
+        history: []
     }
 ];
 

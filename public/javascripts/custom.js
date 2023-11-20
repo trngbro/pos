@@ -711,8 +711,8 @@ function init_skycons() {
     console.log('init_skycons');
 
     var icons = new Skycons({
-            "color": "#73879C"
-        }),
+        "color": "#73879C"
+    }),
         list = [
             "clear-day", "clear-night", "partly-cloudy-day",
             "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
@@ -1317,7 +1317,7 @@ function init_parsley() {
 
     try {
         hljs.initHighlightingOnLoad();
-    } catch (err) {}
+    } catch (err) { }
 
 };
 
@@ -1382,9 +1382,9 @@ function init_wysiwyg() {
 
     function init_ToolbarBootstrapBindings() {
         var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                'Times New Roman', 'Verdana'
-            ],
+            'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+            'Times New Roman', 'Verdana'
+        ],
             fontTarget = $('[title=Font]').siblings('.dropdown-menu');
         $.each(fonts, function (idx, fontName) {
             fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
@@ -1393,8 +1393,8 @@ function init_wysiwyg() {
             container: 'body'
         });
         $('.dropdown-menu input').click(function () {
-                return false;
-            })
+            return false;
+        })
             .change(function () {
                 $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
             })
@@ -3021,11 +3021,11 @@ function init_calendar() {
 
                 if (title) {
                     calendar.fullCalendar('renderEvent', {
-                            title: title,
-                            start: started,
-                            end: end,
-                            allDay: allDay
-                        },
+                        title: title,
+                        start: started,
+                        end: end,
+                        allDay: allDay
+                    },
                         true // make the event "stick"
                     );
                 }
@@ -3102,25 +3102,25 @@ function init_DataTables() {
             $("#datatable-buttons").DataTable({
                 dom: "Blfrtip",
                 buttons: [{
-                        extend: "copy",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "csv",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "excel",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "pdfHtml5",
-                        className: "btn-sm"
-                    },
-                    {
-                        extend: "print",
-                        className: "btn-sm"
-                    },
+                    extend: "copy",
+                    className: "btn-sm"
+                },
+                {
+                    extend: "csv",
+                    className: "btn-sm"
+                },
+                {
+                    extend: "excel",
+                    className: "btn-sm"
+                },
+                {
+                    extend: "pdfHtml5",
+                    className: "btn-sm"
+                },
+                {
+                    extend: "print",
+                    className: "btn-sm"
+                },
                 ],
                 responsive: true
             });
@@ -5811,7 +5811,7 @@ $(document).ready(function () {
             $(`p.${mailPrefix}.userStatus`).text('block');
         } else if ($(`p.${mailPrefix}.userStatus`).text("") == "block") {
             $(`p.${mailPrefix}.userStatus`).text("active")
-        } else {}
+        } else { }
         $('#toggle').modal('hide');
     })
 
@@ -5890,8 +5890,8 @@ $(document).ready(function () {
     $("#delete .confirmedDeletedProduct").click(function () {
         const dataText = $('#d-data').text().split(" - ")[0];
         fetch(`/products/${dataText}`, {
-                method: 'DELETE',
-            })
+            method: 'DELETE',
+        })
             .then(response => {
                 if (response.status === 401) {
                     alert("Do not delete this product because it is sold")
@@ -6015,14 +6015,14 @@ $(document).ready(function () {
                 var tableBody = $("#detail table tbody");
                 tableBody.empty();
 
-                detail.products.forEach(item => 
+                detail.products.forEach(item =>
                     tableBody.append(
                         `<tr>
                             <td>${item._id}</td>
                             <td>${item.productBarcode}</td>
                             <td>` + item.qty || "1" + `</td>
                         </tr>`
-                ));
+                    ));
             }
         })
     });
@@ -6085,7 +6085,7 @@ $(document).ready(function () {
                             name: 'base64Image',
                             value: base64Image
                         }).appendTo('#addProductForm');
-                        
+
                         // Gỡ bỏ sự kiện submit và gửi lại form
                         $('#addProductForm').unbind('submit').submit();
                     } else {

@@ -1,7 +1,7 @@
 const base64 = require('base-64');
 
 function password_hash(inputString) {
-    if(inputString === undefined)   return inputString
+    if (inputString === undefined) return inputString
     const rotateLeft = (value, shift) => (value << shift) | (value >>> (32 - shift));
 
     const words = [];

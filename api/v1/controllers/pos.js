@@ -41,7 +41,7 @@ const posControllers = {
             })
         } catch (error) {
             res.render('error')
-        }   
+        }
     },
 
     payloadCustomer: async (req, res) => {
@@ -55,28 +55,28 @@ const posControllers = {
             }
         } catch (error) {
             res.status(404).json({ name: "Not found customer" });
-        }   
+        }
     },
 
     makeANewReciept: async (req, res) => {
         try {
-            const {products, totalAmount, customerPhone, userLogs} = req.body;
+            const { products, totalAmount, customerPhone, userLogs } = req.body;
 
             await insertBill(JSON.parse(products), customerPhone, userLogs);
 
             console.log(products)
 
             JSON.parse(products).forEach(async product => {
-                const temp = await Products.findOne({barcode: product.product_id})
+                const temp = await Products.findOne({ barcode: product.product_id })
                 const newQty = parseInt(temp.qty) - parseInt(product.quantity)
                 const newSold = parseInt(temp.sold) + parseInt(product.quantity)
-                await Products.findByIdAndUpdate(temp._id, {qty: newQty, sold: newSold})
+                await Products.findByIdAndUpdate(temp._id, { qty: newQty, sold: newSold })
             })
 
             res.status(200).send("Done");
         } catch (error) {
             res.status(404).json({ name: "Not found customer" });
-        }   
+        }
     },
 
     addCustomerIfNotExist: async (req, res) => {
@@ -88,7 +88,7 @@ const posControllers = {
             })
 
             await customer.save();
-            
+
             res.status(200).send("Successed")
         } catch (error) {
             res.status(400).send("{error}")
@@ -97,8 +97,8 @@ const posControllers = {
 
     getProductByBarcode: async (req, res) => {
         try {
-            const value = await Products.findOne({barcode:req.body.barcode})
-            if(value){
+            const value = await Products.findOne({ barcode: req.body.barcode })
+            if (value) {
                 res.status(200).send(JSON.stringify(value));
             }
             else {

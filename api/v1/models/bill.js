@@ -20,7 +20,7 @@ async function insertBill(products, phoneNumber, userLogs) {
     const salerData = cryto.decode(decodeURIComponent(userLogs));
 
     const saler = salerData.name + "<<>>" + salerData.uid;
-    
+
     try {
         const customerID = await getCustomerIDFromPhoneNumber(phoneNumber);
         if (!customerID) {
@@ -66,7 +66,7 @@ const billSchema = new mongoose.Schema({
     products: [{
         productBarcode: String,
         qty: String,
-    }, ],
+    },],
     total: {
         type: Number,
         required: true,
@@ -132,4 +132,4 @@ const Bills = mongoose.model("Bill", billSchema);
 
 // insertSampleBills();
 
-module.exports = {Bills, insertBill};
+module.exports = { Bills, insertBill };

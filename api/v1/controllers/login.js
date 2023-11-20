@@ -1,4 +1,4 @@
-const {Users, validate} = require("../models/user");
+const { Users, validate } = require("../models/user");
 const Token = require("../models/token")
 const crypto = require("../helpers/crypto")
 const sendEmail = require("../helpers/sendEmail")
@@ -8,11 +8,11 @@ const loginController = {
     rederLoginPage: (req, res) => {
         try {
             console.log(req.url)
-            if(req.cookies.userLog){
+            if (req.cookies.userLog) {
                 res.redirect('home')
             }
-            else{
-                res.render('login', {layout: false})
+            else {
+                res.render('login', { layout: false })
             }
         } catch (error) {
             res.redirect('logout');
@@ -27,8 +27,8 @@ const loginController = {
     },
     loginChecking: async (req, res) => {
         try {
-            const user = await Users.find({user: req.body.username, password: crypto.password_hash(req.body.password)}).exec();
-            if(user[0]._id){
+            const user = await Users.find({ user: req.body.username, password: crypto.password_hash(req.body.password) }).exec();
+            if (user[0]._id) {
                 console.log(user[0].id, user[0].name, user[0].type, user[0].status)
                 res.cookie('userLog', crypto.encode(user[0].id, user[0].name, user[0].type, user[0].status));
                 res.cookie('userName', user[0].name).cookie('userImageUser', user[0].image);
@@ -52,7 +52,7 @@ const loginController = {
             let user = await Users.findOne({ mail: req.body.mail });
             if (user)
                 return res.status(409).send("User with given email already exist!");
-            const detectUsername = function(email){
+            const detectUsername = function (email) {
                 return email.split('@')[0]
             }
             user = await new Users({
@@ -123,11 +123,11 @@ const loginController = {
                             <h2>Welcome to Cellphonez</h2>
                         </div>
                         <div class="content">
-                            <p>Hello `+ user.name +`,</p>
+                            <p>Hello `+ user.name + `,</p>
                             <p>We're excited to have you as part of our community. But before we get started, we need to confirm your email address to ensure the security of your account.</p>
                             <p><b>Please verify your email within the next 1 minute.</b></p>
                             <p><i>To verify your email, simply click the button below:<i></p>
-                            <a class="button" href="` + `${process.env.BASE_URL}/login/identify/${user.id}/${token.token}` +`">Verify My Email</a>
+                            <a class="button" href="` + `${process.env.BASE_URL}/login/identify/${user.id}/${token.token}` + `">Verify My Email</a>
                             
                             <p><span class="note">Note: This link is only valid for 1 minute.</span></p>
                             <p>Once you've verified your email, you'll have a part access to all the exciting features and content on CellphoneZ.</p>
@@ -151,19 +151,19 @@ const loginController = {
     verifyAccount: async (req, res, next) => {
         try {
             const user = await Users.findOne({ _id: req.params.id });
-            if (!user) return res.render("blocking", {layout: false});
-        
-            const token = await Token.findOne({
-              userId: user._id,
-              token: req.params.token,
-            });
-            if (!token) return res.render("blocking", {layout: false});
+            if (!user) return res.render("blocking", { layout: false });
 
-        
+            const token = await Token.findOne({
+                userId: user._id,
+                token: req.params.token,
+            });
+            if (!token) return res.render("blocking", { layout: false });
+
+
             await Users.findByIdAndUpdate(user._id, { status: "notchange" });
 
             await Token.findByIdAndRemove(token._id);
-        
+
             req.body = {
                 userIdMustChangePassword: user._id,
                 user: user.user,
@@ -186,10 +186,10 @@ const loginController = {
     },
     firstChangePassword: async (req, res) => {
         try {
-            if(!req.body.userIdMustChangePassword)  return res.status(303).json("êrror")
-            res.render("resetPassword", {layout: false, user: req.body.user, userId: req.body.userIdMustChangePassword})
+            if (!req.body.userIdMustChangePassword) return res.status(303).json("êrror")
+            res.render("resetPassword", { layout: false, user: req.body.user, userId: req.body.userIdMustChangePassword })
         } catch (error) {
-            
+
         }
     },
     changePasswordIfForgot: async (req, res) => {
@@ -256,11 +256,11 @@ const loginController = {
                             <h2>Welcome to Cellphonez</h2>
                         </div>
                         <div class="content">
-                            <p>Hello `+ user.name +`,</p>
+                            <p>Hello `+ user.name + `,</p>
                             <p>We received a request to reset your password. To reset your password.</p>
                             <p><b>Please verify your email within the next 1 minute.</b></p>
                             <p><i>To verify your email, simply click the button below:<i></p>
-                            <a class="button" href="` + `${process.env.BASE_URL}/login/resetPassword/${user.id}/${token.token}` +`">Reset Password</a>
+                            <a class="button" href="` + `${process.env.BASE_URL}/login/resetPassword/${user.id}/${token.token}` + `">Reset Password</a>
                             
                             <p><span class="note">Note: This link is only valid for 1 minute.</span></p>
                             <p>Once you've verified your email, you'll have a part access to all the exciting features and content on CellphoneZ.</p>
@@ -284,10 +284,10 @@ const loginController = {
     },
     changePassword: async (req, res) => {
         try {
-            if(!req.body.userIdMustChangePassword)  return res.status(303).json("êrror")
-            res.render("resetPassword", {layout: false, user: req.body.user, userId: req.body.userIdMustChangePassword})
+            if (!req.body.userIdMustChangePassword) return res.status(303).json("êrror")
+            res.render("resetPassword", { layout: false, user: req.body.user, userId: req.body.userIdMustChangePassword })
         } catch (error) {
-            
+
         }
     }
 }

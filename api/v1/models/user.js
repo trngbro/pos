@@ -35,14 +35,14 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.methods.getUserFullName = function () {
-  return `${this.name}`;
+    return `${this.name}`;
 };
 
 userSchema.methods.isInformation = function () {
     return `${this.status}`;
 };
 
-const Users =  mongoose.model('User', userSchema);
+const Users = mongoose.model('User', userSchema);
 
 const sampleUsers = [
     {
@@ -72,4 +72,4 @@ const validate = (user) => {
     return schema.validate(user);
 };
 
-module.exports = {Users, validate};
+module.exports = { Users, validate };

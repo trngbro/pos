@@ -8,9 +8,9 @@ describe('password_hash', () => {
     // Gọi hàm password_hash mà không có đầu vào
     const result = password_hash();
     // Kiểm tra kết quả trả về là undefined (mã hoá mật khẩu mà không có đầu vào)
-    expect(result).to.equal(undefined); 
+    expect(result).to.equal(undefined);
   });
-    
+
   it('should return a non-empty string when called with a string input', () => {
     // Gọi hàm password_hash với đầu vào là một chuỗi
     const result = password_hash('abc123');

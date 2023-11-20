@@ -5,7 +5,7 @@ const router = require("express").Router();
 
 router.get("/", loginController.rederLoginPage);
 router.post("", loginController.loginChecking);
-router.get("/verify", loginController.renderPage);        
+router.get("/verify", loginController.renderPage);
 router.post("/identify", isAdmin, loginController.identifyUser);        //tạo tài khoản mới
 router.get("/identify/:id/:token", loginController.verifyAccount, loginController.firstChangePassword);     //xác minh tài khoản mới và bắt đổi mật khẩu
 router.put("/identify", loginController.resetAccount)   //đổi mật khẩu và đổi trạng thái

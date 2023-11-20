@@ -8,7 +8,7 @@ const importingSchema = new mongoose.Schema({
             ref: "Product",
         },
         qty: String,
-    }, ],
+    },],
     dateCreated: {
         type: Date,
         default: Date.now,
@@ -16,4 +16,4 @@ const importingSchema = new mongoose.Schema({
     status: Boolean,
 });
 
-module.exports =  mongoose.model("Importing", importingSchema);
+module.exports = mongoose.model("Importing", importingSchema);

@@ -2,23 +2,23 @@ const crypto = require('../helpers/crypto');
 
 function authuAccount(req, res, next) {
     var userData = req.cookies.userLog;
-    if(!userData){
+    if (!userData) {
         res.redirect('logout');
     }
-    else{
-        if(crypto.decode(userData).status == "active"){
+    else {
+        if (crypto.decode(userData).status == "active") {
             next();
         }
-        else if(crypto.decode(userData).status == 'noaccess'){
+        else if (crypto.decode(userData).status == 'noaccess') {
             res.redirect('/blocking');
         }
-        else if(crypto.decode(userData).status == 'notchange'){
+        else if (crypto.decode(userData).status == 'notchange') {
             res.redirect('/login/verify');
-        } 
-        else if(crypto.decode(userData).status == 'block'){
+        }
+        else if (crypto.decode(userData).status == 'block') {
             res.redirect('/blocking');
         }
-        else{
+        else {
             res.redirect('notfound');
         }
     }

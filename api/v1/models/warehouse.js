@@ -12,4 +12,4 @@ const warehouseSchema = new mongoose.Schema({
     status: String,
 });
 
-module.exports =  mongoose.model("Warehouse", warehouseSchema);
+module.exports = mongoose.model("Warehouse", warehouseSchema);

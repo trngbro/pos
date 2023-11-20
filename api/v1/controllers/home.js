@@ -1,7 +1,7 @@
 const crypto = require('../helpers/crypto');
 const moment = require('moment')
-const {Bills, insertBill} = require("../models/bill");
-const {Users, validate} = require("../models/user");
+const { Bills, insertBill } = require("../models/bill");
+const { Users, validate } = require("../models/user");
 const Products = require("../models/product");
 
 const styles = require('../helpers/stylesheetsConfig')
@@ -13,7 +13,7 @@ const homeController = {
             pathIsLevelTwo: false,
             stylesheets: styles.homeCSS,
             javascripts: scripts.homeJS
-        })      
+        })
     },
     getRevenuesOnPickedTime: async (req, res) => {
         try {
@@ -29,8 +29,8 @@ const homeController = {
             res.status(200).send(JSON.stringify(filteredBills))
         } catch (error) {
             res.status(500).send("Fail")
-            
-        }  
+
+        }
     },
     getUserData: async (req, res) => {
         try {
@@ -38,8 +38,8 @@ const homeController = {
             res.status(200).send(JSON.stringify(user))
         } catch (error) {
             res.status(500).send("Fail")
-            
-        }  
+
+        }
     },
     getSalerOnPickedTime: async (req, res) => {
         try {
@@ -57,7 +57,7 @@ const homeController = {
 
             filteredBills.forEach((bill) => {
                 const saler = bill.saler;
-    
+
                 if (!salerInfo[saler]) {
                     salerInfo[saler] = {
                         totalBills: 1,
@@ -78,8 +78,8 @@ const homeController = {
             res.status(200).send(JSON.stringify(salerArray))
         } catch (error) {
             res.status(500).send("Fail")
-            
-        }  
+
+        }
     },
     getDataForChart: async (req, res) => {
         try {
@@ -90,12 +90,12 @@ const homeController = {
             function generateDateRange(startDate, endDate) {
                 const dateRange = [];
                 const currentDate = moment(startDate);
-        
+
                 while (currentDate.isSameOrBefore(endDate, 'day')) {
                     dateRange.push(currentDate.format('YYYY-MM-DD'));
                     currentDate.add(1, 'day');
                 }
-        
+
                 return dateRange;
             }
 
@@ -107,11 +107,11 @@ const homeController = {
 
             bills.forEach((bill) => {
                 const billDate = moment(bill.dateCreated).format('YYYY-MM-DD');
-        
+
                 if (!revenueByDay[billDate]) {
                     revenueByDay[billDate] = 0;
                 }
-        
+
                 revenueByDay[billDate] += bill.total;
             });
 
@@ -123,8 +123,8 @@ const homeController = {
             res.status(200).send(JSON.stringify(result))
         } catch (error) {
             res.status(500).send("Fail")
-            
-        }  
+
+        }
     },
     getDashboardData: async (req, res) => {
         try {
@@ -133,8 +133,8 @@ const homeController = {
             const currentDate = new Date();
 
             const startOfDay = moment(currentDate).startOf('day');
-            const endOfDay = moment(currentDate).endOf('day');     
-            
+            const endOfDay = moment(currentDate).endOf('day');
+
             const dailyBills = await Bills.find({
                 dateCreated: { $gte: startOfDay, $lte: endOfDay },
             });
@@ -149,7 +149,7 @@ const homeController = {
 
             const monthlyAmount = monthlyBills.reduce((total, bill) => total + bill.total, 0);
 
-            res.status(200).send(JSON.stringify({totalBills: bills.length, dailyAmount: dailyAmount, monthlyAmount: monthlyAmount, todayBills:dailyBills.length}))
+            res.status(200).send(JSON.stringify({ totalBills: bills.length, dailyAmount: dailyAmount, monthlyAmount: monthlyAmount, todayBills: dailyBills.length }))
         } catch (error) {
             res.status(500).send("Fail")
         }
@@ -160,14 +160,14 @@ const homeController = {
             const productSalesMap = {};
             bills.forEach((bill) => {
                 bill.products.forEach((product) => {
-                  const productId = product.productBarcode;
-                  const productQty = parseInt(product.qty) ? parseInt(product.qty) : 1;
-              
-                  if (productId in productSalesMap) {
-                    productSalesMap[productId] += productQty;
-                  } else {
-                    productSalesMap[productId] = productQty;
-                  }
+                    const productId = product.productBarcode;
+                    const productQty = parseInt(product.qty) ? parseInt(product.qty) : 1;
+
+                    if (productId in productSalesMap) {
+                        productSalesMap[productId] += productQty;
+                    } else {
+                        productSalesMap[productId] = productQty;
+                    }
                 });
             })
             const sortedProducts = Object.entries(productSalesMap).sort(
@@ -177,7 +177,7 @@ const homeController = {
             const topProducts = sortedProducts.slice(0, 4);
 
             const resultMap = await Promise.all(
-                topProducts.map(async([barcode, qty]) => {
+                topProducts.map(async ([barcode, qty]) => {
                     const product = await Products.findOne({ barcode: barcode });
                     return [product ? product.name : barcode, qty];
                 })
@@ -208,7 +208,7 @@ const homeController = {
 
             filteredBills.forEach((bill) => {
                 const saler = bill.saler;
-    
+
                 if (!salerInfo[saler]) {
                     salerInfo[saler] = {
                         totalBills: 1,
@@ -226,7 +226,7 @@ const homeController = {
                 totalBills: salerInfo[saler].totalBills,
                 totalSales: salerInfo[saler].totalSales,
             }));
-            
+
             res.status(200).send(JSON.stringify(salerArray))
         } catch (error) {
             res.status(500).send("Fail")

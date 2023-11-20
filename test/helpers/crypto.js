@@ -1,6 +1,6 @@
 const chai = require('chai');
 const expect = chai.expect;
-const { password_hash, encode, decode } = require("../../api/v1/helpers/crypto"); 
+const { password_hash, encode, decode } = require("../../api/v1/helpers/crypto");
 
 describe('password_hash', () => {
   it('should return an empty string when called without input', () => {
@@ -19,22 +19,22 @@ describe('password_hash', () => {
 });
 
 describe('encode', () => {
-    it('should return a string when called without input', () => {
-      const result = encode();
-      expect(result).to.be.a('string');
-    });
-  
-    it('should return a string when called with empty strings', () => {
-      const result = encode('', '', '', '');
-      expect(result).to.be.a('string');
-    });
-  
-    it('should return a string when called with mixed input types', () => {
-      const result1 = encode(123, { name: 'John' }, 'type', 456);
-      const result2 = encode('123', '[object Object]', 'type', '456');
-      expect(result1).to.be.a('string');
-      expect(result2).to.be.a('string');
-    });
+  it('should return a string when called without input', () => {
+    const result = encode();
+    expect(result).to.be.a('string');
+  });
+
+  it('should return a string when called with empty strings', () => {
+    const result = encode('', '', '', '');
+    expect(result).to.be.a('string');
+  });
+
+  it('should return a string when called with mixed input types', () => {
+    const result1 = encode(123, { name: 'John' }, 'type', 456);
+    const result2 = encode('123', '[object Object]', 'type', '456');
+    expect(result1).to.be.a('string');
+    expect(result2).to.be.a('string');
+  });
 });
 
 describe('decode', () => {

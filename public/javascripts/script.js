@@ -1,5 +1,5 @@
-$(document).ready(function() {
-  $("#cart").on("click", ".minus", function(event) {
+$(document).ready(function () {
+  $("#cart").on("click", ".minus", function (event) {
     event.preventDefault();
     var quantityCell = $(this).closest("tr").find(".quantity");
     var currentQuantity = parseInt(quantityCell.text());
@@ -7,25 +7,25 @@ $(document).ready(function() {
       quantityCell.text(currentQuantity - 1);
       updateRow(this);
     }
-    else{
+    else {
       $(this).closest("tr").remove();
     }
   });
-  $("#cart").on("click", ".plus", function(event) {
+  $("#cart").on("click", ".plus", function (event) {
     event.preventDefault();
     var quantityCell = $(this).closest("tr").find(".quantity");
     var currentQuantity = parseInt(quantityCell.text());
     quantityCell.text(currentQuantity + 1)
     updateRow(this);
   });
-  function updateRow(trigger){
+  function updateRow(trigger) {
     var $row = $(trigger).closest("tr");
     var quantity = parseInt($row.find(".quantity").text());
     var price = parseInt($row.find(".a-price").text().replace(/[^0-9]/g, ''));
     var subTotal = quantity * price;
     $row.find(".sub-price").text(subTotal.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
   }
-  $(".add-to-cart").click(function(event) {
+  $(".add-to-cart").click(function (event) {
     event.preventDefault();
 
     var productId = $(this).closest(".card-product").find(".product-id").text();
@@ -40,7 +40,7 @@ $(document).ready(function() {
       var subPriceCell = existingRow.find(".sub-price");
       var currentPrice = parseInt(subPriceCell.text().replace(/[^0-9]/g, '')) + parseInt(priceCell.text().replace(/[^0-9]/g, ''));
       existingRow.find(".sub-price").text(currentPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
-    } 
+    }
     else {
       var newRow = $("<tr data-product-id='" + productId + "'>");
       newRow.html(
@@ -48,7 +48,7 @@ $(document).ready(function() {
           <td>
             <figure class="media">
             
-              <div class="img-wrap"><img src="`+ $(this).closest(".card-product").find("img").attr("src") +`" class="img-thumbnail img-xs"></div>
+              <div class="img-wrap"><img src="`+ $(this).closest(".card-product").find("img").attr("src") + `" class="img-thumbnail img-xs"></div>
               <figcaption class="media-body">
                 <h6 class="title text-truncate"> ` + $(this).closest(".card-product").find(".title").text() + ` </h6>
               </figcaption>
@@ -63,7 +63,7 @@ $(document).ready(function() {
           </td>
           <td>
             <div class="price-wrap">
-              <var class="sub-price">` + $(this).closest(".card-product").find(".price-new").text() +`</var>
+              <var class="sub-price">` + $(this).closest(".card-product").find(".price-new").text() + `</var>
               <span class="a-price" style="display: none;">` + $(this).closest(".card-product").find(".price-new").text() + `</span>
             </div> <!-- price-wrap .// -->
           </td>
@@ -71,18 +71,18 @@ $(document).ready(function() {
             <a href="" class="btn btn-outline-danger delete-from-cart"> <i class="fa fa-trash"></i></a>
           </td>
         `
-        );
+      );
 
 
       // Thêm sản phẩm vào giỏ hàng (thẻ có id "cart")
       $("#cart").append(newRow);
-      
+
     }
     calculateReciept();
   });
 
 
-  $("#cart").on("click", ".plus, .minus, .delete-from-cart, .add-to-cal", function(event) {
+  $("#cart").on("click", ".plus, .minus, .delete-from-cart, .add-to-cal", function (event) {
     event.preventDefault();
     calculateReciept();
   });
@@ -91,46 +91,46 @@ $(document).ready(function() {
     trigger: "focus", // Đặt trigger thành "manual" để bạn có thể kiểm soát việc hiển thị popover
   });
 
-  $("#makeRecieptFromCart").on("click", function(event) {
+  $("#makeRecieptFromCart").on("click", function (event) {
     event.preventDefault();
 
     const isEmptyCustomer = $("#customerFindedID").text().trim() === "";
     const isEmptyCartList = $("#cart").children().length == 0
 
     console.log(isEmptyCartList, isEmptyCustomer)
-    
+
     if (isEmptyCustomer || isEmptyCartList) {
-        $("#invoiceModal").modal("hide");
-        $("#makeRecieptFromCart").popover("show");
+      $("#invoiceModal").modal("hide");
+      $("#makeRecieptFromCart").popover("show");
     } else {
-        $("#invoiceModal").modal("show");
-        $("#makeRecieptFromCart").popover("hide");
-        getDataFromCartToReciept();
+      $("#invoiceModal").modal("show");
+      $("#makeRecieptFromCart").popover("hide");
+      getDataFromCartToReciept();
     }
 
     event.stopPropagation();
   });
 
-  function calculateReciept(){
+  function calculateReciept() {
     var subPriceAll = 0;
-    $("#cart tr").each(function() {
+    $("#cart tr").each(function () {
       var aPrice = parseFloat($(this).find(".sub-price").text().replace(/[^0-9]/g, ''));
-      subPriceAll += aPrice; 
+      subPriceAll += aPrice;
     })
 
     $(".sub-price-all").text(subPriceAll.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
-    $(".sub-price-take").text(subPriceAll.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));  
+    $(".sub-price-take").text(subPriceAll.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
   }
 
   // Xử lý sự kiện xóa khỏi giỏ hàng
-  $("#cart").on("click", ".delete-from-cart", function(event) {
+  $("#cart").on("click", ".delete-from-cart", function (event) {
     event.preventDefault();
     $(this).closest("tr").remove();
   });
-  $(document).ready(function() {
-    $(".cancel-cart").click(function() {
+  $(document).ready(function () {
+    $(".cancel-cart").click(function () {
       $(".sub-price-all").text(0);
-      $(".sub-price-take").text(0); 
+      $(".sub-price-take").text(0);
       $("#cart").find("tr").remove();
     });
   });
@@ -139,13 +139,13 @@ $(document).ready(function() {
     // Lấy giá trị nhập vào ô tìm kiếm
     var searchText = $(this).val().toLowerCase();
 
-    if(/^\d{13}$/.test(searchText)){
-      var $col3Elements = $("div.col-md-3").filter(function() {
+    if (/^\d{13}$/.test(searchText)) {
+      var $col3Elements = $("div.col-md-3").filter(function () {
         return $(this).find(".product-id").text() === searchText;
       });
-      $col3Elements.each(function() {
+      $col3Elements.each(function () {
         var $col3 = $(this);
-        
+
         // Lấy thông tin sản phẩm từ các phần tử con trong $col3
         var productName = $col3.find(".title").text();
         var price = $col3.find(".price-new").text();
@@ -153,17 +153,17 @@ $(document).ready(function() {
         var productId = $col3.find(".product-id").text();
 
         var existingRow = $("#cart tr[data-product-id='" + productId + "']");
-        
+
         if (existingRow.length) {
           var quantityCell = existingRow.find(".quantity");
           var currentQuantity = parseInt(quantityCell.text());
           quantityCell.text(currentQuantity + 1);
-    
+
           var priceCell = existingRow.find(".a-price");
           var subPriceCell = existingRow.find(".sub-price");
           var currentPrice = parseInt(subPriceCell.text().replace(/[^0-9]/g, '')) + parseInt(priceCell.text().replace(/[^0-9]/g, ''));
           existingRow.find(".sub-price").text(currentPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }));
-        } 
+        }
         else {
           var newRow = $("<tr data-product-id='" + productId + "'>");
           newRow.html(
@@ -171,7 +171,7 @@ $(document).ready(function() {
               <td>
                 <figure class="media">
                 
-                  <div class="img-wrap"><img src="`+ productImage +`" class="img-thumbnail img-xs"></div>
+                  <div class="img-wrap"><img src="`+ productImage + `" class="img-thumbnail img-xs"></div>
                   <figcaption class="media-body">
                     <h6 class="title text-truncate"> ` + productName + ` </h6>
                   </figcaption>
@@ -186,7 +186,7 @@ $(document).ready(function() {
               </td>
               <td>
                 <div class="price-wrap">
-                  <var class="sub-price">` + price +`</var>
+                  <var class="sub-price">` + price + `</var>
                   <span class="a-price" style="display: none;">` + price + `</span>
                 </div> <!-- price-wrap .// -->
               </td>
@@ -194,17 +194,17 @@ $(document).ready(function() {
                 <a href="" class="btn btn-outline-danger delete-from-cart"> <i class="fa fa-trash"></i></a>
               </td>
             `
-            );
-    
-    
+          );
+
+
           // Thêm sản phẩm vào giỏ hàng (thẻ có id "cart")
           $("#cart").append(newRow);
-          
+
         }
         calculateReciept();
       })
 
-      if($col3Elements){
+      if ($col3Elements) {
         alert("Please check again")
       }
 
@@ -213,20 +213,20 @@ $(document).ready(function() {
 
     // Lọc và hiển thị sản phẩm dựa trên giá trị tìm kiếm
     $('.col-md-3').each(function () {
-        var title = $(this).find('.title').text().toLowerCase();
-        if (title.includes(searchText)) {
-            $(this).show();
-        } else {
-            $(this).hide();
-        }
+      var title = $(this).find('.title').text().toLowerCase();
+      if (title.includes(searchText)) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
     });
   });
 
-  $('form.search-wrap').on('submit', function(event) {
+  $('form.search-wrap').on('submit', function (event) {
     // Lấy giá trị nhập vào ô tìm kiếm
     event.preventDefault();
     searchValue = $('#search-input').val();
-    
+
   })
 });
 
@@ -261,7 +261,7 @@ function getDataFromCartToReciept() {
 
   $("#totalAmount").text(totalAmount);
 
-  return {products, totalAmount, customerPhone}
+  return { products, totalAmount, customerPhone }
 }
 
 function getCookie(name) {
@@ -272,20 +272,20 @@ function getCookie(name) {
 }
 
 document.getElementById("printOutReciept").onclick = function () {
-  const {products, totalAmount, customerPhone} = getDataFromCartToReciept();
+  const { products, totalAmount, customerPhone } = getDataFromCartToReciept();
   const formatttm = parseInt(totalAmount.replace(/[^\d]/g, ""))
   console.log(formatttm)
-  $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: formatttm, customerPhone:customerPhone, userLogs: getCookie("userLog") }, function (data) {
+  $.post("/pos/makeReciept", { products: JSON.stringify(products), totalAmount: formatttm, customerPhone: customerPhone, userLogs: getCookie("userLog") }, function (data) {
     if (data === "Done") {
       console.log("Receipt data received successfully.");
       printElement(document.getElementById("printAreaContent"));
     } else {
-        return;
+      return;
     }
   });
 
   $(".sub-price-all").text(0);
-  $(".sub-price-take").text(0); 
+  $(".sub-price-take").text(0);
   $("#cart").find("tr").remove();
 };
 
@@ -295,13 +295,13 @@ function printElement(elem) {
   var $printSection = document.getElementById("printSection");
 
   if (!$printSection) {
-      var $printSection = document.createElement("div");
-      $printSection.id = "printSection";
-      var $logoImage = document.createElement("img");
-      $logoImage.style.minHeight = "60px";
-      $logoImage.src = "./favicon.ico";
-      document.body.appendChild($logoImage);
-      document.body.appendChild($printSection);
+    var $printSection = document.createElement("div");
+    $printSection.id = "printSection";
+    var $logoImage = document.createElement("img");
+    $logoImage.style.minHeight = "60px";
+    $logoImage.src = "./favicon.ico";
+    document.body.appendChild($logoImage);
+    document.body.appendChild($printSection);
   }
 
   $printSection.innerHTML = "";
@@ -317,26 +317,26 @@ $(document).ready(function () {
     phoneNumberField.removeClass("error");
   });
   $("#payloadCustomer").click(function () {
-      const phoneNumber = $("#phoneNumber").val();
-      const phoneNumberField = $("#phoneNumber");
-      const phonePattern = /^0\d{9}$/;
+    const phoneNumber = $("#phoneNumber").val();
+    const phoneNumberField = $("#phoneNumber");
+    const phonePattern = /^0\d{9}$/;
 
-      if(!phonePattern.test(phoneNumber)){
-        phoneNumberField.addClass("error");
-      }
-      else{
-        phoneNumberField.removeClass("error");
-        $.post("/pos/findUser", { phone: phoneNumber }, function (data) {
-          if (data !== undefined) {
-              $("#customerFindedName").val(data.name);
-              $("#customerFindedID").text(data.phone);
-          } else {
-              $("#customerFindedName").val("User not found");
-              $("#customerPhoneNumber").val(phoneNumber);
-              $("#customerModal").modal("show");
-          }
-        });
-      }
+    if (!phonePattern.test(phoneNumber)) {
+      phoneNumberField.addClass("error");
+    }
+    else {
+      phoneNumberField.removeClass("error");
+      $.post("/pos/findUser", { phone: phoneNumber }, function (data) {
+        if (data !== undefined) {
+          $("#customerFindedName").val(data.name);
+          $("#customerFindedID").text(data.phone);
+        } else {
+          $("#customerFindedName").val("User not found");
+          $("#customerPhoneNumber").val(phoneNumber);
+          $("#customerModal").modal("show");
+        }
+      });
+    }
   });
 
   $(document).ready(function () {
@@ -345,12 +345,12 @@ $(document).ready(function () {
       var name = $("#customerName").val();
       var address = $("#customerAddress").val();
       var phonePattern = /^0\d{9}$/;
-  
+
       if (!phonePattern.test(phoneNumber)) {
         alert("Phone number must be 10 digits and start with 0");
-        return; 
+        return;
       }
-  
+
       $.ajax({
         url: "/pos/addCustomer", // Replace with the actual server endpoint
         method: "POST",
@@ -366,30 +366,30 @@ $(document).ready(function () {
           alert("Do not add this customer!")
         },
       });
-  
+
       $("#customerModal").modal("hide");
     });
   });
-  
-  
+
+
   $("#refreshNewOne").click(function () {
-      $("#phoneNumber").val("");
-      $("#customerFindedName").val("");
-      $("#customerFindedID").text("");
+    $("#phoneNumber").val("");
+    $("#customerFindedName").val("");
+    $("#customerFindedID").text("");
   });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
   if (window.location.pathname === '/logout') {
-      localStorage.clear();
+    localStorage.clear();
   }
 
   var image = localStorage.getItem("image");
   var name = localStorage.getItem("name");
 
   if (image && name) {
-      $(".userImageFromCookieByBase64").attr("src", image);
-      $(".profile_info strong").text(name);
+    $(".userImageFromCookieByBase64").attr("src", image);
+    $(".profile_info strong").text(name);
   } else {
   }
 })
