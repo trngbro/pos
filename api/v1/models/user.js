@@ -44,23 +44,21 @@ userSchema.methods.isInformation = function () {
 
 const Users = mongoose.model('User', userSchema);
 
-const sampleUsers = [
-    {
-        mail: "87295854+trngbro@users.noreply.github.com",
-        user: "admin",
-        password: "513da788167a5218-14b5cfd8430025b2",
-        name: "Trung-Nghia Nguyen",
-        status: "active",
-        type: "admin"
-    }
-]
+const sampleUsers = [{
+    mail: "87295854+trngbro@users.noreply.github.com",
+    user: "admin",
+    password: "513da788167a5218-14b5cfd8430025b2",
+    name: "Trung-Nghia Nguyen",
+    status: "active",
+    type: "admin"
+}]
 
 Users.insertMany(sampleUsers)
     .then(() => {
         console.log("Users data are inserted.");
     })
     .catch((error) => {
-        console.log("Has error/ or data was had before at Users model");
+
     });
 
 const validate = (user) => {
@@ -72,4 +70,7 @@ const validate = (user) => {
     return schema.validate(user);
 };
 
-module.exports = { Users, validate };
+module.exports = {
+    Users,
+    validate
+};

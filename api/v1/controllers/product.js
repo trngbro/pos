@@ -66,7 +66,9 @@ const productController = {
     deleteProduct: async (req, res) => {
         const barcode = req.params.barcode;
 
-        Products.findOne({ barcode: barcode })
+        Products.findOne({
+                barcode: barcode
+            })
             .then(async (product) => {
                 if (!product) {
                     return res.status(404).send('Product not found.');
@@ -76,7 +78,9 @@ const productController = {
                     return res.status(401).send('Product cannot be deleted as it has been sold.');
                 }
 
-                const result = await Products.findOneAndDelete({ barcode: barcode });
+                const result = await Products.findOneAndDelete({
+                    barcode: barcode
+                });
                 if (result) {
                     return res.status(200).send();
                 } else {
@@ -90,9 +94,14 @@ const productController = {
 
     addProduct: async (req, res) => {
         try {
-            const { name, ogprice, saleprice, category, categoryID, base64Image } = req.body;
-
-            console.log(name, ogprice, saleprice, category, categoryID, base64Image)
+            const {
+                name,
+                ogprice,
+                saleprice,
+                category,
+                categoryID,
+                base64Image
+            } = req.body;
 
             const product = new Products({
                 barcode: await generate.generateUniqueBarcode(),
@@ -121,10 +130,13 @@ const productController = {
         }
     },
     updateProduct: async (req, res) => {
-        console.log(req.body)
         try {
-            await Products.findOneAndUpdate({ barcode: req.body.pid }, { name: req.body.name, salePrice: req.body.salePrice })
-            console.log("Pass yet")
+            await Products.findOneAndUpdate({
+                barcode: req.body.pid
+            }, {
+                name: req.body.name,
+                salePrice: req.body.salePrice
+            })
             res.status(200).send("Successed")
         } catch (error) {
             res.status(400).send("Failed")

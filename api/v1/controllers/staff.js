@@ -62,19 +62,16 @@ const staffControllers = {
     },
     toggleStatus: async (req, res) => {
         try {
-            console.log(req.body.mail)
             if (req.body.mail) {
                 const user = await Users.findOne({
                     mail: req.body.mail
                 });
-                console.log(user.status === "active")
                 if (user.status === "active") {
                     await Users.findOneAndUpdate({
                         mail: req.body.mail
                     }, {
                         status: "block"
                     });
-                    console.log("done")
                 }
                 if (user.status === "block") {
                     await Users.findOneAndUpdate({

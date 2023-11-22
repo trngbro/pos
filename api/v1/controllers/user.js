@@ -62,7 +62,6 @@ const userControllers = {
 
             if (uid) {
                 const u = await Users.findOneAndUpdate({ _id: uid }, { image: image });
-                console.log(u.image)
                 res.status(200).send("Successed");
 
             } else {

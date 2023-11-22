@@ -11,7 +11,6 @@ async function getCustomerIDFromPhoneNumber(phoneNumber) {
             return null;
         }
     } catch (error) {
-        console.error("bill model fail at getCustomerIDFromPhoneNumber");
         return null;
     }
 }
@@ -24,7 +23,6 @@ async function insertBill(products, phoneNumber, userLogs) {
     try {
         const customerID = await getCustomerIDFromPhoneNumber(phoneNumber);
         if (!customerID) {
-            console.error("Customer not found for phone number: ", phoneNumber);
             return false;
         }
 

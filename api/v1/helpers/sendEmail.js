@@ -20,18 +20,9 @@ const sendEmail = async (email, subject, text) => {
       html: text,
     }
 
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-      }
-    });
-    console.log("email sent sucessfully");
-  } catch (error) {
-    console.log("email not sent");
-    console.log(error);
-  }
+    transporter.sendMail(mailOptions, function (error, info) {});
+
+  } catch (error) {}
 };
 
 module.exports = sendEmail;

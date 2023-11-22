@@ -15,8 +15,7 @@ const categorySchema = new mongoose.Schema({
 
 const Category = mongoose.model("Category", categorySchema);
 
-const sampleCategories = [
-    {
+const sampleCategories = [{
         name: "Phone",
         image: "",
     },
@@ -31,7 +30,7 @@ Category.insertMany(sampleCategories)
         console.log("Categories data are inserted.");
     })
     .catch((error) => {
-        console.log("Has error/ or data was had before at categories model");
+
     });
 
 module.exports = Category;

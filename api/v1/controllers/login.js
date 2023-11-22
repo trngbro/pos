@@ -7,7 +7,6 @@ const crypto_fromLib = require('crypto');
 const loginController = {
     rederLoginPage: (req, res) => {
         try {
-            console.log(req.url)
             if (req.cookies.userLog) {
                 res.redirect('home')
             }
@@ -29,7 +28,6 @@ const loginController = {
         try {
             const user = await Users.find({ user: req.body.username, password: crypto.password_hash(req.body.password) }).exec();
             if (user[0]._id) {
-                console.log(user[0].id, user[0].name, user[0].type, user[0].status)
                 res.cookie('userLog', crypto.encode(user[0].id, user[0].name, user[0].type, user[0].status));
                 res.cookie('userName', user[0].name).cookie('userImageUser', user[0].image);
                 res.redirect('home');
@@ -41,7 +39,6 @@ const loginController = {
                 })
             }
         } catch (error) {
-            console.log(error)
             res.redirect('login?login=password-or-username-be-not-correct')
         }
     },
@@ -176,9 +173,7 @@ const loginController = {
     },
     resetAccount: async (req, res) => {
         try {
-            console.log(req.body)
             await Users.findByIdAndUpdate(req.body.userId, { password: crypto.password_hash(req.body.password), status: "active" });
-            console.log("Pass")
             res.status(200).send("successed change")
         } catch (error) {
             res.status(400).send("some errors went changing password");

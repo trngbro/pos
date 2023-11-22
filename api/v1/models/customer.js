@@ -40,7 +40,7 @@ Customer.insertMany(sampleCustomers)
         console.log("Customers data are inserted.");
     })
     .catch((error) => {
-        console.log("Has error/ or data was had before at customers model");
+        
     });
 
 module.exports = Customer

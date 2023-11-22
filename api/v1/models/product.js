@@ -56,7 +56,6 @@ const Product = mongoose.model("Product", productSchema);
 const insertSampleProducts = async () => {
     const phoneCategoryId = await getCategoryIdByName("Phone");
     if (!phoneCategoryId) {
-        console.error("Category 'Phone' not found.");
         return;
     }
 
@@ -309,7 +308,6 @@ const insertSampleProducts = async () => {
         await Product.insertMany(sampleProducts);
         console.log("Product data are inserted");
     } catch (error) {
-        console.log("Has error/ or data was had before at product model");
     }
 };
 

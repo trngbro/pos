@@ -1,5 +1,8 @@
 const Customer = require("../models/customer")
-const { Bills, insertBill } = require("../models/bill");
+const {
+    Bills,
+    insertBill
+} = require("../models/bill");
 const styles = require('../helpers/stylesheetsConfig');
 const scripts = require('../helpers/javascriptConfig');
 
@@ -24,12 +27,17 @@ const homeController = {
                 customersData: arr
             });
         } catch (error) {
-            res.render("error", { error: error, layout: false })
+            res.render("error", {
+                error: error,
+                layout: false
+            })
         }
     },
     viewAllOrderOfAUserByID: async (req, res) => {
         try {
-            const allBill = await Bills.find({ customer: req.params.id });
+            const allBill = await Bills.find({
+                customer: req.params.id
+            });
             res.status(200).send(JSON.stringify(allBill))
         } catch (error) {
             res.status(500).send("Fail")
@@ -37,9 +45,7 @@ const homeController = {
     },
     viewDetailAOrderByOrderID: async (req, res) => {
         try {
-            console.log(req.params.id)
             const allBill = await Bills.findById(req.params.id);
-            console.log(allBill)
             res.status(200).send(JSON.stringify(allBill))
         } catch (error) {
             res.status(500).send("Fail")

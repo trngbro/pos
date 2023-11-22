@@ -64,8 +64,6 @@ const posControllers = {
 
             await insertBill(JSON.parse(products), customerPhone, userLogs);
 
-            console.log(products)
-
             JSON.parse(products).forEach(async product => {
                 const temp = await Products.findOne({ barcode: product.product_id })
                 const newQty = parseInt(temp.qty) - parseInt(product.quantity)
