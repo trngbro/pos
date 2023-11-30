@@ -9,3 +9,8 @@
     echo SERVICE=Gmail
     echo BASE_URL=http://localhost:3334
 ) > .env
+
+call npm install
+call start http://localhost:3334/login
+call npm start
+exit
