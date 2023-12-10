@@ -127,3 +127,5 @@ Project is developed and maintained by ungraduate student of TDTU, which main te
 [express]: <http://expressjs.com>
 [handlebars]: <https://handlebarsjs.com/>
     
+## Video demo
+[Click here](https://www.youtube.com/playlist?list=PLT210MRmCrVbTmLy51_uRaXxSnpF9L8qM).
