@@ -29,7 +29,7 @@ Ready to use in your browers: localhost:3334/login
 ## Login
 
 Username: admin
-Password: 123456
+Password: admin
 
 ---------------------------------------------------------------------------------------
 
